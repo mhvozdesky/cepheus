@@ -22,7 +22,7 @@ class AccountViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         account = serializer.save()
         login(request, user=account)
-        return Response(serializer.data, status=201)
+        return Response(AccountSerializer(account).data, status=201)
 
     @action(methods=['post'], detail=False, serializer_class=AccountAuthSerializer)
     def login(self, request):

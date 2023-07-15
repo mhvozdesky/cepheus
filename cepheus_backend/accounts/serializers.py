@@ -11,18 +11,15 @@ from common.error_messages import RE_PASSWORD_NOT_EQUAL, WRONG_EMAIL_OR_PASSWORD
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        exclude = ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']
-        extra_kwargs = {'password': {'write_only': True}}
-
-    def create(self, validated_data):
-        if 'password' in validated_data:
-            validated_data.pop('password')
-        instance = super().create(validated_data)
-        return instance
+        exclude = ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions', 'password']
 
 
-class AccountRegisterSerializer(AccountSerializer):
+class AccountRegisterSerializer(serializers.ModelSerializer):
     re_password = serializers.CharField(required=True, write_only=True)
+
+    class Meta:
+        model = Account
+        fields = ['email', 'password', 're_password']
 
     def validate_password(self, value):
         validate_password(value)
@@ -41,7 +38,7 @@ class AccountRegisterSerializer(AccountSerializer):
             validated_data.pop('re_password')
         raw_password = validated_data['password']
         validated_data['password'] = make_password(raw_password)
-        instance = serializers.ModelSerializer.create(self, validated_data)
+        instance = super().create(validated_data)
         return instance
 
 
