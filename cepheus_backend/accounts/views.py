@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from django.contrib.auth import login, logout
 from rest_framework.response import Response
 from rest_framework.generics import UpdateAPIView
+from extra_settings.models import Setting as ExtrSetting
 
 
 from .models import Account
@@ -16,6 +17,17 @@ class AccountViewSet(ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     lookup_field = 'pk'
+    allow_registration = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.allow_registration is None:
+            self.allow_registration = self.is_registration_allowed()
+
+    @staticmethod
+    def is_registration_allowed():
+        allow_registration = ExtrSetting.objects.filter(name='ALLOW_REGISTRATION')
+        return allow_registration.exists() and allow_registration.first().value
 
     def get_object(self):
         if self.action == 'update_me':
@@ -23,14 +35,15 @@ class AccountViewSet(ModelViewSet):
         return super().get_object()
 
     def get_permissions(self):
-        if self.action in ['update', 'partial_update']:
-            permission_classes = [IsAdminUser]
-        elif self.action in ['login', 'register']:
-            permission_classes = [AllowAny]
-        elif self.action in ['create', 'destroy']:
-            permission_classes = [ForbiddenToAll]
-        else:
-            permission_classes = [IsAuthenticated]
+        permissions_mapping = {
+            'update': [IsAdminUser],
+            'partial_update': [IsAdminUser],
+            'login': [AllowAny],
+            'register': [AllowAny if self.allow_registration else ForbiddenToAll],
+            'create': [ForbiddenToAll],
+            'destroy': [ForbiddenToAll],
+        }
+        permission_classes = permissions_mapping.get(self.action, [IsAuthenticated])
         return [permission() for permission in permission_classes]
 
     @action(methods=['post'], detail=False, serializer_class=AccountRegisterSerializer)

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'extra_settings',
     'rest_framework',
     'accounts',
 ]
@@ -151,3 +152,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication'
     ],
 }
+
+EXTRA_SETTINGS_DEFAULTS = [
+    {
+        "name": "ALLOW_REGISTRATION",
+        "type": 'bool',
+        "value": False,
+    },
+]
