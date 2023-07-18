@@ -1,4 +1,4 @@
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
@@ -49,6 +49,13 @@ class AccountViewSet(ModelViewSet):
         }
         permission_classes = permissions_mapping.get(self.action, [IsAuthenticated])
         return [permission() for permission in permission_classes]
+
+    def permission_denied(self, request, message=None, code=None):
+        permissions = self.get_permissions()
+        forbidden_to_all = list(filter(lambda val: isinstance(val, ForbiddenToAll), permissions))
+        if len(forbidden_to_all) > 0:
+            raise PermissionDenied(detail=message, code=code)
+        super().permission_denied(request, message, code)
 
     @action(methods=['post'], detail=False, serializer_class=AccountRegisterSerializer)
     def register(self, request):
