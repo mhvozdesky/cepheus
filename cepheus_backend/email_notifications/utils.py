@@ -2,6 +2,19 @@ from functools import wraps
 
 from django.core.mail import send_mail
 from django.template import loader
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
+from common.utils import get_base_url
+from accounts.models import PasswordGenerationToken
+
+
+def reset_password_url(user):
+    base_url = get_base_url()
+    user_id = urlsafe_base64_encode(force_bytes(user.id))
+    token_obj = PasswordGenerationToken.objects.create(user=user)
+    PasswordGenerationToken.objects.filter(user=user).exclude(pk=token_obj.pk).update(active=False)
+    return f'{base_url}/reset-password/{user_id}/{token_obj.token}/'
 
 
 def sender(subject):
@@ -25,6 +38,6 @@ def send_pass_generations(user):
     template = loader.get_template("email_templates/password_genetation.html")
     context = {
         'first_name': user.first_name if user.first_name else 'Dear client',
-        'url': 'http://example.com'
+        'url': reset_password_url(user)
     }
     return template.render(context)

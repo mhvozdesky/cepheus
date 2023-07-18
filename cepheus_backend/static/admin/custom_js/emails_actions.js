@@ -9,7 +9,7 @@ window.addEventListener("load", function() {
 
 	$('.send-email-btn').on('click', function(event) {
 		var data = $(this).data();
-		var url = window.location.origin + '/accounts/send-email/';
+		var url = window.location.origin + '/api/v1/generation-password/send-email/';
 		$.ajaxSetup({
 			headers: {'X-CSRFToken': getCookie('csrftoken')}
 		});
