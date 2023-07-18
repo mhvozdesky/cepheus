@@ -14,13 +14,7 @@ class AccountSerializer(serializers.ModelSerializer):
         exclude = ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions', 'password']
 
 
-class AccountRegisterSerializer(serializers.ModelSerializer):
-    re_password = serializers.CharField(required=True, write_only=True)
-
-    class Meta:
-        model = Account
-        fields = ['email', 'password', 're_password']
-
+class PasswordSerializer(serializers.Serializer):
     def validate_password(self, value):
         validate_password(value)
         return value
@@ -32,6 +26,14 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
             if password != value:
                 raise ValidationError(RE_PASSWORD_NOT_EQUAL)
         return value
+
+
+class AccountRegisterSerializer(serializers.ModelSerializer, PasswordSerializer):
+    re_password = serializers.CharField(required=True, write_only=True)
+
+    class Meta:
+        model = Account
+        fields = ['email', 'password', 're_password']
 
     def create(self, validated_data):
         if 're_password' in validated_data:
@@ -54,3 +56,8 @@ class AccountAuthSerializer(serializers.Serializer):
             raise serializers.ValidationError(WRONG_EMAIL_OR_PASSWORD)
 
         return account
+
+
+class ResetPasswordSerializer(PasswordSerializer):
+    password = serializers.CharField(required=True)
+    re_password = serializers.CharField(required=True)
