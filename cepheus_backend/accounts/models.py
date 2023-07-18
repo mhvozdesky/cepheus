@@ -64,5 +64,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
     objects = AccountManager()
 
     def save(self, *args, **kwargs):
+        created = not self.pk
+        if created and not self.password:
+            self.set_unusable_password()
         self.full_clean()
         super().save(*args, **kwargs)
