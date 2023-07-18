@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
+from django.utils.crypto import get_random_string
 
 from common.custom_model_fields import LowercaseEmailField
 from common.constants import GENDER_CHOICES, MALE, PHONE_REGEXP, PHONE_VALIDATION_MSG
@@ -64,5 +65,28 @@ class Account(AbstractBaseUser, PermissionsMixin):
     objects = AccountManager()
 
     def save(self, *args, **kwargs):
+        created = not self.pk
+        if created and not self.password:
+            self.set_unusable_password()
         self.full_clean()
         super().save(*args, **kwargs)
+
+
+class PasswordGenerationToken(models.Model):
+    user = models.ForeignKey(
+        Account,
+        related_name='password_generation_token',
+        on_delete=models.CASCADE
+    )
+    token = models.CharField(max_length=255, unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = self.generate_token()
+        return super().save(*args, **kwargs)
+
+    @staticmethod
+    def generate_token():
+        return get_random_string(48)

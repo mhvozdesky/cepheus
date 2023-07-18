@@ -1,0 +1,7 @@
+.btn-wrapper {
+	width: max-content;
+}
+
+.btn-wrapper .button {
+	padding: 5px 10px;
+}
