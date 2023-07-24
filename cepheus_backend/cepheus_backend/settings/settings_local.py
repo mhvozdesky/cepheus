@@ -156,6 +156,10 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Redis settings
+REDIS_HOST = os.environ.get('REDIS_HOST')
+REDIS_PORT = os.environ.get('REDIS_PORT')
+
 EXTRA_SETTINGS_DEFAULTS = [
     {
         "name": "ALLOW_REGISTRATION",
