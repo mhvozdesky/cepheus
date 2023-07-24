@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'extra_settings',
     'rest_framework',
+    'django_celery_beat',
+    'django_celery_results',
     'accounts',
     'email_notifications',
 ]
@@ -153,6 +155,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication'
     ],
 }
+
+# Redis settings
+REDIS_HOST = os.environ.get('REDIS_HOST')
+REDIS_PORT = os.environ.get('REDIS_PORT')
 
 EXTRA_SETTINGS_DEFAULTS = [
     {

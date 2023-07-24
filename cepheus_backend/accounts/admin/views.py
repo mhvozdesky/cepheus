@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from email_notifications.utils import send_pass_generations
 from accounts.models import Account
+from accounts.tasks import send_mail_delayed
 
 
 class SendEmail(View):
@@ -13,7 +14,7 @@ class SendEmail(View):
             return JsonResponse(data={'detail': 'Is not allowed'})
         try:
             user = Account.objects.get(pk=request.POST.get('user_id'))
-            send_pass_generations(user)
+            send_mail_delayed.delay('send_pass_generations', user.pk)
         except Exception:
             messages.warning(request, 'Sending email was failed')
             return JsonResponse(data={})
