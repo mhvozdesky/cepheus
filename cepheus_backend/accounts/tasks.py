@@ -16,9 +16,6 @@ task_logger = get_task_logger(__name__)
 @shared_task
 def send_mail_delayed(fun_name, user_id, *args, **kwargs):
     function_to_call = getattr(email_notifications.utils, fun_name)
-    try:
-        user = Account.objects.get(pk=user_id)
-    except ObjectDoesNotExist:
-        task_logger.info(f'User with id {user_id} not found')
-        return
+    user = Account.objects.get(pk=user_id)
     function_to_call(user, *args, **kwargs)
+    return f'A message was sent to user_id {user_id} by email {user.email}'
