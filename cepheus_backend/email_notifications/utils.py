@@ -22,13 +22,7 @@ def sender(subject):
         @wraps(fun)
         def cur_email(user, *args, **kwargs):
             msg_html = fun(user, *args, **kwargs)
-            send_mail(
-                subject,
-                '',
-                None,
-                [user.email],
-                html_message=msg_html
-            )
+            send_mail(subject, '', None, [user.email], html_message=msg_html)
         return cur_email
     return fun_wrap
 
