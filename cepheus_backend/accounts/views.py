@@ -79,6 +79,11 @@ class AccountViewSet(ModelViewSet):
         login(request, account)
         return Response({'detail': 'Login successful'}, status=200)
 
+    @action(methods=['post'], detail=False)
+    def logout(self, request):
+        logout(request)
+        return Response({'detail': 'Logout successful'})
+
     @action(methods=['get'], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
         return Response(self.get_serializer(request.user).data, status=200)
