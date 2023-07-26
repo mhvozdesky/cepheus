@@ -2,19 +2,23 @@ from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from django.contrib.auth import login, logout
 from rest_framework.response import Response
-from rest_framework.generics import UpdateAPIView
-from extra_settings.models import Setting as ExtrSetting
 from rest_framework.viewsets import ViewSet
+from extra_settings.models import Setting as ExtrSetting
+
+from django.contrib.auth import login, logout
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError as DjangoValidationError
+from django.shortcuts import get_object_or_404
 
 
 from .models import Account, PasswordGenerationToken
 from .serializers import AccountSerializer, AccountRegisterSerializer, AccountAuthSerializer,\
     ResetPasswordSerializer
 from common.cepheus_permissions import ForbiddenToAll
+from .tasks import send_mail_delayed
 
 
 class AccountViewSet(ModelViewSet):
@@ -46,6 +50,7 @@ class AccountViewSet(ModelViewSet):
             'register': [AllowAny if self.allow_registration else ForbiddenToAll],
             'create': [ForbiddenToAll],
             'destroy': [ForbiddenToAll],
+            'reset_password': [AllowAny]
         }
         permission_classes = permissions_mapping.get(self.action, [IsAuthenticated])
         return [permission() for permission in permission_classes]
@@ -81,6 +86,27 @@ class AccountViewSet(ModelViewSet):
     @me.mapping.patch
     def update_me(self, request):
         return self.partial_update(request)
+
+    @action(methods=['post'], detail=False, url_path='reset-password')
+    def reset_password(self, request):
+        email = request.data.get('email')
+        if not email:
+            raise ValidationError({'detail': 'Email is required'})
+
+        try:
+            validate_email(email)
+        except DjangoValidationError as e:
+            raise ValidationError({'detail': e.message})
+
+        account = get_object_or_404(Account, email=email)
+        result = send_mail_delayed.delay('send_pass_generations', account.pk)
+        return Response(
+            {
+                'detail': f'A link to reset your password has been sent to your email. '
+                          f'If you did not receive the letter, please contact the administrator '
+                          f'and report id {result.task_id}'
+            }
+        )
 
 
 class ResetPasswordViewSet(ViewSet):
