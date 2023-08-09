@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'accounts',
     'email_notifications',
+    'orders',
 ]
 
 MIDDLEWARE = [
