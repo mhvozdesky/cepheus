@@ -1,8 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Order, Category
-from .serializers import OrderSerializer, CategorySerializer
+from .models import Order, Category, Customer
+from .serializers import OrderSerializer, CategorySerializer, CustomerSerializer
 
 
 class OrderViewSet(ModelViewSet):
@@ -16,6 +16,13 @@ class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     lookup_field = 'pk'
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+
+
+class CustomerViewSet(ModelViewSet):
+    queryset = Customer.objects.all()
+    lookup_field = 'pk'
+    serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated]
 
 
