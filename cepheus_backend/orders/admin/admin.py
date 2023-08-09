@@ -11,6 +11,9 @@ class OrderGoodInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderGoodInline]
 
+    class Media:
+        js = ('admin/custom_js/orders.js',)
+
 
 admin.site.register(Customer)
 admin.site.register(Order, OrderAdmin)
