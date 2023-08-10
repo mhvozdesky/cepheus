@@ -2,15 +2,19 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Order, Category, Customer, Good
-from .serializers import (OrderSerializer, CategorySerializer, CustomerSerializer,
-                          GoodSerializer)
+from .serializers import (OrderListSerializer, CategorySerializer, CustomerSerializer,
+                          GoodSerializer, OrderDetailSerializer)
 
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     lookup_field = 'pk'
-    serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return OrderListSerializer
+        return OrderDetailSerializer
 
 
 class CategoryViewSet(ModelViewSet):
