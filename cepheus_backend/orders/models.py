@@ -59,7 +59,7 @@ class Customer(models.Model):
     )
 
     def __str__(self):
-        return f'Customer: {self.email}'
+        return f'{self.email}'
 
 
 class Order(models.Model):
@@ -72,14 +72,14 @@ class Order(models.Model):
     place_of_delivery = models.CharField(max_length=300, blank=True, default='')
 
     def __str__(self):
-        return f'Order: id-{self.pk}, responsible-{self.responsible}'
+        return f'{self.pk}'
 
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'Category: {self.title}'
+        return f'{self.title}'
 
 
 class Good(models.Model):
@@ -92,7 +92,7 @@ class Good(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Good: {self.title} - {self.pk}'
+        return f'{self.title}: {self.pk}'
 
 
 class OrderGood(models.Model):
@@ -103,4 +103,4 @@ class OrderGood(models.Model):
     amount = models.FloatField(blank=True, default=0.0)
 
     def __str__(self):
-        return f'OrderGood: {self.pk}'
+        return f'order: {self.order_id}, good: {self.good_id}'
