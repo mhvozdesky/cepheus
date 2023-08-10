@@ -19,7 +19,8 @@ from django.urls import path, include
 
 
 api_urls = [
-    path('', include('accounts.urls'))
+    path('', include('accounts.urls')),
+    path('', include('orders.urls'))
 ]
 
 urlpatterns = [
