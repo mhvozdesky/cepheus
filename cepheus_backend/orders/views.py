@@ -7,7 +7,7 @@ from .serializers import (OrderListSerializer, CategorySerializer, CustomerSeria
 
 
 class OrderViewSet(ModelViewSet):
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().order_by('-created_at')
     lookup_field = 'pk'
     permission_classes = [IsAuthenticated]
 
@@ -18,23 +18,21 @@ class OrderViewSet(ModelViewSet):
 
 
 class CategoryViewSet(ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by('title')
     lookup_field = 'pk'
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
 
 
 class CustomerViewSet(ModelViewSet):
-    queryset = Customer.objects.all()
+    queryset = Customer.objects.all().order_by('-created_at')
     lookup_field = 'pk'
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated]
 
 
 class GoodViewSet(ModelViewSet):
-    queryset = Good.objects.all()
+    queryset = Good.objects.all().order_by('-created_at')
     lookup_field = 'pk'
     serializer_class = GoodSerializer
     permission_classes = [IsAuthenticated]
-
-
