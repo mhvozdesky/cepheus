@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from rest_framework import serializers
 
 from .models import Order, Category, Customer, Good, OrderGood
@@ -20,6 +22,27 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 class OrderDetailSerializer(OrderListSerializer):
     goods = GoodInOrderSerializer(many=True, source='order_goods')
+
+    @transaction.atomic
+    def set_order_goods(self, instance, goods):
+        OrderGood.objects.filter(order=instance).delete()
+        for line in goods:
+            line['order'] = instance
+            OrderGood.objects.create(**line)
+
+    def create(self, validated_data):
+        goods = validated_data.pop('order_goods', None)
+        instance = super().create(validated_data)
+        if goods is not None:
+            self.set_order_goods(instance, goods)
+        return instance
+
+    def update(self, instance, validated_data):
+        goods = validated_data.pop('order_goods', None)
+        instance = super().update(instance, validated_data)
+        if goods is not None:
+            self.set_order_goods(instance, goods)
+        return instance
 
 
 class CategorySerializer(serializers.ModelSerializer):
