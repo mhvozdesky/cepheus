@@ -63,13 +63,14 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
-    responsible = models.ForeignKey(Account, blank=True, null=True, on_delete=models.SET_NULL)
+    responsible = models.ForeignKey(Account, blank=True, null=True, on_delete=models.SET_NULL, related_name='responsible_for')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(choices=ORDER_STATUSES, default=NEW, max_length=30, blank=True)
     payment_status = models.CharField(choices=PAYMENT_STATUSES, default=NOT_PAID, max_length=30, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     place_of_delivery = models.CharField(max_length=300, blank=True, default='')
+    latest_editor = models.ForeignKey(Account, blank=True, null=True, on_delete=models.SET_NULL, related_name='latest_editor_for')
 
     def __str__(self):
         return f'{self.pk}'

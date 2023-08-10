@@ -39,6 +39,8 @@ class OrderDetailSerializer(OrderListSerializer):
 
     def update(self, instance, validated_data):
         goods = validated_data.pop('order_goods', None)
+        editor = self.context['request'].user
+        validated_data.update({'latest_editor': editor})
         instance = super().update(instance, validated_data)
         if goods is not None:
             self.set_order_goods(instance, goods)
