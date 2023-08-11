@@ -148,8 +148,8 @@ class TestAccountViewSet(APITestCase):
     def test_accounts_list(self):
         request = self.client.get(reverse('accounts-list'))
         self.assertEqual(request.status_code, 200)
-        self.assertEqual(len(request.data), 2)
-        self.assertTrue('password' not in request.data[0])
+        self.assertEqual(len(request.data['results']), 2)
+        self.assertTrue('password' not in request.data['results'][0])
 
     def test_accounts_detail_not_auth(self):
         self.client.logout()

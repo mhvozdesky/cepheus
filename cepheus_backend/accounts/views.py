@@ -22,7 +22,7 @@ from .tasks import send_mail_delayed
 
 
 class AccountViewSet(ModelViewSet):
-    queryset = Account.objects.all()
+    queryset = Account.objects.all().order_by('-created')
     serializer_class = AccountSerializer
     lookup_field = 'pk'
     allow_registration = None
