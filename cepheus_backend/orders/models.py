@@ -91,6 +91,7 @@ class Good(models.Model):
     stock_balance = models.IntegerField(blank=True, default=0, validators=[MinValueValidator(0)])
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    vendor_code = models.CharField(max_length=50, blank=True, default='')
 
     def __str__(self):
         return f'{self.title}: {self.pk}'
