@@ -7,10 +7,11 @@ from .models import Order, Category, Customer, Good, OrderGood
 
 class GoodInOrderSerializer(serializers.ModelSerializer):
     good_title = serializers.CharField(source='good.title', read_only=True)
+    vendor_code = serializers.CharField(source='good.vendor_code', read_only=True)
 
     class Meta:
         model = OrderGood
-        fields = ['quantity', 'price', 'amount', 'good', 'good_title']
+        fields = ['quantity', 'price', 'amount', 'good', 'good_title', 'vendor_code']
 
 
 class OrderListSerializer(serializers.ModelSerializer):
