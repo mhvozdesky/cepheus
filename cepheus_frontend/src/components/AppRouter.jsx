@@ -6,7 +6,6 @@ import Loader from "./UI/Loader/Loader"
 
 const AppRouter = function() {
     const {isAuth, setIsAuth, isLoading} = useContext(AuthContex)
-    console.log(isAuth)
 
     if (isLoading) {
         return <Loader/>
