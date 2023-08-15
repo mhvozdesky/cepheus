@@ -1,38 +1,118 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  background-color: #ECECEC;
+  font-family: 'Inter', sans-serif;
+  height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
+  padding-right: 15px;
+}
+
+.header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
+  
+}
+
+.header-item {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0 5px;
 }
 
-.App-link {
-  color: #61dafb;
+.header-item.logo {
+  width: 92px;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo-image {
+  width: 64px;
+  height: 64px;
+  background-image: url("../../public/images/logo2.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.header .company {
+  flex: auto;
+}
+
+.header-item.company .text {
+  font-weight: 800;
+  font-size: 35px;
+}
+
+.header-item.user .text {
+  font-size: 17px;
+}
+
+.container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.side-panel {
+  width: 95px;
+  max-width: 95px;
+  margin-top: 35px;
+}
+
+.item-side-panel {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.item-side-panel .title-wrapper .title {
+  font-size: 12px;
+}
+
+.image-wrapper, .title-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.title-wrapper {
+  margin-top: 5px;
+}
+
+.item-side-panel .image-wrapper .image {
+  width: 35px;
+  height: 35px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+}
+
+.side-orders .image {
+  background-image: url("../../public/images/side_panel/orders.svg");
+  
+}
+
+.work-space {
+  flex-grow: 1;
+  background-color: white;
+  border-radius: 25px 25px 0 0;
+}
+
+.page {
+  padding: 50px;
 }
