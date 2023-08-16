@@ -33,6 +33,10 @@ const OrdersPage = function() {
                     class_name='date'
                     defaultValue="Період"
                     options={[
+                        {value: 'today', name: "Сьогодні"},
+                        {value: 'this_week', name: "Поточний тиждень"},
+                        {value: 'this_month', name: "Поточний місяць"},
+                        {value: 'own_option', name: "Свій варіант"}
                     ]}
                 />
                 <ButtonExport />
