@@ -1,5 +1,7 @@
 import React from "react";
 import ButtonAdd from "../components/UI/ButtonAdd"
+import ButtonExport from "../components/UI/ButtonExport"
+import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
 
 const OrdersPage = function() {
@@ -33,6 +35,8 @@ const OrdersPage = function() {
                     options={[
                     ]}
                 />
+                <ButtonExport />
+                <ButtonDelete />
             </div>
             <div className='page-content'></div>
         </div>
