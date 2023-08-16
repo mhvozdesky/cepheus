@@ -114,5 +114,30 @@ body {
 }
 
 .page {
-  padding: 50px;
+  width: 100%;
+  height: 100%;
+}
+
+.order-page .page-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.button-add {
+  cursor: pointer;
+}
+
+.order-page .page-header .button-add {
+  width: 37px;
+  height: 37px;
+}
+
+.button-add .image {
+  background-image: url("../../public/images/buttons/add.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
 }
