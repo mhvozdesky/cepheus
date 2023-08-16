@@ -122,6 +122,7 @@ body {
   height: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-around;
 }
 
 .button-add, .button-export, .button-delete {
@@ -129,18 +130,29 @@ body {
 }
 
 .order-page .page-header .button-add {
-  width: 37px;
-  height: 37px;
+  width: 30px;
+  height: 30px;
 }
 
 .order-page .page-header .button-export {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
 }
 
 .order-page .page-header .button-delete {
-  width: 37px;
+  width: 30px;
+  height: 30px;
+}
+
+.order-page .ceph-select {
+  width: 184px;
   height: 37px;
+  text-align: center;
+  background-color: #ECECEC;
+  border-radius: 15px;
+  border: none;
+  padding: 0 0px;
+  font-size: 15px;
 }
 
 .button-add .image {
