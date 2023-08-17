@@ -4,6 +4,7 @@ import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
 import VerticalLine from "../components/UI/VerticalLine"
+import OrdersTable from "../components/OrdersTable"
 
 const OrdersPage = function() {
     return (
@@ -55,7 +56,11 @@ const OrdersPage = function() {
                 <ButtonExport />
                 <ButtonDelete />
             </div>
-            <div className='page-content'></div>
+            <div className='page-content'>
+                <div className='block-table'>
+                    <OrdersTable />
+                </div>
+            </div>
         </div>
     );
 };

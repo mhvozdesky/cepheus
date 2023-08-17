@@ -213,3 +213,8 @@ body {
   border-left: 2px solid #bfbdbd;
   height: 40%;
 }
+
+.block-table {
+  display: flex;
+  justify-content: center;
+}
