@@ -122,7 +122,7 @@ body {
   height: 80px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
 .button-add, .button-export, .button-delete {
@@ -187,4 +187,29 @@ body {
 .order-page .page-header .button-export,
 .order-page .page-header .button-delete {
   margin: 5px;
+}
+
+.wrapper-period {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper-date label {
+  margin: 0 10px;
+}
+
+.wrapper-date input{
+  margin: 0 5px;
+  background-color: #ECECEC;
+  border-radius: 15px;
+  border: none;
+  font-size: 15px;
+  height: 37px;
+  width: 139px;
+  text-align: center;
+}
+
+.vl {
+  border-left: 2px solid #bfbdbd;
+  height: 40%;
 }
