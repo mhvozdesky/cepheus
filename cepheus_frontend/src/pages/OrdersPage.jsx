@@ -11,7 +11,6 @@ const OrdersPage = function() {
         <div className='page order-page'>
             <div className='page-header'>
                 <ButtonAdd />
-                <VerticalLine />
                 <SelectOption
                     class_name='responsible'
                     defaultValue="Відповідальний"
@@ -34,11 +33,11 @@ const OrdersPage = function() {
                 />
                 <div className='wrapper-period'>
                     <div className='wrapper-date wrapper-date-start'>
-                        <label for='date_start'>з</label>
+                        <label htmlFor='date_start'>з</label>
                         <input type='date' name='date_start' lang='uk'/>
                     </div>
                     <div className='wrapper-date wrapper-date-end'>
-                        <label for='date_end'>по</label>
+                        <label htmlFor='date_end'>по</label>
                         <input type='date' name='date_end' lang='uk'/>
                     </div>
                     <SelectOption
@@ -52,7 +51,6 @@ const OrdersPage = function() {
                         ]}
                     />
                 </div>
-                <VerticalLine />
                 <ButtonExport />
                 <ButtonDelete />
             </div>
