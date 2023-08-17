@@ -10,49 +10,53 @@ const OrdersPage = function() {
     return (
         <div className='page order-page'>
             <div className='page-header'>
-                <ButtonAdd />
-                <SelectOption
-                    class_name='responsible'
-                    defaultValue="Відповідальний"
-                    options={[
-                        {value: 1, name: "Антон Сурін"},
-                        {value: 2, name: "Аліса Срібчук"}
-                    ]}
-                />
-                <SelectOption
-                    class_name='status'
-                    defaultValue="Статус"
-                    options={[
-                        {value: 'in_progress', name: "В роботі"},
-                        {value: 'canceled', name: "Анульовано"},
-                        {value: 'returned', name: "Повернено"},
-                        {value: 'shipped', name: "В дорозі"},
-                        {value: 'shipped_back', name: "В дорозі назад"},
-                        {value: 'completed', name: "Готово"},
-                    ]}
-                />
-                <div className='wrapper-period'>
-                    <div className='wrapper-date wrapper-date-start'>
-                        <label htmlFor='date_start'>з</label>
-                        <input type='date' name='date_start' lang='uk'/>
-                    </div>
-                    <div className='wrapper-date wrapper-date-end'>
-                        <label htmlFor='date_end'>по</label>
-                        <input type='date' name='date_end' lang='uk'/>
-                    </div>
+                <div className='header-part part0'>
+                    <ButtonAdd />
                     <SelectOption
-                        class_name='date'
-                        defaultValue="Період"
+                        class_name='responsible'
+                        defaultValue="Відповідальний"
                         options={[
-                            {value: 'today', name: "Сьогодні"},
-                            {value: 'this_week', name: "Поточний тиждень"},
-                            {value: 'this_month', name: "Поточний місяць"},
-                            {value: 'own_option', name: "Свій варіант"}
+                            {value: 1, name: "Антон Сурін"},
+                            {value: 2, name: "Аліса Срібчук"}
                         ]}
                     />
+                    <SelectOption
+                        class_name='status'
+                        defaultValue="Статус"
+                        options={[
+                            {value: 'in_progress', name: "В роботі"},
+                            {value: 'canceled', name: "Анульовано"},
+                            {value: 'returned', name: "Повернено"},
+                            {value: 'shipped', name: "В дорозі"},
+                            {value: 'shipped_back', name: "В дорозі назад"},
+                            {value: 'completed', name: "Готово"},
+                        ]}
+                    />
+                    <div className='wrapper-period'>
+                        <div className='wrapper-date wrapper-date-start'>
+                            <label htmlFor='date_start'>з</label>
+                            <input type='date' name='date_start' lang='uk'/>
+                        </div>
+                        <div className='wrapper-date wrapper-date-end'>
+                            <label htmlFor='date_end'>по</label>
+                            <input type='date' name='date_end' lang='uk'/>
+                        </div>
+                        <SelectOption
+                            class_name='date'
+                            defaultValue="Період"
+                            options={[
+                                {value: 'today', name: "Сьогодні"},
+                                {value: 'this_week', name: "Поточний тиждень"},
+                                {value: 'this_month', name: "Поточний місяць"},
+                                {value: 'own_option', name: "Свій варіант"}
+                            ]}
+                        />
+                    </div>
                 </div>
-                <ButtonExport />
-                <ButtonDelete />
+                <div className='header-part part1'>
+                    <ButtonExport />
+                    <ButtonDelete />
+                </div>
             </div>
             <div className='page-content'>
                 <div className='block-table'>
