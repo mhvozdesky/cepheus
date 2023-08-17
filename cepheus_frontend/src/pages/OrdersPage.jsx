@@ -29,16 +29,26 @@ const OrdersPage = function() {
                         {value: 'completed', name: "Готово"},
                     ]}
                 />
-                <SelectOption
-                    class_name='date'
-                    defaultValue="Період"
-                    options={[
-                        {value: 'today', name: "Сьогодні"},
-                        {value: 'this_week', name: "Поточний тиждень"},
-                        {value: 'this_month', name: "Поточний місяць"},
-                        {value: 'own_option', name: "Свій варіант"}
-                    ]}
-                />
+                <div className='wrapper-period'>
+                    <div className='wrapper-date wrapper-date-start'>
+                        <label for='date_start'>з</label>
+                        <input type='date' name='date_start' lang='uk'/>
+                    </div>
+                    <div className='wrapper-date wrapper-date-end'>
+                        <label for='date_end'>по</label>
+                        <input type='date' name='date_end' lang='uk'/>
+                    </div>
+                    <SelectOption
+                        class_name='date'
+                        defaultValue="Період"
+                        options={[
+                            {value: 'today', name: "Сьогодні"},
+                            {value: 'this_week', name: "Поточний тиждень"},
+                            {value: 'this_month', name: "Поточний місяць"},
+                            {value: 'own_option', name: "Свій варіант"}
+                        ]}
+                    />
+                </div>
                 <ButtonExport />
                 <ButtonDelete />
             </div>
