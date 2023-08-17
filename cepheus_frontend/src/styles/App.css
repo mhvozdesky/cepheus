@@ -208,3 +208,8 @@ body {
   width: 139px;
   text-align: center;
 }
+
+.vl {
+  border-left: 2px solid #bfbdbd;
+  height: 40%;
+}

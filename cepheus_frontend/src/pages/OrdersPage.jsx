@@ -3,12 +3,14 @@ import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
+import VerticalLine from "../components/UI/VerticalLine"
 
 const OrdersPage = function() {
     return (
         <div className='page order-page'>
             <div className='page-header'>
                 <ButtonAdd />
+                <VerticalLine />
                 <SelectOption
                     class_name='responsible'
                     defaultValue="Відповідальний"
@@ -49,6 +51,7 @@ const OrdersPage = function() {
                         ]}
                     />
                 </div>
+                <VerticalLine />
                 <ButtonExport />
                 <ButtonDelete />
             </div>
