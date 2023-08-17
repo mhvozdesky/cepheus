@@ -118,13 +118,19 @@ body {
   height: 100%;
   padding: 0 20px;
   font-family: 'Inter', sans-serif;
+  min-width: 1170px;
+  overflow-x: auto;
 }
 
 .order-page .page-header {
   height: 80px;
   display: flex;
   align-items: center;
-  /* justify-content: space-around; */
+  justify-content: space-between;
+}
+
+.order-page .header-part {
+  display: flex;
 }
 
 .page-header select {
@@ -271,4 +277,8 @@ body {
 .checkbox-column input {
   width: 16px;
   height: 16px;
+}
+
+.order-page .page-header .button-delete {
+  margin-left: 40px;
 }
