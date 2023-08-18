@@ -9,4 +9,34 @@
   <body>
     <div id="root"></div>
   </body>
+  <script>
+    window.onload = function() {
+      var scr = document.querySelector(".work-space");
+      var isDragging = false;
+      var startX;
+
+      if (scr.scrollWidth > scr.parentElement.clientWidth) {
+        scr.style.overflowX = "scroll";
+      }
+
+      scr.addEventListener("mousedown", function(event) {
+        if (event.button === 0) {
+          isDragging = true;
+          startX = this.scrollLeft + event.clientX;
+          event.preventDefault();
+        }
+      });
+
+      window.addEventListener("mousemove", function(event) {
+        if (isDragging) {
+          var scrollX = startX - event.clientX;
+          scr.scrollLeft = scrollX;
+        }
+      });
+
+      window.addEventListener("mouseup", function() {
+        isDragging = false;
+      });
+    };
+  </script>
 </html>
