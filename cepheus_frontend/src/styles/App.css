@@ -282,3 +282,12 @@ body {
 .order-page .page-header .button-delete {
   margin-left: 40px;
 }
+
+/* ########login########### */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: auto;
+}
+/* ################### */

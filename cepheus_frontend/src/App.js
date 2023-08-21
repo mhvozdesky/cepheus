@@ -7,7 +7,7 @@ import SidePanel from "./components/SidePanel"
 import {AuthContex} from "./contex/index"
 
 function App() {
-  const [isAuth, setIsAuth] = useState(true)
+  const [isAuth, setIsAuth] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
