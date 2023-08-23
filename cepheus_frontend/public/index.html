@@ -15,28 +15,30 @@
       var isDragging = false;
       var startX;
 
-      if (scr.scrollWidth > scr.parentElement.clientWidth) {
-        scr.style.overflowX = "scroll";
+      if (scr) {
+        if (scr.scrollWidth > scr.parentElement.clientWidth) {
+          scr.style.overflowX = "scroll";
+        }
+
+        scr.addEventListener("mousedown", function(event) {
+          if (event.button === 0) {
+            isDragging = true;
+            startX = this.scrollLeft + event.clientX;
+          }
+        });
+
+        window.addEventListener("mousemove", function(event) {
+          if (isDragging) {
+            //event.preventDefault();
+            var scrollX = startX - event.clientX;
+            scr.scrollLeft = scrollX;
+          }
+        });
+
+        window.addEventListener("mouseup", function() {
+          isDragging = false;
+        });
       }
-
-      scr.addEventListener("mousedown", function(event) {
-        if (event.button === 0) {
-          isDragging = true;
-          startX = this.scrollLeft + event.clientX;
-        }
-      });
-
-      window.addEventListener("mousemove", function(event) {
-        if (isDragging) {
-          //event.preventDefault();
-          var scrollX = startX - event.clientX;
-          scr.scrollLeft = scrollX;
-        }
-      });
-
-      window.addEventListener("mouseup", function() {
-        isDragging = false;
-      });
     };
   </script>
 </html>
