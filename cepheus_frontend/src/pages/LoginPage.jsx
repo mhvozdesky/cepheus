@@ -1,7 +1,10 @@
-import React, {useState} from "react";
-import axios from "axios"
+import React, {useState, useContext} from "react";
+import {AuthContex} from "../contex/index";
+import axios from "axios";
+
 
 const LoginPage = function() {
+    const {isAuth, setIsAuth, isLoading, setLoadCustomer} = useContext(AuthContex)
     const [emailField, setEmailField] = useState({text: '', errors: []})
     const [passwordField, setPasswordField] = useState({text: '', errors: []})
     const [commonError, setCommonError] = useState({text: '', errors: []})
@@ -37,8 +40,8 @@ const LoginPage = function() {
             }
         )
         .then((response) => {
-            console.log('1')
-            console.log(response.data)
+            setIsAuth(true)
+            setLoadCustomer(true)
         })
         .catch((error) => {
             if (typeof error.response.data.email != 'undefined') {
