@@ -1,6 +1,38 @@
-import React from "react";
+import React, {useContext} from "react";
+import {AuthContex} from "../contex/index";
+import axios from "axios";
 
 const Header = function() {
+    const {isAuth, setIsAuth, isLoading, setLoadCustomer} = useContext(AuthContex)
+
+    const logout = () => {
+        const url = 'api/v1/accounts/logout/';
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        if (document.cookie) {
+            headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
+        }
+
+        axios.post(
+            url,
+            {},
+            {
+                withCredentials: true,
+                headers: headers
+            }
+        )
+        .then((response) => {
+            setIsAuth(false)
+        })
+        .catch((error) => {
+            console.log(error.response.data)
+        })
+    }
+
+
     return (
         <div className='header'>
             <div className='header-item logo'>
@@ -10,7 +42,13 @@ const Header = function() {
                 <div className='text'>CEPHEUS</div>
             </div>
             <div className='header-item user'>
-                <div className='text'>Антон Сурін</div>
+                <div className='dropdown-wrapper'>
+                    <div className='text'>Антон Сурін</div>
+                    <div className='header-profile-list'>
+                        <div className='header-profile-list-item'>Мій профіль</div>
+                        <div onClick={logout} className='header-profile-list-item'>Вийти</div>
+                    </div>
+                </div>
             </div>
         </div>
     );
