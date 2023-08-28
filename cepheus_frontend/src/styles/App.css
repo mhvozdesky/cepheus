@@ -332,3 +332,31 @@ body {
   }
 }
 /* ################### */
+
+.dropdown-wrapper .text {
+  cursor: pointer;
+}
+
+.header-profile-list {
+  position: absolute;
+  right: 12px;
+  
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  display: none;
+}
+
+.header-profile-list-item {
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.dropdown-wrapper:hover .header-profile-list {
+  display: block;
+}
+
+.header-profile-list-item:hover {
+  background-color: #ddd;
+}

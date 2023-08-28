@@ -10,7 +10,13 @@ const Header = function() {
                 <div className='text'>CEPHEUS</div>
             </div>
             <div className='header-item user'>
-                <div className='text'>Антон Сурін</div>
+                <div className='dropdown-wrapper'>
+                    <div className='text'>Антон Сурін</div>
+                    <div className='header-profile-list'>
+                        <div className='header-profile-list-item'>Мій профіль</div>
+                        <div className='header-profile-list-item'>Вийти</div>
+                    </div>
+                </div>
             </div>
         </div>
     );
