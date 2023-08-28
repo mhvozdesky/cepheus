@@ -15,7 +15,6 @@ function App() {
   const [loadCustomer, setLoadCustomer] = useState(false)
 
   const getCustomer = async () => {
-    console.log('spam')
     setIsLoading(true)
     const url = 'api/v1/accounts/me/';
 
