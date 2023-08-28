@@ -1,12 +1,69 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
-import VerticalLine from "../components/UI/VerticalLine"
+import PreLoader from "../components/UI/PreLoader"
 import OrdersTable from "../components/OrdersTable"
+import axios from "axios";
 
 const OrdersPage = function() {
+    const [loadingOrders, setLoadingOrders] = useState(false)
+    const [orders, setOrders] = useState([])
+    const [printOrders, setPrintOrders] = useState(false)
+
+    const getOrders = () => {
+        setLoadingOrders(true)
+        const url = 'api/v1/orders/';
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        if (document.cookie) {
+            headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
+        }
+
+        axios.get(
+            url,
+            {
+                withCredentials: true,
+                headers: headers
+            }
+        )
+        .then((response) => {
+            setOrders(response.data['results'])
+            setLoadingOrders(false)
+            setPrintOrders(true)
+        })
+        .catch((error) => {
+            console.log(error.response)
+            setLoadingOrders(false)
+        })
+    }
+
+    const printOrd = () => {
+        if (printOrders) {
+            console.log(orders)
+        }
+    }
+
+
+    useEffect(() => {
+        getOrders();
+      }, [])
+
+    // useEffect(() => {
+    //     printOrd();
+    //   }, [printOrders])
+
+    if (loadingOrders) {
+        return (
+            <PreLoader />
+        )
+    }
+
+
     return (
         <div className='page order-page'>
             <div className='page-header'>
@@ -60,7 +117,7 @@ const OrdersPage = function() {
             </div>
             <div className='page-content'>
                 <div className='block-table'>
-                    <OrdersTable />
+                    <OrdersTable orders={orders}/>
                 </div>
             </div>
         </div>
