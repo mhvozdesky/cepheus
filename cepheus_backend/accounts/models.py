@@ -71,6 +71,10 @@ class Account(AbstractBaseUser, PermissionsMixin):
         self.full_clean()
         super().save(*args, **kwargs)
 
+    @property
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class PasswordGenerationToken(models.Model):
     user = models.ForeignKey(
