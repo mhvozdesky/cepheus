@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Sum
 
 from rest_framework import serializers
 
@@ -15,10 +16,23 @@ class GoodInOrderSerializer(serializers.ModelSerializer):
 
 
 class OrderListSerializer(serializers.ModelSerializer):
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    payment_status_display = serializers.CharField(source='get_payment_status_display', read_only=True)
+    responsible_display = serializers.CharField(source='responsible.get_full_name', read_only=True)
+    number = serializers.SerializerMethodField()
+    amount = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
         fields = '__all__'
+
+    def get_number(self, obj):
+        return obj.order_goods.count()
+
+    def get_amount(self, obj):
+        return obj.order_goods.aggregate(total_amount=Sum('amount'))['total_amount']
+
+
 
 
 class OrderDetailSerializer(OrderListSerializer):
