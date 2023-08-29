@@ -4,6 +4,7 @@ import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
 import PreLoader from "../components/UI/PreLoader"
+import PaginationPanel from "../components/UI/PaginationPanel"
 import OrdersTable from "../components/OrdersTable"
 import axios from "axios";
 
@@ -118,6 +119,22 @@ const OrdersPage = function() {
             <div className='page-content'>
                 <div className='block-table'>
                     <OrdersTable orders={orders}/>
+                </div>
+            </div>
+            <div className='page-footer'>
+                <div className='console'>
+                    <PaginationPanel />
+                    <SelectOption
+                        class_name='select-onPage'
+                        defaultValue="На сторінці"
+                        options={[
+                            {value: 25, name: "25"},
+                            {value: 50, name: "50"},
+                            {value: 100, name: "100"},
+                            {value: 250, name: "250"},
+                            {value: 500, name: "500"}
+                        ]}
+                    />
                 </div>
             </div>
         </div>
