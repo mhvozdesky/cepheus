@@ -13,6 +13,41 @@ const OrdersPage = function() {
     const [orders, setOrders] = useState([])
     const [printOrders, setPrintOrders] = useState(false)
 
+    const add_script = () => {
+        const scr = document.querySelector(".work-space");
+        let isDragging = false;
+        let startX;
+
+        if (scr) {
+          if (scr.scrollWidth > scr.parentElement.clientWidth) {
+            scr.style.overflowX = "scroll";
+          }
+    
+          const handleMouseDown = (event) => {
+            if (event.button === 0) {
+              isDragging = true;
+              startX = scr.scrollLeft + event.clientX;
+            }
+          };
+    
+          const handleMouseMove = (event) => {
+            if (isDragging) {
+              // event.preventDefault();
+              const scrollX = startX - event.clientX;
+              scr.scrollLeft = scrollX;
+            }
+          };
+    
+          const handleMouseUp = () => {
+            isDragging = false;
+          };
+    
+          scr.addEventListener("mousedown", handleMouseDown);
+          window.addEventListener("mousemove", handleMouseMove);
+          window.addEventListener("mouseup", handleMouseUp);
+        }
+      }
+
     const getOrders = () => {
         setLoadingOrders(true)
         const url = 'api/v1/orders/';
@@ -51,6 +86,7 @@ const OrdersPage = function() {
 
 
     useEffect(() => {
+        add_script();
         getOrders();
       }, [])
 
