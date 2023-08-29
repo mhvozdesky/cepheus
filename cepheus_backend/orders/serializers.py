@@ -30,7 +30,10 @@ class OrderListSerializer(serializers.ModelSerializer):
         return obj.order_goods.count()
 
     def get_amount(self, obj):
-        return obj.order_goods.aggregate(total_amount=Sum('amount'))['total_amount']
+        total_amount = obj.order_goods.aggregate(total_amount=Sum('amount'))['total_amount']
+        if total_amount is None:
+            return 0
+        return total_amount
 
 
 
