@@ -9,9 +9,58 @@ import OrdersTable from "../components/OrdersTable"
 import axios from "axios";
 
 const OrdersPage = function() {
+    const pageSizeDefault = 25;
+
     const [loadingOrders, setLoadingOrders] = useState(false)
     const [orders, setOrders] = useState([])
-    const [printOrders, setPrintOrders] = useState(false)
+
+    const [next, setNext] = useState(false)
+    const [prev, setPrev] = useState(false)
+    const [count, setCount] = useState(0)
+    const [pageSize, setPageSize] = useState(pageSizeDefault)
+    const [page, setPage] = useState(1)
+    const [lastPage, setLastPage] = useState(1)
+
+    const change_page = (next_page=null, prev_page=null, need_page=null) => {
+        let cur_page = page
+
+        if (next_page) {
+            cur_page = cur_page + 1;
+        }
+
+        if (prev_page) {
+            cur_page = cur_page - 1;
+        }
+
+        if (need_page) {
+            cur_page = need_page;
+        }
+
+        getOrders(cur_page);
+    }
+
+    const change_page_size = (onPage) => {
+        getOrders(1, onPage);
+    }
+
+    const fill_pagination = (data) => {
+        if (data['next'] !== null) {
+            setNext(true)
+        } else {
+            setNext(false)
+        }
+
+        if (data['previous'] !== null) {
+            setPrev(true)
+        } else {
+            setPrev(false)
+        }
+
+        setCount(data['count'])
+        setPageSize(data['page_size'])
+        setPage(data['page'])
+        setLastPage(data['last_page'])
+    }
 
     const add_script = () => {
         const scr = document.querySelector(".work-space");
@@ -48,9 +97,9 @@ const OrdersPage = function() {
         }
       }
 
-    const getOrders = () => {
+    const getOrders = (cur_page=page, onPage=pageSize) => {
         setLoadingOrders(true)
-        const url = 'api/v1/orders/';
+        const url = `api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
 
         const headers = {
             "Content-Type": "application/json"
@@ -69,8 +118,8 @@ const OrdersPage = function() {
         )
         .then((response) => {
             setOrders(response.data['results'])
+            fill_pagination(response.data)
             setLoadingOrders(false)
-            setPrintOrders(true)
         })
         .catch((error) => {
             console.log(error.response)
@@ -78,28 +127,15 @@ const OrdersPage = function() {
         })
     }
 
-    const printOrd = () => {
-        if (printOrders) {
-            console.log(orders)
-        }
-    }
-
-
     useEffect(() => {
-        add_script();
         getOrders();
       }, [])
-
-    // useEffect(() => {
-    //     printOrd();
-    //   }, [printOrders])
 
     if (loadingOrders) {
         return (
             <PreLoader />
         )
     }
-
 
     return (
         <div className='page order-page'>
@@ -159,10 +195,20 @@ const OrdersPage = function() {
             </div>
             <div className='page-footer'>
                 <div className='console'>
-                    <PaginationPanel />
+                    <PaginationPanel
+                        next={next}
+                        prev={prev}
+                        pageSize={pageSize}
+                        page={page}
+                        lastPage={lastPage}
+                        change_page={change_page}
+                    />
                     <SelectOption
                         class_name='select-onPage'
-                        defaultValue="На сторінці"
+                        id='onPage'
+                        defaultValue=""
+                        pageSize={pageSize}
+                        change_page_size={change_page_size}
                         options={[
                             {value: 25, name: "25"},
                             {value: 50, name: "50"},
