@@ -462,4 +462,15 @@ body {
 .pagination-block .text {
   margin: 0px 0px 0px 8px;
 }
+
+.pagination-panel .disabled {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: default;
+}
+
+#onPage {
+  width: 90px;
+  height: 30px;
+}
 /* ################### */
