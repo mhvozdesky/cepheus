@@ -14,7 +14,7 @@ def reset_password_url(user):
     user_id = urlsafe_base64_encode(force_bytes(user.id))
     token_obj = PasswordGenerationToken.objects.create(user=user)
     PasswordGenerationToken.objects.filter(user=user).exclude(pk=token_obj.pk).update(active=False)
-    return f'{base_url}/reset-password/{user_id}/{token_obj.token}/'
+    return f'{base_url}/confirm-password/{user_id}/{token_obj.token}/'
 
 
 def sender(subject):
