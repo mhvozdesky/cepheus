@@ -99,7 +99,7 @@ const OrdersPage = function() {
 
     const getOrders = (cur_page=page, onPage=pageSize) => {
         setLoadingOrders(true)
-        const url = `api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
+        const url = `/api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
 
         const headers = {
             "Content-Type": "application/json"

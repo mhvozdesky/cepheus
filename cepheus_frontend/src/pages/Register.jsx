@@ -19,7 +19,7 @@ const Register = function() {
 
     const register = (e) => {
         cleanErrors();
-        const url = 'api/v1/accounts/register/';
+        const url = '/api/v1/accounts/register/';
         const data = {
             email: emailField.text,
             password: passwordField.text,

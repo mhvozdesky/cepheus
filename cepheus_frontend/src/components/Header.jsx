@@ -6,7 +6,7 @@ const Header = function() {
     const {isAuth, setIsAuth, isLoading, setLoadCustomer, customer} = useContext(AuthContex)
 
     const logout = () => {
-        const url = 'api/v1/accounts/logout/';
+        const url = '/api/v1/accounts/logout/';
 
         const headers = {
             "Content-Type": "application/json"
