@@ -43,7 +43,6 @@ const Register = function() {
             }
         )
         .then((response) => {
-            setIsAuth(true)
             setLoadCustomer(true)
         })
         .catch((error) => {
