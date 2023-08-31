@@ -1,12 +1,15 @@
 import React from "react";
+import {useNavigate} from "react-router-dom"
 import { format } from 'date-fns';
 
 const OrdersTableRow = function(props) {
+    const router = useNavigate()
+
     const formattedCreatedAt = format(new Date(props.order.created_at), 'dd.MM.yyyy HH:mm');
     const formattedModifiedAt = format(new Date(props.order.modified_at), 'dd.MM.yyyy HH:mm');
 
     return (
-        <tr className={'row'+props.index}>
+        <tr className={'row'+props.index} onDoubleClick={() => router(`/orders/${props.order.id}`)}>
             <td className='checkbox'>
                 <div className='text'><span><input type='checkbox'/></span></div>
             </td>

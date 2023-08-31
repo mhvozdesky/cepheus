@@ -18,7 +18,7 @@ const LoginPage = function() {
 
     const login = (e) => {
         cleanErrors();
-        const url = 'api/v1/accounts/login/';
+        const url = '/api/v1/accounts/login/';
         const data = {
             email: emailField.text,
             password: passwordField.text

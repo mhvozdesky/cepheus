@@ -16,7 +16,7 @@ function App() {
 
   const getCustomer = async () => {
     setIsLoading(true)
-    const url = 'api/v1/accounts/me/';
+    const url = '/api/v1/accounts/me/';
 
     const headers = {
       "Content-Type": "application/json"
