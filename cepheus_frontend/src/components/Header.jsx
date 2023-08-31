@@ -3,7 +3,7 @@ import {AuthContex} from "../contex/index";
 import axios from "axios";
 
 const Header = function() {
-    const {isAuth, setIsAuth, isLoading, setLoadCustomer} = useContext(AuthContex)
+    const {isAuth, setIsAuth, isLoading, setLoadCustomer, customer} = useContext(AuthContex)
 
     const logout = () => {
         const url = 'api/v1/accounts/logout/';
@@ -43,7 +43,7 @@ const Header = function() {
             </div>
             <div className='header-item user'>
                 <div className='dropdown-wrapper'>
-                    <div className='text'>Антон Сурін</div>
+                    <div className='text'>{customer.first_name} {customer.last_name}</div>
                     <div className='header-profile-list'>
                         <div className='header-profile-list-item'>Мій профіль</div>
                         <div onClick={logout} className='header-profile-list-item'>Вийти</div>

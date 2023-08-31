@@ -66,7 +66,7 @@ function App() {
   );
 
   return (
-    <AuthContex.Provider value={{isAuth, setIsAuth, isLoading, setLoadCustomer}}>
+    <AuthContex.Provider value={{isAuth, setIsAuth, isLoading, setLoadCustomer, customer}}>
       <BrowserRouter>
           {isAuth ? (
             <>
