@@ -259,7 +259,7 @@ class TestAccountViewSet(APITestCase):
 
         result = reset_password_url(self.user)
         token = PasswordGenerationToken.objects.get(user=self.user).token
-        expected_result = f'{protocol}://{host}:{port}/reset-password/{user_id}/{token}/'
+        expected_result = f'{protocol}://{host}:{port}/confirm-password/{user_id}/{token}/'
         self.assertEqual(result, expected_result)
 
     def test_reset_password_user_id_wrong(self):
