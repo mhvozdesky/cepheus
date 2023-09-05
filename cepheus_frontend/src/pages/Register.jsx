@@ -2,6 +2,8 @@ import React, {useState, useContext} from "react";
 import {Link} from "react-router-dom";
 import {AuthContex} from "../contex/index";
 import axios from "axios";
+import Header from "../components/Header"
+import AuthLogo from "../components/UI/AuthLogo"
 
 const Register = function() {
     const {isAuth, setIsAuth, isLoading, setLoadCustomer} = useContext(AuthContex)
@@ -66,44 +68,72 @@ const Register = function() {
     }
 
     return (
-        <div className='login-page'>
-            <p>Login Page</p>
-            <label htmlFor='email'>Email</label>
-            {emailField.errors &&
-                <ul className='error-list'>
-                    {emailField.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <input onChange={e => setEmailField(prevState => ({ ...prevState, text: e.target.value}))} id='email' name='email' placeholder="Enter Email" type="email" required />
-            <label htmlFor='password'>Password</label>
-            {passwordField.errors &&
-                <ul className='error-list'>
-                    {passwordField.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <input onChange={e => setPasswordField(prevState => ({ ...prevState, text: e.target.value}))} id='password' name='password' placeholder="Enter Password" type="password" required />
-            <label htmlFor='re-password'>Re-Password</label>
-            {rePasswordField.errors &&
-                <ul className='error-list'>
-                    {rePasswordField.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <input onChange={e => setRePasswordField(prevState => ({ ...prevState, text: e.target.value}))} id='re-password' name='re-password' placeholder="Enter Re-Password" type="password" required />
-            {commonError.errors &&
-                <ul className='error-list'>
-                    {commonError.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <button onClick={register} type="button" className="auth-button">Register</button>
-            <p>Already have an account? <Link to="/login">Sign up.</Link></p>
+        <div className='auth-page register-page'>
+            <Header />
+            <div className='content'>
+                <div className='auth-block'>
+                    <AuthLogo />
+                    <p className='title'>Registration for CEPHEUS</p>
+                    {emailField.errors &&
+                        <ul className='error-list'>
+                            {emailField.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <input
+                        onChange={e => setEmailField(prevState => ({ ...prevState, text: e.target.value}))}
+                        id='email'
+                        name='email'
+                        placeholder="Email"
+                        type="email"
+                        required
+                    />
+                    {passwordField.errors &&
+                        <ul className='error-list'>
+                            {passwordField.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <input
+                        onChange={e => setPasswordField(prevState => ({ ...prevState, text: e.target.value}))}
+                        id='password'
+                        name='password'
+                        placeholder="Password"
+                        type="password"
+                        required
+                    />
+                    {rePasswordField.errors &&
+                        <ul className='error-list'>
+                            {rePasswordField.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <input
+                        onChange={e => setRePasswordField(prevState => ({ ...prevState, text: e.target.value}))}
+                        id='re-password'
+                        name='re-password'
+                        placeholder="Confirm Password"
+                        type="password"
+                        required
+                    />
+                    {commonError.errors &&
+                        <ul className='error-list'>
+                            {commonError.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <button onClick={register} type="button" className="auth-button">Register</button>
+                    <div className='info'>
+                        <div className='forgot'>
+                            <Link to="/login">Already have an account?</Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

@@ -115,7 +115,6 @@ const LoginPage = function() {
                             <Link to="/register">Create account</Link>
                         </div>
                     </div>
-                    {/* <p>Don't have an account yet? <Link to="/register">Sign up.</Link></p> */}
                 </div>
             </div>
         </div>
