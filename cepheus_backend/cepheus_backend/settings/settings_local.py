@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -248,3 +248,6 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+CEPHEUS_CSRF_TRUSTED_ORIGINS = os.environ.get('CEPHEUS_CSRF_TRUSTED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = [i.strip() for i in CEPHEUS_CSRF_TRUSTED_ORIGINS.split(',')]
