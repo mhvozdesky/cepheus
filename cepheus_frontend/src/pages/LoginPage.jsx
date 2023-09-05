@@ -2,6 +2,8 @@ import React, {useState, useContext} from "react";
 import {Link} from "react-router-dom";
 import {AuthContex} from "../contex/index";
 import axios from "axios";
+import Header from "../components/Header"
+import AuthLogo from "../components/UI/AuthLogo"
 
 
 const LoginPage = function() {
@@ -61,35 +63,60 @@ const LoginPage = function() {
     }
 
     return (
-        <div className='login-page'>
-            <p>Login Page</p>
-            <label htmlFor='email'>Email</label>
-            {emailField.errors &&
-                <ul className='error-list'>
-                    {emailField.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <input onChange={e => setEmailField(prevState => ({ ...prevState, text: e.target.value}))} id='email' name='email' placeholder="Enter Email" type="email" required />
-            <label htmlFor='password'>Password</label>
-            {passwordField.errors &&
-                <ul className='error-list'>
-                    {passwordField.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <input onChange={e => setPasswordField(prevState => ({ ...prevState, text: e.target.value}))} id='password' name='password' placeholder="Enter Password" type="password" required />
-            {commonError.errors &&
-                <ul className='error-list'>
-                    {commonError.errors.map((error, index) => 
-                        <li key={index}>{error}</li>
-                    )}
-                </ul>
-            }
-            <button onClick={login} type="button" className="auth-button">Login</button>
-            <p>Don't have an account yet? <Link to="/register">Sign up.</Link></p>
+        <div className='auth-page login-page'>
+            <Header />
+            <div className='content'>
+                <div className='auth-block'>
+                    <AuthLogo />
+                    <p className='title'>Welcome to CEPHEUS</p>
+                    {emailField.errors &&
+                        <ul className='error-list'>
+                            {emailField.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <input
+                        onChange={e => setEmailField(prevState => ({ ...prevState, text: e.target.value}))}
+                        id='email'
+                        name='email'
+                        placeholder="Email"
+                        type="email"
+                        required
+                    />
+                    {passwordField.errors &&
+                        <ul className='error-list'>
+                            {passwordField.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <input
+                        onChange={e => setPasswordField(prevState => ({ ...prevState, text: e.target.value}))}
+                        id='password'
+                        name='password'
+                        placeholder="Password"
+                        type="password"
+                        required
+                    />
+                    {commonError.errors &&
+                        <ul className='error-list'>
+                            {commonError.errors.map((error, index) => 
+                                <li key={index}>{error}</li>
+                            )}
+                        </ul>
+                    }
+                    <button onClick={login} type="button" className="auth-button">Login</button>
+                    <div className='info'>
+                        <div className='forgot'>
+                            <Link to="/forgot-password">Forgot password</Link>
+                        </div>
+                        <div className='create'>
+                            <Link to="/register">Create account</Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
