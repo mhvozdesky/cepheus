@@ -308,13 +308,83 @@ body {
   margin-left: 40px;
 }
 
-/* ########login########### */
-.login-page {
+/* ########auth########### */
+.auth-page {
+  background-color: #ECECEC;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 200px;
-  margin: auto;
 }
+
+.auth-page .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: auto;
+}
+
+.auth-page .auth-block {
+  width: 660px;
+  height: 559px;
+  background-color: #FFFFFF;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-page .auth-logo {
+  width: 64px;
+  height: 64px;
+  background-image: url("../../public/images/logo2.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 35px;
+}
+
+.auth-page .title {
+  margin-bottom: 23px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.auth-page .auth-block input, .auth-page .auth-block button {
+  width: 534px;
+  height: 55px;
+  border-radius: 15px;
+  background-color: #ECECEC;
+  border: none;
+  font-size: 24px;
+  margin: 10px 0 10px 0;
+  padding-left: 28px;
+}
+
+.auth-page .auth-block button {
+  background-color: #03AB78;
+  color: white;
+  font-weight: 700;
+}
+
+.auth-page .auth-block .info {
+  width: 534px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 24px;
+  color: #B2B0B0;
+  margin-top: 35px;
+}
+
+.auth-page .auth-block .info a {
+  text-decoration: none;
+  color: #B2B0B0;
+}
+
+.auth-page .error-list {
+  color: #db1313;
+}
+
 /* ################### */
 
 /* ########spiner########### */
