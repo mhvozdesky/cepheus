@@ -385,6 +385,11 @@ body {
   color: #db1313;
 }
 
+.forgot-page .auth-block .text {
+  padding: 10px;
+  text-align: center;
+}
+
 /* ################### */
 
 /* ########spiner########### */
