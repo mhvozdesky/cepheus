@@ -5,6 +5,7 @@ import Page404 from "../pages/Page404"
 import Login from "../pages/LoginPage"
 import ConfirmPassword from "../pages/ConfirmPassword"
 import Register from "../pages/Register"
+import ForgotPassword from "../pages/ForgotPassword"
 
 export const privateRoutes = [
     {path: '/orders', element: <OrdersPage/>, exact: true},
@@ -20,6 +21,7 @@ export const privateRoutes = [
 export const publicRoutes = [
     {path: '/login', element: <Login/>, exact: true},
     {path: '/register', element: <Register/>, exact: true},
+    {path: '/forgot-password', element: <ForgotPassword/>, exact: true},
     {path: '/confirm-password/:user_id/:token_obj', element: <ConfirmPassword/>, exact: true},
     {path: '*', element: <Navigate to="/login" replace />, exact: true}
 ]
