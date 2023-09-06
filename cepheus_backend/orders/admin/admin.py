@@ -11,6 +11,7 @@ class OrderGoodInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderGoodInline]
+    readonly_fields = ['created_at', 'modified_at']
 
     class Media:
         js = ('admin/custom_js/orders.js',)

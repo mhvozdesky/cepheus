@@ -36,10 +36,9 @@ class OrderListSerializer(serializers.ModelSerializer):
         return total_amount
 
 
-
-
 class OrderDetailSerializer(OrderListSerializer):
     goods = GoodInOrderSerializer(many=True, source='order_goods')
+    latest_editor = serializers.CharField(source='latest_editor.get_full_name', read_only=True)
 
     @transaction.atomic
     def set_order_goods(self, instance, goods):
