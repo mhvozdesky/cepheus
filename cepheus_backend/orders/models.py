@@ -71,6 +71,7 @@ class Order(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     place_of_delivery = models.CharField(max_length=300, blank=True, default='')
     latest_editor = models.ForeignKey(Account, blank=True, null=True, on_delete=models.SET_NULL, related_name='latest_editor_for')
+    customer_comment = models.TextField(blank=True, default='')
 
     def __str__(self):
         return f'{self.pk}'
