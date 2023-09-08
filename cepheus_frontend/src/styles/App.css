@@ -560,32 +560,32 @@ body {
 .order-detail-page .common-info .panel {
   display: flex;
   width: 100%;
-  height: 60px;
+  height: 80px;
 }
 
 .order-detail-page .common-info .panel select,
 .order-detail-page .common-info .panel label,
 .order-detail-page .common-info .panel input {
-  font-size: 12px;
+  font-size: 17px;
 }
 
 .order-detail-page .common-info .panel input,
 .order-detail-page .common-info .panel select {
-  height: 30px;
+  height: 37px;
 }
 
 .order-detail-page .common-info .panel .labeled-input.id {
-  width: 120px;
+  width: 160px;
 }
 
 .order-detail-page .common-info .panel .labeled-input.created_at,
 .order-detail-page .common-info .panel .labeled-input.modified_at {
-  width: 120px;
+  width: 160px;
 }
 
 .order-detail-page .common-info .panel .labeled-select.status,
 .order-detail-page .common-info .panel .labeled-select.payment_status {
-  width: 120px;
+  width: 160px;
 }
 
 .order-detail-page .common-info .panel .btn-set {
@@ -597,14 +597,14 @@ body {
 }
 
 .order-detail-page .common-info .panel .btn-set .button-delete {
-  width: 30px;
-  height: 30px;
+  width: 37px;
+  height: 37px;
 }
 
 .order-detail-page .common-info .panel .btn-set .button-delete {
   margin: 0 5px;
   position: relative;
-  top: 9px;
+  top: 11px;
 }
 
 /* ################### */
