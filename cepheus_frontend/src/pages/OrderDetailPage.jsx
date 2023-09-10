@@ -16,7 +16,7 @@ const OrderDetailPage = function() {
     const [someValue, setSomeValue] = useState(route_params.id)
     const [order, setOrder] = useState({})
     const [orderClear, setOrderClear] = useState({})
-    const [loadingOrder, setLoadingOrder] = useState(false)
+    const [loadingOrder, setLoadingOrder] = useState(true)
 
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
@@ -153,7 +153,88 @@ const OrderDetailPage = function() {
                     </div>
                 </div>
             </div>
-            <div className='goods-info'></div>
+            <div className='goods-info'>
+                <div className='table-block'>
+                    <table className='goods-table'>
+                        <thead>
+                            <tr>
+                                <th scope='col' className='checkbox-column col1'>
+                                    <div className='text'><span><input type='checkbox'/></span></div>
+                                </th>
+                                <th scope='col' className='id-good col2'>
+                                    <div className='text'>ID Товару</div>
+                                </th>
+                                <th scope='col' className='good_title col1'>
+                                    <div className='text'>Назва</div>
+                                </th>
+                                <th scope='col' className='vendor-code col2'>
+                                    <div className='text'>Артикул</div>
+                                </th>
+                                <th scope='col' className='price col1'>
+                                    <div className='text'>Ціна</div>
+                                </th>
+                                <th scope='col' className='quantity col2'>
+                                    <div className='text'>Кількість</div>
+                                </th>
+                                <th scope='col' className='amount col1'>
+                                    <div className='text'>Сума</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {order.goods.map((good, index) => 
+                                <tr key={index} className={`row${index}`}>
+                                    <td className='checkbox'>
+                                        <div className='text'><span><input type='checkbox'/></span></div>
+                                    </td>
+                                    <td className='id-good'>
+                                        <div className='text'>{good.good}</div>
+                                    </td>
+                                    <td className='good_title'>
+                                        <div className='text'>{good.good_title}</div>
+                                    </td>
+                                    <td className='vendor-code'>
+                                        <div className='text'>{good.vendor_code}</div>
+                                    </td>
+                                    <td className='price'>
+                                        <div className='text'>{good.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</div>
+                                    </td>
+                                    <td className='quantity'>
+                                        <div className='text'>{good.quantity}</div>
+                                    </td>
+                                    <td className='amount'>
+                                        <div className='text'>{good.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</div>
+                                    </td>
+                                </tr>
+                            )}
+                            <tr className='total-row' id='order_goods_total_row'>
+                                <td className='checkbox'>
+                                    <div className='text'></div>
+                                </td>
+                                <td className='id-good'>
+                                    <div className='text'>Всього</div>
+                                </td>
+                                <td className='good_title'>
+                                    <div className='text'></div>
+                                </td>
+                                <td className='vendor-code'>
+                                    <div className='text'></div>
+                                </td>
+                                <td className='price'>
+                                    <div className='text'></div>
+                                </td>
+                                <td className='quantity'>
+                                    <div className='text'></div>
+                                </td>
+                                <td className='amount'>
+                                    <div className='text'>{order.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div className='btn-block'></div>
+            </div>
             <div className='customer-info'></div>
             <div className='footer-block'></div>
         </div>
