@@ -1,23 +1,41 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 const LabeledInput = function(props) {
+    const [localValue, setLocalValue] = useState(props.value || "");
+
     var mainClassName = `labeled-input ${props.input_name}`
 
     if (props.control_elem) {
         mainClassName = mainClassName + ' is-control-elem'
     }
 
+    const changeHandle = (e) => {
+        if (props.index !== null) {
+            props.change(props.index, e.target.id, e.target.value)
+        } else {
+            props.change(e.target.id, e.target.value)
+        }
+        setLocalValue(props.value)
+    }
+
+    useEffect(() => {
+        setLocalValue(props.value);
+    }, [props.value]);
+
     return (
         <div className={mainClassName}>
-            <label htmlFor={props.input_name}>{props.label_text}</label>
+            {props.input_name !== '' && 
+                <label htmlFor={props.input_name}>{props.label_text}</label>
+            }
             <div className='content-block'>
                 <div className='text-wrapper'>
                     <input
-                        type="text"
+                        type={props.type}
                         id={props.input_name}
                         name={props.input_name}
-                        value={props.value}
-                        onChange={(e) => props.change(e.target.id, e.target.value)}
+                        value={localValue}
+                        onBlur={(e) => changeHandle(e)}
+                        onChange={(e) => setLocalValue(e.target.value)}
                         readOnly={props.readOnly}
                     />
                 </div>

@@ -31,12 +31,53 @@ const OrderDetailPage = function() {
     // }
 
     const changeFields = (field, value) => {
-        console.log(field)
-        console.log(value)
         setOrder(prevOrder => ({
             ...prevOrder,
             [field]: value
         }));
+    }
+
+    const normalizeFloatValue = (value, type) => {
+        const cleanedValue = value.replace(/\s+/g, '');
+        const numberValue = parseFloat(cleanedValue);
+        if (type == 'float') {
+            return Number(numberValue.toFixed(2)) || 0;
+        }
+
+        return parseInt(numberValue, 10) || 0;
+    };
+    
+    const changeTableFields = (index, field, value) => {
+        const float_fields = ['price', 'amount'];
+        const integer_fields = ['quantity'];
+
+        var updatedValue = null;
+
+        if (float_fields.includes(field)) {
+            var rawNum = normalizeFloatValue(value, 'float')
+            updatedValue = rawNum !== NaN ? rawNum : value
+        } else if (integer_fields.includes(field)) {
+            var rawNum = normalizeFloatValue(value, 'integer')
+            updatedValue = rawNum !== NaN ? rawNum : value
+        } else {
+            updatedValue = value
+        }
+    
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            goods: prevOrder.goods.map((item, i) => {
+                if (i !== index) return item;
+                return { ...item, [field]: updatedValue };
+            }),
+        }));
+    };
+    
+
+    const numberDisplay = (number, type) => {
+        if (type == 'float') {
+            return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+        }
+        return number
     }
 
     const getOrder = () => {
@@ -93,6 +134,8 @@ const OrderDetailPage = function() {
                     <LabeledInput
                         input_name='id'
                         label_text='Замовлення'
+                        type='text'
+                        index={null}
                         value={order.id}
                         change={changeFields}
                         control_elem={false}
@@ -101,6 +144,8 @@ const OrderDetailPage = function() {
                     <LabeledInput
                         input_name='created_at'
                         label_text='Створено'
+                        type='text'
+                        index={null}
                         value={order.id ? format(new Date(order.created_at), datePattern) : ''}
                         change={changeFields}
                         control_elem={false}
@@ -109,6 +154,8 @@ const OrderDetailPage = function() {
                     <LabeledInput
                         input_name='modified_at'
                         label_text='Оновлено'
+                        type='text'
+                        index={null}
                         value={order.id ? format(new Date(order.modified_at), datePattern) : ''}
                         change={changeFields}
                         control_elem={false}
@@ -143,10 +190,12 @@ const OrderDetailPage = function() {
                     <LabeledInput
                         input_name='responsible_display'
                         label_text='Відповідальний'
+                        type='text'
+                        index={null}
                         value={order.responsible_display}
                         change={changeFields}
                         control_elem={true}
-                        readOnly={true}
+                        readOnly={false}
                     />
                     <div className='btn-set'>
                         <ButtonDelete />
@@ -191,19 +240,64 @@ const OrderDetailPage = function() {
                                         <div className='text'>{good.good}</div>
                                     </td>
                                     <td className='good_title'>
-                                        <div className='text'>{good.good_title}</div>
+                                        <LabeledInput
+                                            input_name='good_title'
+                                            label_text=''
+                                            type='text'
+                                            index={index}
+                                            value={good.good_title}
+                                            change={changeTableFields}
+                                            control_elem={true}
+                                            readOnly={true}
+                                        />
                                     </td>
                                     <td className='vendor-code'>
-                                        <div className='text'>{good.vendor_code}</div>
+                                        <LabeledInput
+                                            input_name='vendor_code'
+                                            label_text=''
+                                            type='text'
+                                            index={index}
+                                            value={good.vendor_code}
+                                            change={changeTableFields}
+                                            control_elem={false}
+                                            readOnly={true}
+                                        />
                                     </td>
                                     <td className='price'>
-                                        <div className='text'>{good.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</div>
+                                        <LabeledInput
+                                            input_name='price'
+                                            label_text=''
+                                            type='text'
+                                            index={index}
+                                            value={numberDisplay(good.price, 'float')}
+                                            change={changeTableFields}
+                                            control_elem={false}
+                                            readOnly={false}
+                                        />
                                     </td>
                                     <td className='quantity'>
-                                        <div className='text'>{good.quantity}</div>
+                                        <LabeledInput
+                                            input_name='quantity'
+                                            label_text=''
+                                            type='number'
+                                            index={index}
+                                            value={numberDisplay(good.quantity, 'integer')}
+                                            change={changeTableFields}
+                                            control_elem={false}
+                                            readOnly={false}
+                                        />
                                     </td>
                                     <td className='amount'>
-                                        <div className='text'>{good.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</div>
+                                        <LabeledInput
+                                            input_name='amount'
+                                            label_text=''
+                                            type='text'
+                                            index={index}
+                                            value={numberDisplay(good.amount, 'float')}
+                                            change={changeTableFields}
+                                            control_elem={false}
+                                            readOnly={true}
+                                        />
                                     </td>
                                 </tr>
                             )}
