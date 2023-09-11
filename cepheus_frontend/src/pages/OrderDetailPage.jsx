@@ -6,6 +6,7 @@ import PreLoader from "../components/UI/PreLoader"
 import LabeledInput from "../components/UI/LabeledInput"
 import LabeledSelect from "../components/UI/LabeledSelect"
 import LabeledDate from "../components/UI/LabeledDate"
+import OrderTableButton from "../components/UI/OrderTableButton"
 import ButtonDelete from "../components/UI/ButtonDelete"
 
 const OrderDetailPage = function() {
@@ -327,7 +328,12 @@ const OrderDetailPage = function() {
                         </tbody>
                     </table>
                 </div>
-                <div className='btn-block'></div>
+                <div className='btn-block'>
+                    <OrderTableButton 
+                        name='add_good'
+                        value='Додати товар'
+                    />
+                </div>
             </div>
             <div className='customer-info'></div>
             <div className='footer-block'></div>
