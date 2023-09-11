@@ -748,6 +748,59 @@ body {
   display: inline;
 }
 
+.order-detail-page .customer-info {
+  width: 1198px;
+  height: 364px;
+  margin-top: 50px;
+}
+
+.order-info-customer {
+  width: 100%;
+  height: 100%;
+  background-color: #F8F8F8;
+}
+
+.order-info-customer .local-header {
+  width: 100%;
+  height: 44px;
+  background-color: #35BC93;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  border-radius: 25px 25px 0 0;
+  padding: 0 40px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+#order_customer_spinner {
+  position: relative;
+}
+
+.order-info-customer .local-content {
+  display: flex;
+  height: 320px;
+}
+
+.order-info-customer .local-content .row1 {
+  height: 100px;
+  display: flex;
+}
+
+.order-info-customer .local-content .row1 .labeled-input.email {
+  width: 340px;
+}
+
+.order-info-customer .local-content .row1 .labeled-input .content-block,
+.order-info-customer .local-content .row1 .labeled-input .content-block .text-wrapper,
+.order-info-customer .local-content .row1 .labeled-input .content-block .text-wrapper input {
+  width: 100%;
+}
+
+.order-info-customer .local-content .row1 .labeled-input input {
+  height: 40px;
+}
+
 /* ################### */
 
 /* ########LabeledInput########### */

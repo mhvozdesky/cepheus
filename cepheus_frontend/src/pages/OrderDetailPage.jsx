@@ -8,6 +8,7 @@ import LabeledSelect from "../components/UI/LabeledSelect"
 import LabeledDate from "../components/UI/LabeledDate"
 import OrderTableButton from "../components/UI/OrderTableButton"
 import ButtonDelete from "../components/UI/ButtonDelete"
+import OrderInfoCustomer from "../components/OrderInfoCustomer"
 
 const OrderDetailPage = function() {
     const route_params = useParams();
@@ -335,7 +336,11 @@ const OrderDetailPage = function() {
                     />
                 </div>
             </div>
-            <div className='customer-info'></div>
+            <div className='customer-info'>
+                <OrderInfoCustomer 
+                    customer_id={order.customer}
+                />
+            </div>
             <div className='footer-block'></div>
         </div>
     );
