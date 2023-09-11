@@ -758,6 +758,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: #F8F8F8;
+  border-radius: 25px 25px 0 0;
 }
 
 .order-info-customer .local-header {
@@ -779,7 +780,9 @@ body {
 
 .order-info-customer .local-content {
   display: flex;
+  flex-direction: column;
   height: 320px;
+  width: 100%;
 }
 
 .order-info-customer .local-content .row1 {
@@ -799,6 +802,23 @@ body {
 
 .order-info-customer .local-content .row1 .labeled-input input {
   height: 40px;
+}
+
+.order-info-customer .local-content .row2 {
+  display: flex;
+  margin-top: 25px;
+  padding: 0 10px;
+  justify-content: space-between;
+}
+
+.order-info-customer .local-content .row2 .labeled-text #place_of_delivery {
+  width: 608px;
+  height: 140px;
+}
+
+.order-info-customer .local-content .row2 .labeled-text #customer_comment {
+  width: 489px;
+  height: 140px;
 }
 
 /* ################### */
@@ -898,6 +918,30 @@ body {
 /* ########ButtonDelete########### */
 .button-delete {
   cursor: pointer;
+}
+
+/* ################### */
+
+/* ########LabeledText########### */
+.labeled-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.labeled-text label {
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+
+.labeled-text textarea {
+  border: none;
+  border-radius: 15px;
+  background-color: #ECECEC;
+  padding: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
 }
 
 /* ################### */

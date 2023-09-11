@@ -339,6 +339,8 @@ const OrderDetailPage = function() {
             <div className='customer-info'>
                 <OrderInfoCustomer 
                     customer_id={order.customer}
+                    place_of_delivery={order.place_of_delivery}
+                    customer_comment={order.customer_comment}
                 />
             </div>
             <div className='footer-block'></div>

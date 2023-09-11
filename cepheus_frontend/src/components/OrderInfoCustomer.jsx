@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import PreLoader from "./UI/PreLoader"
 import LabeledInput from "./UI/LabeledInput"
+import LabeledText from "./UI/LabeledText"
 
 const OrderInfoCustomer = function(props) {
     const [loadingCustomer, setLoadingCustomer] = useState(true)
@@ -88,7 +89,22 @@ const OrderInfoCustomer = function(props) {
                     readOnly={true}
                 />
                 </div>
-                <div className='row2'></div>
+                <div className='row2'>
+                    <LabeledText 
+                        name='place_of_delivery'
+                        label_text='Доставка'
+                        value={props.place_of_delivery}
+                        readOnly={false}
+                        rows='15'
+                    />
+                    <LabeledText 
+                        name='customer_comment'
+                        label_text='Коментар до замовлення'
+                        value={props.customer_comment}
+                        readOnly={false}
+                        rows='15'
+                    />
+                </div>
             </div>
         </div>
     );
