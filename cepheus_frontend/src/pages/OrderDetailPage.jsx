@@ -7,6 +7,7 @@ import LabeledInput from "../components/UI/LabeledInput"
 import LabeledSelect from "../components/UI/LabeledSelect"
 import LabeledDate from "../components/UI/LabeledDate"
 import OrderTableButton from "../components/UI/OrderTableButton"
+import OrderFooterBtn from "../components/UI/OrderFooterBtn"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import OrderInfoCustomer from "../components/OrderInfoCustomer"
 
@@ -343,7 +344,16 @@ const OrderDetailPage = function() {
                     customer_comment={order.customer_comment}
                 />
             </div>
-            <div className='footer-block'></div>
+            <div className='footer-block'>
+                <OrderFooterBtn
+                    text='Зберегти'
+                    name='save'
+                />
+                <OrderFooterBtn
+                    text='Відмінити'
+                    name='cancel'
+                />
+            </div>
         </div>
     );
 };

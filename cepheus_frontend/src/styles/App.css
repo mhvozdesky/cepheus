@@ -821,6 +821,30 @@ body {
   height: 140px;
 }
 
+.order-detail-page .footer-block {
+  display: flex;
+  justify-content: end;
+  height: 50px;
+  width: 1198px;
+  margin-top: 50px;
+}
+
+.order-detail-page .footer-block .order-footer-btn {
+  width: 210px;
+  height: 50px;
+  color: #FFFFFF;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.order-detail-page .footer-block .order-footer-btn.save {
+  background-color: #03AB78;
+}
+
+.order-detail-page .footer-block .order-footer-btn.cancel {
+  background-color: #CB3730;
+}
+
 /* ################### */
 
 /* ########LabeledInput########### */
@@ -942,6 +966,19 @@ body {
   padding: 10px;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
+}
+
+/* ################### */
+
+/* ########OrderFooterBtn########### */
+
+.order-footer-btn {
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+  cursor: pointer;
 }
 
 /* ################### */
