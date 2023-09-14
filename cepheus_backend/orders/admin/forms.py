@@ -6,7 +6,7 @@ from ..models import Good
 
 
 class GoodAdminForm(forms.ModelForm):
-    description = forms.CharField(widget=CKEditorWidget())
+    description = forms.CharField(widget=CKEditorWidget(), required=False)
 
     class Meta:
         model = Good
