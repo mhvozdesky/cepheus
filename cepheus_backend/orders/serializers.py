@@ -77,6 +77,11 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class GoodSerializer(serializers.ModelSerializer):
+    category_display = serializers.SerializerMethodField()
+
     class Meta:
         model = Good
         fields = '__all__'
+
+    def get_category_display(self, obj):
+        return obj.category.title if obj.category else ''
