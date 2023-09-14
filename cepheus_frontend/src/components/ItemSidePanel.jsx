@@ -7,7 +7,7 @@ const ItemSidePanel = function(props) {
     const class_name = 'item-side-panel' + ' ' + props.class_name;
 
     return (
-        <div className={class_name} onClick={() => router(`/orders`)} >
+        <div className={class_name} onClick={() => router(`/${props.url}`)} >
             <div className='image-wrapper'>
                 <div className='image'></div>
             </div>
