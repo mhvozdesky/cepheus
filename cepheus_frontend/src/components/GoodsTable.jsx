@@ -1,4 +1,5 @@
 import React from "react";
+import GoodTableRow from "./GoodTableRow"
 
 const GoodsTable = function(props) {
     return (
@@ -26,7 +27,11 @@ const GoodsTable = function(props) {
                     <div className='text'>Залишок</div>
                 </div>
             </div>
-            <div className='table-body'></div>
+            <div className='table-body'>
+                {props.goods.map((good, index) => 
+                    <GoodTableRow key={good.id} good={good} index={index} />
+                )}
+            </div>
         </div>
     );
 };

@@ -1020,6 +1020,10 @@ body {
 
 /* ########GoodsTable########### */
 
+.goods-table {
+  width: 1305px;
+}
+
 .goods-table .table-header {
   width: 100%;
   height: 50px;
@@ -1044,37 +1048,44 @@ body {
   background-color: #03ab78cc;
 }
 
+.goods-table .table-body .row .checkbox,
 .goods-table .table-header .col.checkbox-column {
   width: 50px;
   flex: none;
   border-radius: 15px 0 0 0;
 }
 
+.goods-table .table-body .row .id,
 .goods-table .table-header .col.good-id {
   width: 140px;
   flex: none;
 }
 
+.goods-table .table-body .row .title,
 .goods-table .table-header .col.title {
   width: 435px;
   flex: none;
 }
 
+.goods-table .table-body .row .vendor_code,
 .goods-table .table-header .col.vendor-code {
   width: 140px;
   flex: none;
 }
 
+.goods-table .table-body .row .category_display,
 .goods-table .table-header .col.category {
   width: 210px;
   flex: none;
 }
 
+.goods-table .table-body .row .price,
 .goods-table .table-header .col.price {
   width: 165px;
   flex: none;
 }
 
+.goods-table .table-body .row .stock_balance,
 .goods-table .table-header .col.stock-balance {
   width: 165px;
   flex: none;
@@ -1084,6 +1095,26 @@ body {
 .goods-table .table-header .col .text {
   font-size: 17px;
   font-weight: 700;
+}
+
+.goods-table .table-body .row {
+  display: flex;
+}
+
+.goods-table .table-body .row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.goods-table .table-body .row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.goods-table .table-body .row .row-item {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
 }
 
 /* ################### */
