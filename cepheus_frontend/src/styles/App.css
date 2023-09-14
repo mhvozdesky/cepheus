@@ -996,3 +996,94 @@ body {
 }
 
 /* ################### */
+
+/* ########GoodsPage########### */
+
+.goods-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.goods-page .page-header {
+  height: 80px;
+}
+
+.goods-page .page-content {
+  flex: auto;
+}
+
+.goods-page .page-footer {
+  height: 48px;
+}
+
+/* ################### */
+
+/* ########GoodsTable########### */
+
+.goods-table .table-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.goods-table .table-header .col {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  height: 100%;
+}
+
+.goods-table .table-header .col.col1 {
+  background-color: #03AB78;
+}
+.goods-table .table-header .col.col2 {
+  background-color: #03ab78cc;
+}
+
+.goods-table .table-header .col.checkbox-column {
+  width: 50px;
+  flex: none;
+  border-radius: 15px 0 0 0;
+}
+
+.goods-table .table-header .col.good-id {
+  width: 140px;
+  flex: none;
+}
+
+.goods-table .table-header .col.title {
+  width: 435px;
+  flex: none;
+}
+
+.goods-table .table-header .col.vendor-code {
+  width: 140px;
+  flex: none;
+}
+
+.goods-table .table-header .col.category {
+  width: 210px;
+  flex: none;
+}
+
+.goods-table .table-header .col.price {
+  width: 165px;
+  flex: none;
+}
+
+.goods-table .table-header .col.stock-balance {
+  width: 165px;
+  flex: none;
+  border-radius: 0 15px 0 0;
+}
+
+.goods-table .table-header .col .text {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* ################### */
