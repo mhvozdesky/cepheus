@@ -121,6 +121,10 @@ body {
   background-image: url("../../public/images/side_panel/goods.svg");
 }
 
+.side-employees .image {
+  background-image: url("../../public/images/side_panel/employees.svg");
+}
+
 .work-space {
   flex-grow: 1;
   background-color: white;
