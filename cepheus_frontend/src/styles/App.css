@@ -839,10 +839,20 @@ body {
 
 .order-detail-page .footer-block {
   display: flex;
-  justify-content: end;
+  margin-top: 50px;
   height: 50px;
   width: 1198px;
-  margin-top: 50px;
+  justify-content: space-between;
+}
+
+.order-detail-page .footer-block .notes {
+  display: flex;
+  align-items: center;
+}
+
+.order-detail-page .footer-block .btn-block {
+  display: flex;
+  justify-content: end;
 }
 
 .order-detail-page .footer-block .order-footer-btn {
