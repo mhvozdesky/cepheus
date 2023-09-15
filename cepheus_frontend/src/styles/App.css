@@ -1008,6 +1008,27 @@ body {
 
 .goods-page .page-header {
   height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.goods-page .page-header .button-add,
+.goods-page .page-header .button-export,
+.goods-page .page-header .button-delete {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.goods-page .page-header .labeled-search {
+  height: 100%;
+  width: 155px;
+  margin: 0 10px;
+}
+
+.goods-page .page-header .labeled-search input {
+  height: 37px;
+  font-size: 17px;
 }
 
 .goods-page .page-content {
@@ -1117,6 +1138,50 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 17px;
+}
+
+/* ################### */
+
+/* ########LabeledSearch########### */
+
+.labeled-search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.labeled-search .label {
+  margin-bottom: 5px;
+}
+
+.labeled-search .search-block {
+  display: flex;
+  background-color: #ECECEC;
+  border-radius: 11px;
+}
+
+.labeled-search input {
+  width: 100%;
+  border: none;
+  background-color: #ECECEC;
+  padding: 0 5px;
+  border-radius: 11px 0 0 11px;
+}
+
+.labeled-search input:focus-visible {
+  outline: none;
+}
+
+.labeled-search .search-block .btn {
+  width: 30px;
+  height: 100%;
+  cursor: pointer;
+
+  background-image: url("../../public/images/search.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* ################### */

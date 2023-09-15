@@ -3,7 +3,11 @@ import axios from "axios";
 import PreLoader from "../components/UI/PreLoader"
 import GoodsTable from "../components/GoodsTable"
 import SelectOption from "../components/UI/SelectOption"
+import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
+import ButtonAdd from "../components/UI/ButtonAdd"
+import ButtonExport from "../components/UI/ButtonExport"
+import ButtonDelete from "../components/UI/ButtonDelete"
 
 const GoodsPage = function() {
     const pageSizeDefault = 25;
@@ -101,7 +105,23 @@ const GoodsPage = function() {
 
     return (
         <div className='page goods-page'>
-            <div className='page-header'>1</div>
+            <div className='page-header'>
+                <LabeledSearch
+                    name='search-id'
+                    btn_text='ID'
+                />
+                <LabeledSearch
+                    name='search-title'
+                    btn_text='Назва'
+                />
+                <LabeledSearch
+                    name='search-vendor-code'
+                    btn_text='Артикул'
+                />
+                <ButtonAdd />
+                <ButtonExport />
+                <ButtonDelete />
+            </div>
             <div className='page-content'>
                 <GoodsTable 
                     goods={goods}
