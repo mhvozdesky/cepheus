@@ -179,6 +179,7 @@ body {
   height: 30px;
 }
 
+.goods-page .ceph-select,
 .order-page .ceph-select {
   width: 184px;
   height: 37px;
@@ -194,6 +195,7 @@ body {
   margin-top: 10px;
 }
 
+.goods-page .page-footer .console,
 .order-page .page-footer .console {
   height: 48px;
   width: 100%;
