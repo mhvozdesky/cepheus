@@ -73,11 +73,22 @@ body {
   margin-top: 35px;
 }
 
+.side-panel .blank-block {
+  width: 100%;
+  height: 25px;
+}
+
 .item-side-panel {
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  margin-top: 25px;
+  margin-bottom: 10px;
+  padding: 4px 0;
+  border-radius: 11px;
+}
+
+.item-side-panel:hover {
+  background-color: #c9c9c9;
 }
 
 .item-side-panel .title-wrapper .title {
@@ -104,7 +115,10 @@ body {
 
 .side-orders .image {
   background-image: url("../../public/images/side_panel/orders.svg");
-  
+}
+
+.side-goods .image {
+  background-image: url("../../public/images/side_panel/goods.svg");
 }
 
 .work-space {
@@ -165,6 +179,7 @@ body {
   height: 30px;
 }
 
+.goods-page .ceph-select,
 .order-page .ceph-select {
   width: 184px;
   height: 37px;
@@ -180,6 +195,7 @@ body {
   margin-top: 10px;
 }
 
+.goods-page .page-footer .console,
 .order-page .page-footer .console {
   height: 48px;
   width: 100%;
@@ -979,6 +995,193 @@ body {
   align-items: center;
   margin: 0 10px;
   cursor: pointer;
+}
+
+/* ################### */
+
+/* ########GoodsPage########### */
+
+.goods-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.goods-page .page-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.goods-page .page-header .button-add,
+.goods-page .page-header .button-export,
+.goods-page .page-header .button-delete {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.goods-page .page-header .labeled-search {
+  height: 100%;
+  width: 155px;
+  margin: 0 10px;
+}
+
+.goods-page .page-header .labeled-search input {
+  height: 37px;
+  font-size: 17px;
+}
+
+.goods-page .page-content {
+  flex: auto;
+}
+
+.goods-page .page-footer {
+  height: 48px;
+}
+
+/* ################### */
+
+/* ########GoodsTable########### */
+
+.goods-table {
+  width: 1305px;
+}
+
+.goods-table .table-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.goods-table .table-header .col {
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  height: 100%;
+}
+
+.goods-table .table-header .col.col1 {
+  background-color: #03AB78;
+}
+.goods-table .table-header .col.col2 {
+  background-color: #03ab78cc;
+}
+
+.goods-table .table-body .row .checkbox,
+.goods-table .table-header .col.checkbox-column {
+  width: 50px;
+  flex: none;
+  border-radius: 15px 0 0 0;
+}
+
+.goods-table .table-body .row .id,
+.goods-table .table-header .col.good-id {
+  width: 140px;
+  flex: none;
+}
+
+.goods-table .table-body .row .title,
+.goods-table .table-header .col.title {
+  width: 435px;
+  flex: none;
+}
+
+.goods-table .table-body .row .vendor_code,
+.goods-table .table-header .col.vendor-code {
+  width: 140px;
+  flex: none;
+}
+
+.goods-table .table-body .row .category_display,
+.goods-table .table-header .col.category {
+  width: 210px;
+  flex: none;
+}
+
+.goods-table .table-body .row .price,
+.goods-table .table-header .col.price {
+  width: 165px;
+  flex: none;
+}
+
+.goods-table .table-body .row .stock_balance,
+.goods-table .table-header .col.stock-balance {
+  width: 165px;
+  flex: none;
+  border-radius: 0 15px 0 0;
+}
+
+.goods-table .table-header .col .text {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.goods-table .table-body .row {
+  display: flex;
+}
+
+.goods-table .table-body .row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.goods-table .table-body .row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.goods-table .table-body .row .row-item {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+}
+
+/* ################### */
+
+/* ########LabeledSearch########### */
+
+.labeled-search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.labeled-search .label {
+  margin-bottom: 5px;
+}
+
+.labeled-search .search-block {
+  display: flex;
+  background-color: #ECECEC;
+  border-radius: 11px;
+}
+
+.labeled-search input {
+  width: 100%;
+  border: none;
+  background-color: #ECECEC;
+  padding: 0 5px;
+  border-radius: 11px 0 0 11px;
+}
+
+.labeled-search input:focus-visible {
+  outline: none;
+}
+
+.labeled-search .search-block .btn {
+  width: 30px;
+  height: 100%;
+  cursor: pointer;
+
+  background-image: url("../../public/images/search.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* ################### */
