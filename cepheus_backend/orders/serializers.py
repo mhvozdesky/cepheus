@@ -38,7 +38,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 class OrderDetailSerializer(OrderListSerializer):
     goods = GoodInOrderSerializer(many=True, source='order_goods')
-    latest_editor = serializers.CharField(source='latest_editor.get_full_name', read_only=True)
+    latest_editor = serializers.SerializerMethodField()
 
     @transaction.atomic
     def set_order_goods(self, instance, goods):
@@ -62,6 +62,9 @@ class OrderDetailSerializer(OrderListSerializer):
         if goods is not None:
             self.set_order_goods(instance, goods)
         return instance
+
+    def get_latest_editor(self, obj):
+        return obj.latest_editor.get_full_name if obj.latest_editor else 'auto'
 
 
 class CategorySerializer(serializers.ModelSerializer):
