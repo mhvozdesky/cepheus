@@ -345,14 +345,19 @@ const OrderDetailPage = function() {
                 />
             </div>
             <div className='footer-block'>
-                <OrderFooterBtn
-                    text='Зберегти'
-                    name='save'
-                />
-                <OrderFooterBtn
-                    text='Відмінити'
-                    name='cancel'
-                />
+                <div className='notes'>
+                    <div className='text1'>{`Останній редактор: ${order.latest_editor}`}</div>
+                </div>
+                <div className='btn-block'>
+                    <OrderFooterBtn
+                        text='Зберегти'
+                        name='save'
+                    />
+                    <OrderFooterBtn
+                        text='Відмінити'
+                        name='cancel'
+                    />
+                </div>
             </div>
         </div>
     );
