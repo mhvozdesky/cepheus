@@ -111,7 +111,32 @@ const EmployeesList = function() {
                     employees={employees}
                 />
             </div>
-            <div className='page-footer'></div>
+            <div className='page-footer'>
+                <div className='console'>
+                    <PaginationPanel
+                        next={next}
+                        prev={prev}
+                        pageSize={pageSize}
+                        page={page}
+                        lastPage={lastPage}
+                        change_page={change_page}
+                    />
+                    <SelectOption
+                        class_name='select-onPage'
+                        id='onPage'
+                        defaultValue=""
+                        pageSize={pageSize}
+                        change_page_size={change_page_size}
+                        options={[
+                            {value: 25, name: "25"},
+                            {value: 50, name: "50"},
+                            {value: 100, name: "100"},
+                            {value: 250, name: "250"},
+                            {value: 500, name: "500"}
+                        ]}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

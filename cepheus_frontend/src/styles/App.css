@@ -183,6 +183,7 @@ body {
   height: 30px;
 }
 
+.employees-page .ceph-select,
 .goods-page .ceph-select,
 .order-page .ceph-select {
   width: 184px;
@@ -199,6 +200,7 @@ body {
   margin-top: 10px;
 }
 
+.employees-page .page-footer .console,
 .goods-page .page-footer .console,
 .order-page .page-footer .console {
   height: 48px;
@@ -1212,6 +1214,11 @@ body {
 /* ################### */
 
 /* ########EmployeesList########### */
+
+.employees-page {
+  display: flex;
+  flex-direction: column;
+}
 
 .employees-table {
   width: 1175px;
