@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import PreLoader from "../components/UI/PreLoader"
-import EmployeesTable from "../components/EmployeesTable"
+import CategoriesTable from "../components/CategoriesTable"
 import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
-import ButtonAdd from "../components/UI/ButtonAdd"
-import ButtonExport from "../components/UI/ButtonExport"
-import ButtonDelete from "../components/UI/ButtonDelete"
 
 const CategoriesPage = function() {
     const pageSizeDefault = 25;
@@ -105,9 +102,47 @@ const CategoriesPage = function() {
 
     return (
         <div className='page categories-page'>
-            <div className='page-header'></div>
-            <div className='page-content'></div>
-            <div className='page-footer'></div>
+            <div className='page-header'>
+                <LabeledSearch
+                    name='search-id'
+                    btn_text='ID'
+                />
+                <LabeledSearch
+                    name='search-title'
+                    btn_text="Назва"
+                />
+            </div>
+            <div className='page-content'>
+                <CategoriesTable
+                    categories={categories}
+                />
+            </div>
+            <div className='page-footer'>
+                <div className='console'>
+                    <PaginationPanel
+                        next={next}
+                        prev={prev}
+                        pageSize={pageSize}
+                        page={page}
+                        lastPage={lastPage}
+                        change_page={change_page}
+                    />
+                    <SelectOption
+                        class_name='select-onPage'
+                        id='onPage'
+                        defaultValue=""
+                        pageSize={pageSize}
+                        change_page_size={change_page_size}
+                        options={[
+                            {value: 25, name: "25"},
+                            {value: 50, name: "50"},
+                            {value: 100, name: "100"},
+                            {value: 250, name: "250"},
+                            {value: 500, name: "500"}
+                        ]}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

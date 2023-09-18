@@ -5,9 +5,6 @@ import CustomerTable from "../components/CustomerTable"
 import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
-import ButtonAdd from "../components/UI/ButtonAdd"
-import ButtonExport from "../components/UI/ButtonExport"
-import ButtonDelete from "../components/UI/ButtonDelete"
 
 const CustomersPage = function() {
     const pageSizeDefault = 25;
