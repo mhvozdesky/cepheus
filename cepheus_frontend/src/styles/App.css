@@ -129,6 +129,10 @@ body {
   background-image: url("../../public/images/side_panel/customer.svg");
 }
 
+.side-categories .image {
+  background-image: url("../../public/images/side_panel/category.svg");
+}
+
 .work-space {
   flex-grow: 1;
   background-color: white;
