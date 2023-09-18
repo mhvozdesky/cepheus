@@ -105,7 +105,20 @@ const EmployeesList = function() {
 
     return (
         <div className='page employees-page'>
-            <div className='page-header'></div>
+            <div className='page-header'>
+                <LabeledSearch
+                    name='search-id'
+                    btn_text='ID'
+                />
+                <LabeledSearch
+                    name='search-full-name'
+                    btn_text="Ім'я"
+                />
+                <LabeledSearch
+                    name='search-email'
+                    btn_text='Email'
+                />
+            </div>
             <div className='page-content'>
                 <EmployeesTable 
                     employees={employees}

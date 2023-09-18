@@ -1037,12 +1037,14 @@ body {
   height: 30px;
 }
 
+.employees-page .page-header .labeled-search,
 .goods-page .page-header .labeled-search {
   height: 100%;
   width: 155px;
   margin: 0 10px;
 }
 
+.employees-page .page-header .labeled-search input,
 .goods-page .page-header .labeled-search input {
   height: 37px;
   font-size: 17px;
