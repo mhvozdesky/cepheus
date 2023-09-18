@@ -125,6 +125,10 @@ body {
   background-image: url("../../public/images/side_panel/employees.svg");
 }
 
+.side-customers .image {
+  background-image: url("../../public/images/side_panel/customer.svg");
+}
+
 .work-space {
   flex-grow: 1;
   background-color: white;
@@ -183,6 +187,7 @@ body {
   height: 30px;
 }
 
+.customers-page .ceph-select,
 .employees-page .ceph-select,
 .goods-page .ceph-select,
 .order-page .ceph-select {
@@ -200,6 +205,7 @@ body {
   margin-top: 10px;
 }
 
+.customers-page .page-footer .console,
 .employees-page .page-footer .console,
 .goods-page .page-footer .console,
 .order-page .page-footer .console {
@@ -1017,11 +1023,13 @@ body {
 
 /* ########GoodsPage########### */
 
+.customers-page,
 .goods-page {
   display: flex;
   flex-direction: column;
 }
 
+.customers-page .page-header,
 .employees-page .page-header,
 .goods-page .page-header {
   height: 80px;
@@ -1037,6 +1045,7 @@ body {
   height: 30px;
 }
 
+.customers-page .page-header .labeled-search,
 .employees-page .page-header .labeled-search,
 .goods-page .page-header .labeled-search {
   height: 100%;
@@ -1044,17 +1053,20 @@ body {
   margin: 0 10px;
 }
 
+.customers-page .page-header .labeled-search input,
 .employees-page .page-header .labeled-search input,
 .goods-page .page-header .labeled-search input {
   height: 37px;
   font-size: 17px;
 }
 
+.customers-page .page-content,
 .employees-page .page-content,
 .goods-page .page-content {
   flex: auto;
 }
 
+.customers-page .page-footer,
 .employees-page .page-footer,
 .goods-page .page-footer {
   height: 48px;
@@ -1068,6 +1080,7 @@ body {
   width: 1305px;
 }
 
+.customer-table .table-header,
 .employees-table .table-header,
 .goods-table .table-header {
   width: 100%;
@@ -1077,6 +1090,7 @@ body {
   align-items: center;
 }
 
+.customer-table .table-header .col,
 .employees-table .table-header .col,
 .goods-table .table-header .col {
   flex: auto;
@@ -1087,11 +1101,13 @@ body {
   height: 100%;
 }
 
+.customer-table .table-header .col.col1,
 .employees-table .table-header .col.col1,
 .goods-table .table-header .col.col1 {
   background-color: #03AB78;
 }
 
+.customer-table .table-header .col.col2,
 .employees-table .table-header .col.col2,
 .goods-table .table-header .col.col2 {
   background-color: #03ab78cc;
@@ -1150,16 +1166,19 @@ body {
   display: flex;
 }
 
-.employees-table .table-body .row:nth-child(odd) ,
+.customer-table .table-body .row:nth-child(odd),
+.employees-table .table-body .row:nth-child(odd),
 .goods-table .table-body .row:nth-child(odd) {
   background-color: #ffffff;
 }
 
+.customer-table .table-body .row:nth-child(even),
 .employees-table .table-body .row:nth-child(even),
 .goods-table .table-body .row:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+.customer-table .table-body .row .row-item,
 .employees-table .table-body .row .row-item,
 .goods-table .table-body .row .row-item {
   height: 50px;
@@ -1222,14 +1241,18 @@ body {
   flex-direction: column;
 }
 
+.customer-table, 
 .employees-table {
   width: 1175px;
 }
 
+.customer-table .table-body .row,
 .employees-table .table-body .row {
   display: flex;
 }
 
+.customer-table .table-body .row .checkbox,
+.customer-table .table-header .col.checkbox-column, 
 .employees-table .table-body .row .checkbox,
 .employees-table .table-header .col.checkbox-column {
   width: 50px;
@@ -1237,24 +1260,32 @@ body {
   border-radius: 15px 0 0 0;
 }
 
+.customer-table .table-body .row .id,
+.customer-table .table-header .col.employee-id,
 .employees-table .table-body .row .id,
 .employees-table .table-header .col.employee-id {
   width: 50px;
   flex: none;
 }
 
+.customer-table .table-body .row .full-name,
+.customer-table .table-header .col.full-name,
 .employees-table .table-body .row .full-name,
 .employees-table .table-header .col.full-name {
   width: 435px;
   flex: none;
 }
 
+.customer-table .table-body .row .email,
+.customer-table .table-header .col.email,
 .employees-table .table-body .row .email,
 .employees-table .table-header .col.email {
   width: 370px;
   flex: none;
 }
 
+.customer-table .table-body .row .phone,
+.customer-table .table-header .col.phone,
 .employees-table .table-body .row .phone,
 .employees-table .table-header .col.phone {
   width: 270px;
