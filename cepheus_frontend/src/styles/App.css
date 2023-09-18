@@ -187,6 +187,7 @@ body {
   height: 30px;
 }
 
+.customers-page .ceph-select,
 .employees-page .ceph-select,
 .goods-page .ceph-select,
 .order-page .ceph-select {
@@ -204,6 +205,7 @@ body {
   margin-top: 10px;
 }
 
+.customers-page .page-footer .console,
 .employees-page .page-footer .console,
 .goods-page .page-footer .console,
 .order-page .page-footer .console {
@@ -1021,6 +1023,7 @@ body {
 
 /* ########GoodsPage########### */
 
+.customers-page,
 .goods-page {
   display: flex;
   flex-direction: column;
@@ -1042,6 +1045,7 @@ body {
   height: 30px;
 }
 
+.customers-page .page-header .labeled-search,
 .employees-page .page-header .labeled-search,
 .goods-page .page-header .labeled-search {
   height: 100%;
@@ -1049,6 +1053,7 @@ body {
   margin: 0 10px;
 }
 
+.customers-page .page-header .labeled-search input,
 .employees-page .page-header .labeled-search input,
 .goods-page .page-header .labeled-search input {
   height: 37px;
