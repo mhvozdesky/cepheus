@@ -121,6 +121,10 @@ body {
   background-image: url("../../public/images/side_panel/goods.svg");
 }
 
+.side-employees .image {
+  background-image: url("../../public/images/side_panel/employees.svg");
+}
+
 .work-space {
   flex-grow: 1;
   background-color: white;
@@ -179,6 +183,7 @@ body {
   height: 30px;
 }
 
+.employees-page .ceph-select,
 .goods-page .ceph-select,
 .order-page .ceph-select {
   width: 184px;
@@ -195,6 +200,7 @@ body {
   margin-top: 10px;
 }
 
+.employees-page .page-footer .console,
 .goods-page .page-footer .console,
 .order-page .page-footer .console {
   height: 48px;
@@ -1016,6 +1022,7 @@ body {
   flex-direction: column;
 }
 
+.employees-page .page-header,
 .goods-page .page-header {
   height: 80px;
   display: flex;
@@ -1030,21 +1037,25 @@ body {
   height: 30px;
 }
 
+.employees-page .page-header .labeled-search,
 .goods-page .page-header .labeled-search {
   height: 100%;
   width: 155px;
   margin: 0 10px;
 }
 
+.employees-page .page-header .labeled-search input,
 .goods-page .page-header .labeled-search input {
   height: 37px;
   font-size: 17px;
 }
 
+.employees-page .page-content,
 .goods-page .page-content {
   flex: auto;
 }
 
+.employees-page .page-footer,
 .goods-page .page-footer {
   height: 48px;
 }
@@ -1057,6 +1068,7 @@ body {
   width: 1305px;
 }
 
+.employees-table .table-header,
 .goods-table .table-header {
   width: 100%;
   height: 50px;
@@ -1065,6 +1077,7 @@ body {
   align-items: center;
 }
 
+.employees-table .table-header .col,
 .goods-table .table-header .col {
   flex: auto;
   display: flex;
@@ -1074,9 +1087,12 @@ body {
   height: 100%;
 }
 
+.employees-table .table-header .col.col1,
 .goods-table .table-header .col.col1 {
   background-color: #03AB78;
 }
+
+.employees-table .table-header .col.col2,
 .goods-table .table-header .col.col2 {
   background-color: #03ab78cc;
 }
@@ -1134,14 +1150,17 @@ body {
   display: flex;
 }
 
+.employees-table .table-body .row:nth-child(odd) ,
 .goods-table .table-body .row:nth-child(odd) {
   background-color: #ffffff;
 }
 
+.employees-table .table-body .row:nth-child(even),
 .goods-table .table-body .row:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+.employees-table .table-body .row .row-item,
 .goods-table .table-body .row .row-item {
   height: 50px;
   display: flex;
@@ -1192,6 +1211,55 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+/* ################### */
+
+/* ########EmployeesList########### */
+
+.employees-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.employees-table {
+  width: 1175px;
+}
+
+.employees-table .table-body .row {
+  display: flex;
+}
+
+.employees-table .table-body .row .checkbox,
+.employees-table .table-header .col.checkbox-column {
+  width: 50px;
+  flex: none;
+  border-radius: 15px 0 0 0;
+}
+
+.employees-table .table-body .row .id,
+.employees-table .table-header .col.employee-id {
+  width: 50px;
+  flex: none;
+}
+
+.employees-table .table-body .row .full-name,
+.employees-table .table-header .col.full-name {
+  width: 435px;
+  flex: none;
+}
+
+.employees-table .table-body .row .email,
+.employees-table .table-header .col.email {
+  width: 370px;
+  flex: none;
+}
+
+.employees-table .table-body .row .phone,
+.employees-table .table-header .col.phone {
+  width: 270px;
+  flex: none;
+  border-radius: 0 15px 0 0;
 }
 
 /* ################### */

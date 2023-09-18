@@ -7,11 +7,13 @@ import ConfirmPassword from "../pages/ConfirmPassword"
 import Register from "../pages/Register"
 import ForgotPassword from "../pages/ForgotPassword"
 import GoodsPage from "../pages/GoodsPage"
+import EmployeesList from "../pages/EmployeesList"
 
 export const privateRoutes = [
     {path: '/orders', element: <OrdersPage/>, exact: true},
     {path: '/orders/:id', element: <OrderDetailPage/>, exact: true},
     {path: '/goods', element: <GoodsPage/>, exact: true},
+    {path: '/employees', element: <EmployeesList/>, exact: true},
     {path: '/page404', element: <Page404/>, exact: true},
     {path: '/login', element: <Navigate to="/orders" replace />, exact: true},
     {path: '/register', element: <Navigate to="/orders" replace />, exact: true},
