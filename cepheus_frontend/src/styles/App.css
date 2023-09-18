@@ -129,6 +129,10 @@ body {
   background-image: url("../../public/images/side_panel/customer.svg");
 }
 
+.side-categories .image {
+  background-image: url("../../public/images/side_panel/category.svg");
+}
+
 .work-space {
   flex-grow: 1;
   background-color: white;
@@ -187,6 +191,7 @@ body {
   height: 30px;
 }
 
+.categories-page .ceph-select,
 .customers-page .ceph-select,
 .employees-page .ceph-select,
 .goods-page .ceph-select,
@@ -205,6 +210,7 @@ body {
   margin-top: 10px;
 }
 
+.categories-page .page-footer .console,
 .customers-page .page-footer .console,
 .employees-page .page-footer .console,
 .goods-page .page-footer .console,
@@ -1023,12 +1029,14 @@ body {
 
 /* ########GoodsPage########### */
 
+.categories-page,
 .customers-page,
 .goods-page {
   display: flex;
   flex-direction: column;
 }
 
+.categories-page .page-header,
 .customers-page .page-header,
 .employees-page .page-header,
 .goods-page .page-header {
@@ -1045,6 +1053,7 @@ body {
   height: 30px;
 }
 
+.categories-page .page-header .labeled-search,
 .customers-page .page-header .labeled-search,
 .employees-page .page-header .labeled-search,
 .goods-page .page-header .labeled-search {
@@ -1053,6 +1062,7 @@ body {
   margin: 0 10px;
 }
 
+.categories-page .page-header .labeled-search input,
 .customers-page .page-header .labeled-search input,
 .employees-page .page-header .labeled-search input,
 .goods-page .page-header .labeled-search input {
@@ -1060,12 +1070,14 @@ body {
   font-size: 17px;
 }
 
+.categories-page .page-content,
 .customers-page .page-content,
 .employees-page .page-content,
 .goods-page .page-content {
   flex: auto;
 }
 
+.categories-page .page-footer,
 .customers-page .page-footer,
 .employees-page .page-footer,
 .goods-page .page-footer {
@@ -1080,6 +1092,7 @@ body {
   width: 1305px;
 }
 
+.category-table .table-header,
 .customer-table .table-header,
 .employees-table .table-header,
 .goods-table .table-header {
@@ -1090,6 +1103,7 @@ body {
   align-items: center;
 }
 
+.category-table .table-header .col,
 .customer-table .table-header .col,
 .employees-table .table-header .col,
 .goods-table .table-header .col {
@@ -1101,12 +1115,14 @@ body {
   height: 100%;
 }
 
+.category-table .table-header .col.col1,
 .customer-table .table-header .col.col1,
 .employees-table .table-header .col.col1,
 .goods-table .table-header .col.col1 {
   background-color: #03AB78;
 }
 
+.category-table .table-header .col.col2,
 .customer-table .table-header .col.col2,
 .employees-table .table-header .col.col2,
 .goods-table .table-header .col.col2 {
@@ -1166,18 +1182,21 @@ body {
   display: flex;
 }
 
+.category-table .table-body .row:nth-child(odd),
 .customer-table .table-body .row:nth-child(odd),
 .employees-table .table-body .row:nth-child(odd),
 .goods-table .table-body .row:nth-child(odd) {
   background-color: #ffffff;
 }
 
+.category-table .table-body .row:nth-child(even),
 .customer-table .table-body .row:nth-child(even),
 .employees-table .table-body .row:nth-child(even),
 .goods-table .table-body .row:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+.category-table .table-body .row .row-item,
 .customer-table .table-body .row .row-item,
 .employees-table .table-body .row .row-item,
 .goods-table .table-body .row .row-item {
@@ -1246,11 +1265,14 @@ body {
   width: 1175px;
 }
 
+.category-table .table-body .row,
 .customer-table .table-body .row,
 .employees-table .table-body .row {
   display: flex;
 }
 
+.category-table .table-body .row .checkbox,
+.category-table .table-header .col.checkbox-column,
 .customer-table .table-body .row .checkbox,
 .customer-table .table-header .col.checkbox-column, 
 .employees-table .table-body .row .checkbox,
@@ -1260,6 +1282,8 @@ body {
   border-radius: 15px 0 0 0;
 }
 
+.category-table .table-body .row .id,
+.category-table .table-header .col.category-id,
 .customer-table .table-body .row .id,
 .customer-table .table-header .col.employee-id,
 .employees-table .table-body .row .id,
@@ -1294,3 +1318,14 @@ body {
 }
 
 /* ################### */
+
+.category-table {
+  width: 450px;
+}
+
+.category-table .table-body .row .title,
+.category-table .table-header .col.title {
+  width: 350px;
+  flex: none;
+  border-radius: 0 15px 0 0;
+}

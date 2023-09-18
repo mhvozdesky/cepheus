@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import PreLoader from "../components/UI/PreLoader"
-import CustomerTable from "../components/CustomerTable"
+import CategoriesTable from "../components/CategoriesTable"
 import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
 
-const CustomersPage = function() {
+const CategoriesPage = function() {
     const pageSizeDefault = 25;
 
-    const [loadingCustomers, setLoadingCustomers] = useState(true)
-    const [customers, setCustomers] = useState([])
+    const [loadingCategories, setLoadingCategories] = useState(true)
+    const [categories, setCategories] = useState([])
 
     const [next, setNext] = useState(false)
     const [prev, setPrev] = useState(false)
@@ -34,11 +34,11 @@ const CustomersPage = function() {
             cur_page = need_page;
         }
 
-        getCustomers(cur_page);
+        getCategories(cur_page);
     }
 
     const change_page_size = (onPage) => {
-        getCustomers(1, onPage);
+        getCategories(1, onPage);
     }
 
     const fill_pagination = (data) => {
@@ -60,9 +60,9 @@ const CustomersPage = function() {
         setLastPage(data['last_page'])
     }
 
-    const getCustomers = (cur_page=page, onPage=pageSize) => {
-        setLoadingCustomers(true)
-        const url = `/api/v1/customers/?page=${cur_page}&page_size=${onPage}`;
+    const getCategories = (cur_page=page, onPage=pageSize) => {
+        setLoadingCategories(true)
+        const url = `/api/v1/categories/?page=${cur_page}&page_size=${onPage}`;
 
         const headers = {
             "Content-Type": "application/json"
@@ -80,45 +80,41 @@ const CustomersPage = function() {
             }
         )
         .then((response) => {
-            setCustomers(response.data['results'])
+            setCategories(response.data['results'])
             fill_pagination(response.data)
-            setLoadingCustomers(false)
+            setLoadingCategories(false)
         })
         .catch((error) => {
             console.log(error.response)
-            setLoadingCustomers(false)
+            setLoadingCategories(false)
         })
     }
 
     useEffect(() => {
-        getCustomers();
+        getCategories();
     }, [])
 
-    if (loadingCustomers) {
+    if (loadingCategories) {
         return (
             <PreLoader />
         )
     }
 
     return (
-        <div className='page customers-page'>
+        <div className='page categories-page'>
             <div className='page-header'>
                 <LabeledSearch
                     name='search-id'
                     btn_text='ID'
                 />
                 <LabeledSearch
-                    name='search-full-name'
-                    btn_text="Ім'я"
-                />
-                <LabeledSearch
-                    name='search-email'
-                    btn_text='Email'
+                    name='search-title'
+                    btn_text="Назва"
                 />
             </div>
             <div className='page-content'>
-                <CustomerTable
-                    customers={customers}
+                <CategoriesTable
+                    categories={categories}
                 />
             </div>
             <div className='page-footer'>
@@ -151,4 +147,4 @@ const CustomersPage = function() {
     );
 };
 
-export default CustomersPage;
+export default CategoriesPage;
