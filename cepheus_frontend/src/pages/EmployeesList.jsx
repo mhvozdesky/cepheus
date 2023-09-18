@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import PreLoader from "../components/UI/PreLoader"
-import GoodsTable from "../components/GoodsTable"
+import EmployeesTable from "../components/EmployeesTable"
 import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
@@ -104,8 +104,14 @@ const EmployeesList = function() {
     }
 
     return (
-        <div className='employees-list'>
-            spam
+        <div className='page employees-page'>
+            <div className='page-header'></div>
+            <div className='page-content'>
+                <EmployeesTable 
+                    employees={employees}
+                />
+            </div>
+            <div className='page-footer'></div>
         </div>
     );
 };
