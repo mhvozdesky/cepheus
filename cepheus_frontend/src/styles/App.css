@@ -87,6 +87,10 @@ body {
   border-radius: 11px;
 }
 
+.item-side-panel.active {
+  background-color: #c9c9c9;
+}
+
 .item-side-panel:hover {
   background-color: #c9c9c9;
 }

@@ -4,7 +4,11 @@ import {useNavigate} from "react-router-dom"
 const ItemSidePanel = function(props) {
     const router = useNavigate()
 
-    const class_name = 'item-side-panel' + ' ' + props.class_name;
+    var class_name = 'item-side-panel' + ' ' + props.class_name;
+
+    if (props.active) {
+        class_name = class_name + ' ' + 'active'
+    }
 
     return (
         <div className={class_name} onClick={() => router(`/${props.url}`)} >
