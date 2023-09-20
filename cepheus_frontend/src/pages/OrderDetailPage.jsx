@@ -25,6 +25,7 @@ const OrderDetailPage = function() {
     const [modalOrdersVisible, setModalOrdersVisible] = useState(false)
     const [modalForm, setModalForm] = useState(null)
     const [good, setGood] = useState({data: null, index: null})
+    const [updateTotalAmount, setUpdateTotalAmount] = useState(false)
 
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
@@ -54,6 +55,15 @@ const OrderDetailPage = function() {
 
         return parseInt(numberValue, 10) || 0;
     };
+
+    const recalculateTotalAmount = () => {
+        let newAmount = order.goods.reduce((acc, good) => acc + good.amount, 0);
+
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            amount: newAmount,
+        }));
+    }
     
     const changeTableFields = (index, field, value) => {
         const float_fields = ['price', 'amount'];
@@ -70,14 +80,26 @@ const OrderDetailPage = function() {
         } else {
             updatedValue = value
         }
+
+        var amount = order.goods[index].amount
+
+        if (field == 'price') {
+            amount = updatedValue * order.goods[index].quantity
+        } else if (field == 'quantity') {
+            amount = updatedValue * order.goods[index].price
+        } else if (field == 'amount') {
+            amount = updatedValue
+        }
     
         setOrder(prevOrder => ({
             ...prevOrder,
             goods: prevOrder.goods.map((item, i) => {
                 if (i !== index) return item;
-                return { ...item, [field]: updatedValue };
+                return { ...item, [field]: updatedValue, ['amount']: Number(amount.toFixed(2)) };
             }),
         }));
+
+        setUpdateTotalAmount(true)
     };
 
     const getGood = (id, index) => {
@@ -181,6 +203,13 @@ const OrderDetailPage = function() {
             setGood({data: null, index: null})
         }
     }, [good])
+
+    useEffect(() => {
+        if (order.goods && updateTotalAmount) {
+            recalculateTotalAmount();
+            setUpdateTotalAmount(false);
+        }
+    }, [order])
 
     if (loadingOrder) {
         return (
