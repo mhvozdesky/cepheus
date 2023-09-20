@@ -2,7 +2,7 @@ import React from "react";
 
 const GoodTableRow = function(props) {
     return (
-        <div className={`row row${props.index}`}>
+        <div className={`row row${props.index}`} onDoubleClick={() => props.setGoodSelected(props.good.id)}>
             <div className='row-item checkbox'>
                 <div className='text'><span><input type='checkbox'/></span></div>
             </div>

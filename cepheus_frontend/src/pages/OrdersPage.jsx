@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom"
 import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
@@ -8,7 +9,9 @@ import PaginationPanel from "../components/UI/PaginationPanel"
 import OrdersTable from "../components/OrdersTable"
 import axios from "axios";
 
-const OrdersPage = function() {
+const OrdersPage = function(props) {
+    const router = useNavigate()
+
     const pageSizeDefault = 25;
 
     const [loadingOrders, setLoadingOrders] = useState(false)
@@ -20,6 +23,7 @@ const OrdersPage = function() {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+    const [orderSelected, setOrderSelected] = useState(null)
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -131,6 +135,20 @@ const OrdersPage = function() {
         getOrders();
       }, [])
 
+    useEffect(() => {
+        if (orderSelected == null) {
+            return
+        }
+
+        if (props.modalDirect) {
+            props.modalSelection(props.index, orderSelected, props.field)
+        } else {
+            router(`/orders/${orderSelected}`)
+        }
+
+        setOrderSelected(null);
+    }, [orderSelected])
+
     if (loadingOrders) {
         return (
             <PreLoader />
@@ -190,7 +208,7 @@ const OrdersPage = function() {
             </div>
             <div className='page-content'>
                 <div className='block-table'>
-                    <OrdersTable orders={orders}/>
+                    <OrdersTable orders={orders} setOrderSelected={setOrderSelected} />
                 </div>
             </div>
             <div className='page-footer'>

@@ -10,7 +10,7 @@ import OrderFooterBtn from "../components/UI/OrderFooterBtn"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import OrderInfoCustomer from "../components/OrderInfoCustomer"
 import ModalOrders from "../components/ModalOrders"
-import OrdersPage from "./OrdersPage"
+import GoodsPage from "./GoodsPage"
 
 
 const OrderDetailPage = function() {
@@ -24,6 +24,7 @@ const OrderDetailPage = function() {
     const [loadingOrder, setLoadingOrder] = useState(true)
     const [modalOrdersVisible, setModalOrdersVisible] = useState(false)
     const [modalForm, setModalForm] = useState(null)
+    const [good, setGood] = useState({data: null, index: null})
 
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
@@ -78,6 +79,32 @@ const OrderDetailPage = function() {
             }),
         }));
     };
+
+    const getGood = (id, index) => {
+        const url = `/api/v1/goods/${id}/`;
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        if (document.cookie) {
+            headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
+        }
+
+        axios.get(
+            url,
+            {
+                withCredentials: true,
+                headers: headers
+            }
+        )
+        .then((response) => {
+            setGood({data: response.data, index: index})
+        })
+        .catch((error) => {
+            console.log(error.response)
+        })
+    }
     
 
     const numberDisplay = (number, type) => {
@@ -85,6 +112,21 @@ const OrderDetailPage = function() {
             return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
         }
         return number
+    }
+
+    const fillNewGoodValue = (index, goodId) => {
+        getGood(goodId, index)
+    }
+
+    const newModalValue = (index, valueId, field) => {
+        // console.log(`Index ${index}, valueId ${valueId}, field ${field}`)
+
+        if (field == 'good') {
+            fillNewGoodValue(index, valueId)
+        }
+
+        setModalOrdersVisible(false)
+        setModalForm(null)
     }
 
     const getOrder = () => {
@@ -127,6 +169,18 @@ const OrderDetailPage = function() {
     useEffect(() => {
         getOrder();
     }, [])
+
+    useEffect(() => {
+        if (good.data) {
+            changeTableFields(good.index, 'good', good.data.id)
+            changeTableFields(good.index, 'good_title', good.data.title)
+            changeTableFields(good.index, 'vendor_code', good.data.vendor_code)
+            changeTableFields(good.index, 'price', good.data.price.toString())
+            changeTableFields(good.index, 'quantity', '1')
+            changeTableFields(good.index, 'amount', good.data.price.toString())
+            setGood({data: null, index: null})
+        }
+    }, [good])
 
     if (loadingOrder) {
         return (
@@ -264,7 +318,7 @@ const OrderDetailPage = function() {
                                             listInfo={
                                                 {
                                                     form: setModalOrdersVisible,
-                                                    Component: <OrdersPage />,
+                                                    Component: <GoodsPage modalDirect={true} modalSelection={newModalValue} index={index} field='good' />,
                                                     setComponent: setModalForm
                                                 }
                                             }
