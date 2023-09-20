@@ -37,7 +37,7 @@ const OrdersTable = function(props) {
             </thead>
             <tbody>
                 {props.orders.map((order, index) => 
-                    <OrdersTableRow key={order.id} order={order} index={index} />
+                    <OrdersTableRow key={order.id} order={order} index={index} setOrderSelected={props.setOrderSelected} />
                 )}
             </tbody>
         </table>

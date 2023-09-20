@@ -18,6 +18,14 @@ const LabeledInput = function(props) {
         setLocalValue(props.value)
     }
 
+    const clickListBtn = () => {
+        if (props.listInfo) {
+            const listInfo = props.listInfo;
+            listInfo.setComponent(listInfo.Component)
+            listInfo.form(true);
+        }
+    }
+
     useEffect(() => {
         setLocalValue(props.value);
     }, [props.value]);
@@ -41,7 +49,7 @@ const LabeledInput = function(props) {
                 </div>
                 {props.control_elem &&
                     <>
-                        <div className='list-btn'></div>
+                        <div className='list-btn' onClick={clickListBtn}></div>
                         <div className='detail-btn'></div>
                     </>
                 }

@@ -5,11 +5,13 @@ import { format } from 'date-fns';
 import PreLoader from "../components/UI/PreLoader"
 import LabeledInput from "../components/UI/LabeledInput"
 import LabeledSelect from "../components/UI/LabeledSelect"
-import LabeledDate from "../components/UI/LabeledDate"
 import OrderTableButton from "../components/UI/OrderTableButton"
 import OrderFooterBtn from "../components/UI/OrderFooterBtn"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import OrderInfoCustomer from "../components/OrderInfoCustomer"
+import ModalOrders from "../components/ModalOrders"
+import GoodsPage from "./GoodsPage"
+
 
 const OrderDetailPage = function() {
     const route_params = useParams();
@@ -20,6 +22,10 @@ const OrderDetailPage = function() {
     const [order, setOrder] = useState({})
     const [orderClear, setOrderClear] = useState({})
     const [loadingOrder, setLoadingOrder] = useState(true)
+    const [modalOrdersVisible, setModalOrdersVisible] = useState(false)
+    const [modalForm, setModalForm] = useState(null)
+    const [good, setGood] = useState({data: null, index: null})
+    const [updateTotalAmount, setUpdateTotalAmount] = useState(false)
 
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
@@ -49,6 +55,15 @@ const OrderDetailPage = function() {
 
         return parseInt(numberValue, 10) || 0;
     };
+
+    const recalculateTotalAmount = () => {
+        let newAmount = order.goods.reduce((acc, good) => acc + good.amount, 0);
+
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            amount: newAmount,
+        }));
+    }
     
     const changeTableFields = (index, field, value) => {
         const float_fields = ['price', 'amount'];
@@ -65,15 +80,53 @@ const OrderDetailPage = function() {
         } else {
             updatedValue = value
         }
+
+        var amount = order.goods[index].amount
+
+        if (field == 'price') {
+            amount = updatedValue * order.goods[index].quantity
+        } else if (field == 'quantity') {
+            amount = updatedValue * order.goods[index].price
+        } else if (field == 'amount') {
+            amount = updatedValue
+        }
     
         setOrder(prevOrder => ({
             ...prevOrder,
             goods: prevOrder.goods.map((item, i) => {
                 if (i !== index) return item;
-                return { ...item, [field]: updatedValue };
+                return { ...item, [field]: updatedValue, ['amount']: Number(amount.toFixed(2)) };
             }),
         }));
+
+        setUpdateTotalAmount(true)
     };
+
+    const getGood = (id, index) => {
+        const url = `/api/v1/goods/${id}/`;
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        if (document.cookie) {
+            headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
+        }
+
+        axios.get(
+            url,
+            {
+                withCredentials: true,
+                headers: headers
+            }
+        )
+        .then((response) => {
+            setGood({data: response.data, index: index})
+        })
+        .catch((error) => {
+            console.log(error.response)
+        })
+    }
     
 
     const numberDisplay = (number, type) => {
@@ -81,6 +134,21 @@ const OrderDetailPage = function() {
             return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
         }
         return number
+    }
+
+    const fillNewGoodValue = (index, goodId) => {
+        getGood(goodId, index)
+    }
+
+    const newModalValue = (index, valueId, field) => {
+        // console.log(`Index ${index}, valueId ${valueId}, field ${field}`)
+
+        if (field == 'good') {
+            fillNewGoodValue(index, valueId)
+        }
+
+        setModalOrdersVisible(false)
+        setModalForm(null)
     }
 
     const getOrder = () => {
@@ -124,6 +192,25 @@ const OrderDetailPage = function() {
         getOrder();
     }, [])
 
+    useEffect(() => {
+        if (good.data) {
+            changeTableFields(good.index, 'good', good.data.id)
+            changeTableFields(good.index, 'good_title', good.data.title)
+            changeTableFields(good.index, 'vendor_code', good.data.vendor_code)
+            changeTableFields(good.index, 'price', good.data.price.toString())
+            changeTableFields(good.index, 'quantity', '1')
+            changeTableFields(good.index, 'amount', good.data.price.toString())
+            setGood({data: null, index: null})
+        }
+    }, [good])
+
+    useEffect(() => {
+        if (order.goods && updateTotalAmount) {
+            recalculateTotalAmount();
+            setUpdateTotalAmount(false);
+        }
+    }, [order])
+
     if (loadingOrder) {
         return (
             <PreLoader />
@@ -132,6 +219,11 @@ const OrderDetailPage = function() {
     
     return (
         <div className='order-detail-page'>
+            <ModalOrders 
+                visible={modalOrdersVisible}
+                setVisible={setModalOrdersVisible}
+                content={modalForm}
+            />
             <div className='common-info'>
                 <div className='panel panel1'>
                     <LabeledInput
@@ -252,6 +344,13 @@ const OrderDetailPage = function() {
                                             change={changeTableFields}
                                             control_elem={true}
                                             readOnly={true}
+                                            listInfo={
+                                                {
+                                                    form: setModalOrdersVisible,
+                                                    Component: <GoodsPage modalDirect={true} modalSelection={newModalValue} index={index} field='good' />,
+                                                    setComponent: setModalForm
+                                                }
+                                            }
                                         />
                                     </td>
                                     <td className='vendor-code'>

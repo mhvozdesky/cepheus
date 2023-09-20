@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom"
 import axios from "axios";
 import PreLoader from "../components/UI/PreLoader"
 import GoodsTable from "../components/GoodsTable"
@@ -9,7 +10,9 @@ import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
 
-const GoodsPage = function() {
+const GoodsPage = function(props) {
+    const router = useNavigate()
+
     const pageSizeDefault = 25;
 
     const [loadingGoods, setLoadingGoods] = useState(true)
@@ -21,6 +24,8 @@ const GoodsPage = function() {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+
+    const [goodSelected, setGoodSelected] = useState(null)
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -97,6 +102,21 @@ const GoodsPage = function() {
         getGoods();
     }, [])
 
+    useEffect(() => {
+        if (goodSelected == null) {
+            return
+        }
+
+        if (props.modalDirect) {
+            props.modalSelection(props.index, goodSelected, props.field)
+        } else {
+            // router(`/orders/${goodSelected}`)
+            router(`/orders/217`)
+        }
+
+        setGoodSelected(null);
+    }, [goodSelected])
+
     if (loadingGoods) {
         return (
             <PreLoader />
@@ -125,6 +145,7 @@ const GoodsPage = function() {
             <div className='page-content'>
                 <GoodsTable 
                     goods={goods}
+                    setGoodSelected={setGoodSelected}
                 />
             </div>
             <div className='page-footer'>

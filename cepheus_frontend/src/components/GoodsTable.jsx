@@ -29,7 +29,7 @@ const GoodsTable = function(props) {
             </div>
             <div className='table-body'>
                 {props.goods.map((good, index) => 
-                    <GoodTableRow key={good.id} good={good} index={index} />
+                    <GoodTableRow key={good.id} good={good} index={index} setGoodSelected={props.setGoodSelected} />
                 )}
             </div>
         </div>

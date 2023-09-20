@@ -9,7 +9,7 @@ const OrdersTableRow = function(props) {
     const formattedModifiedAt = format(new Date(props.order.modified_at), 'dd.MM.yyyy HH:mm');
 
     return (
-        <tr className={'row'+props.index} onDoubleClick={() => router(`/orders/${props.order.id}`)}>
+        <tr className={'row'+props.index} onDoubleClick={() => props.setOrderSelected(props.order.id)}>
             <td className='checkbox'>
                 <div className='text'><span><input type='checkbox'/></span></div>
             </td>
