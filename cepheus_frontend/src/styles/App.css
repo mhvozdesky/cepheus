@@ -1333,3 +1333,33 @@ body {
   flex: none;
   border-radius: 0 15px 0 0;
 }
+
+/* ########ModalOrders########### */
+
+.modal-list {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-list .content {
+  padding: 25px;
+  background: white;
+  border-radius: 16px;
+  min-width: 250px;
+  height: 675px;
+  width: 1312px;
+}
+
+.modal-list.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ################### */

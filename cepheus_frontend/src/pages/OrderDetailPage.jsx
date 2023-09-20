@@ -5,11 +5,13 @@ import { format } from 'date-fns';
 import PreLoader from "../components/UI/PreLoader"
 import LabeledInput from "../components/UI/LabeledInput"
 import LabeledSelect from "../components/UI/LabeledSelect"
-import LabeledDate from "../components/UI/LabeledDate"
 import OrderTableButton from "../components/UI/OrderTableButton"
 import OrderFooterBtn from "../components/UI/OrderFooterBtn"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import OrderInfoCustomer from "../components/OrderInfoCustomer"
+import ModalOrders from "../components/ModalOrders"
+import OrdersPage from "./OrdersPage"
+
 
 const OrderDetailPage = function() {
     const route_params = useParams();
@@ -20,6 +22,8 @@ const OrderDetailPage = function() {
     const [order, setOrder] = useState({})
     const [orderClear, setOrderClear] = useState({})
     const [loadingOrder, setLoadingOrder] = useState(true)
+    const [modalOrdersVisible, setModalOrdersVisible] = useState(false)
+    const [modalForm, setModalForm] = useState(null)
 
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
@@ -132,6 +136,11 @@ const OrderDetailPage = function() {
     
     return (
         <div className='order-detail-page'>
+            <ModalOrders 
+                visible={modalOrdersVisible}
+                setVisible={setModalOrdersVisible}
+                content={modalForm}
+            />
             <div className='common-info'>
                 <div className='panel panel1'>
                     <LabeledInput
@@ -252,6 +261,13 @@ const OrderDetailPage = function() {
                                             change={changeTableFields}
                                             control_elem={true}
                                             readOnly={true}
+                                            listInfo={
+                                                {
+                                                    form: setModalOrdersVisible,
+                                                    Component: <OrdersPage />,
+                                                    setComponent: setModalForm
+                                                }
+                                            }
                                         />
                                     </td>
                                     <td className='vendor-code'>
