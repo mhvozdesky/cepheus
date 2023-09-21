@@ -45,6 +45,10 @@ const OrderInfoCustomer = function(props) {
         getCustomer();
     }, [])
 
+    useEffect(() => {
+        getCustomer();
+    }, [props.customer_id])
+
     if (loadingCustomer) {
         return (
             <PreLoader id='order_customer_spinner' />
@@ -63,10 +67,11 @@ const OrderInfoCustomer = function(props) {
                     label_text='Замовник'
                     type='text'
                     index={null}
-                    value={`${customer.last_name} ${customer.first_name}`}
+                    value={`${customer.first_name} ${customer.last_name}`}
                     change={changeCustomer}
                     control_elem={true}
                     readOnly={true}
+                    listInfo={props.listInfo}
                 />
                 <LabeledInput
                     input_name='phone_number'
