@@ -104,6 +104,20 @@ const OrderDetailPage = function() {
         setUpdateTotalAmount(true)
     };
 
+    const addGood = () => {
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            goods: prevOrder.goods.concat({
+              quantity: 1,
+              price: 0,
+              amount: 0,
+              good: null,
+              good_title: '',
+              vendor_code: ''
+            })
+        }));
+    }
+
     const getGood = (id, index) => {
         const url = `/api/v1/goods/${id}/`;
 
@@ -482,6 +496,7 @@ const OrderDetailPage = function() {
                     <OrderTableButton 
                         name='add_good'
                         value='Додати товар'
+                        handler={addGood}
                     />
                 </div>
             </div>
