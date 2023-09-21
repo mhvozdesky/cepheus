@@ -23,7 +23,7 @@ const CustomerTable = function(props) {
             </div>
             <div className='table-body'>
                 {props.customers.map((customer, index) => 
-                    <CustomerTableRow key={customer.id} customer={customer} index={index} />
+                    <CustomerTableRow key={customer.id} customer={customer} index={index} setCustomerSelected={props.setCustomerSelected} />
                 )}
             </div>
         </div>

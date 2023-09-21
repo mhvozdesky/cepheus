@@ -6,7 +6,7 @@ import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
 
-const CustomersPage = function() {
+const CustomersPage = function(props) {
     const pageSizeDefault = 25;
 
     const [loadingCustomers, setLoadingCustomers] = useState(true)
@@ -18,6 +18,8 @@ const CustomersPage = function() {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+
+    const [customerSelected, setCustomerSelected] = useState(null)
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -94,6 +96,21 @@ const CustomersPage = function() {
         getCustomers();
     }, [])
 
+    useEffect(() => {
+        if (customerSelected == null) {
+            return
+        }
+
+        if (props.modalDirect) {
+            props.modalSelection(props.index, customerSelected, props.field)
+        } else {
+            // router(`/orders/${goodSelected}`)
+            // router(`/orders/217`)
+        }
+
+        setCustomerSelected(null);
+    }, [customerSelected])
+
     if (loadingCustomers) {
         return (
             <PreLoader />
@@ -119,6 +136,7 @@ const CustomersPage = function() {
             <div className='page-content'>
                 <CustomerTable
                     customers={customers}
+                    setCustomerSelected={setCustomerSelected}
                 />
             </div>
             <div className='page-footer'>

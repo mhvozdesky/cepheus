@@ -12,6 +12,7 @@ import OrderInfoCustomer from "../components/OrderInfoCustomer"
 import ModalOrders from "../components/ModalOrders"
 import GoodsPage from "./GoodsPage"
 import EmployeesList from "./EmployeesList"
+import CustomersPage from "./CustomersPage"
 
 
 const OrderDetailPage = function() {
@@ -181,6 +182,11 @@ const OrderDetailPage = function() {
             fillNewGoodValue(index, valueId)
         } else if (field == 'responsible') {
             setNewResponsibleValue(valueId)
+        } else if (field == 'customer') {
+            setOrder(prevOrder => ({
+                ...prevOrder,
+                customer: valueId
+            }));
         }
 
         setModalOrdersVisible(false)
@@ -484,6 +490,13 @@ const OrderDetailPage = function() {
                     customer_id={order.customer}
                     place_of_delivery={order.place_of_delivery}
                     customer_comment={order.customer_comment}
+                    listInfo={
+                        {
+                            form: setModalOrdersVisible,
+                            Component: <CustomersPage modalDirect={true} modalSelection={newModalValue} index={null} field='customer' />,
+                            setComponent: setModalForm
+                        }
+                    }
                 />
             </div>
             <div className='footer-block'>
