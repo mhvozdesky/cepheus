@@ -28,6 +28,8 @@ const OrderDetailPage = function() {
     const [modalForm, setModalForm] = useState(null)
     const [good, setGood] = useState({data: null, index: null})
     const [updateTotalAmount, setUpdateTotalAmount] = useState(false)
+    const [listSelectedProducts, setListSelectedProducts] = useState([])
+    const [totalSelectedProducts, setTotalSelectedProducts] = useState(false)
 
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
@@ -103,6 +105,34 @@ const OrderDetailPage = function() {
 
         setUpdateTotalAmount(true)
     };
+
+    const valueTotalSelectedProducts = () => {
+        if (order.goods && listSelectedProducts.length == order.goods.length) {
+            setTotalSelectedProducts(true)
+        } else {
+            setTotalSelectedProducts(false)
+        }
+    }
+
+    const changeTotalSelectedProducts = () => {
+        if (totalSelectedProducts) {
+            setListSelectedProducts([])
+        } else if (order.goods) {
+            const arr = [];
+            for (let i = 0; i < order.goods.length; i++) {
+                arr.push(i);
+            }
+            setListSelectedProducts(arr)
+        }
+    }
+
+    const changeListSelectedProducts = (index) => {
+        if (listSelectedProducts.includes(index)) {
+            setListSelectedProducts(prevList => prevList.filter(item => item !== index));
+        } else {
+            setListSelectedProducts(prevList => [...prevList, index]);
+        }
+    }
 
     const addGood = () => {
         setOrder(prevOrder => ({
@@ -267,6 +297,10 @@ const OrderDetailPage = function() {
         }
     }, [order])
 
+    useEffect(() => {
+        valueTotalSelectedProducts()
+    }, [listSelectedProducts])
+
     if (loadingOrder) {
         return (
             <PreLoader />
@@ -366,7 +400,11 @@ const OrderDetailPage = function() {
                         <thead>
                             <tr>
                                 <th scope='col' className='checkbox-column col1'>
-                                    <div className='text'><span><input type='checkbox'/></span></div>
+                                    <div className='text'><span><input
+                                                                    type='checkbox'
+                                                                    checked={totalSelectedProducts}
+                                                                    onChange={() => changeTotalSelectedProducts()}
+                                                                /></span></div>
                                 </th>
                                 <th scope='col' className='id-good col2'>
                                     <div className='text'>ID Товару</div>
@@ -392,7 +430,12 @@ const OrderDetailPage = function() {
                             {order.goods.map((good, index) => 
                                 <tr key={index} className={`row${index}`}>
                                     <td className='checkbox'>
-                                        <div className='text'><span><input type='checkbox'/></span></div>
+                                        <div className='text'><span><input
+                                                                        type='checkbox'
+                                                                        checked={listSelectedProducts.includes(index)}
+                                                                        onChange={() => changeListSelectedProducts(index)}
+                                                                        />
+                                                                    </span></div>
                                     </td>
                                     <td className='id-good'>
                                         <div className='text'>{good.good}</div>
