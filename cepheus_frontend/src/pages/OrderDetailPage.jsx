@@ -11,6 +11,7 @@ import ButtonDelete from "../components/UI/ButtonDelete"
 import OrderInfoCustomer from "../components/OrderInfoCustomer"
 import ModalOrders from "../components/ModalOrders"
 import GoodsPage from "./GoodsPage"
+import EmployeesList from "./EmployeesList"
 
 
 const OrderDetailPage = function() {
@@ -127,6 +128,35 @@ const OrderDetailPage = function() {
             console.log(error.response)
         })
     }
+
+    const getResponsible = (responsibleID) => {
+        const url = `/api/v1/accounts/${responsibleID}/`;
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        if (document.cookie) {
+            headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
+        }
+
+        axios.get(
+            url,
+            {
+                withCredentials: true,
+                headers: headers
+            }
+        )
+        .then((response) => {
+            setOrder(prevOrder => ({
+                ...prevOrder,
+                responsible: responsibleID, responsible_display: `${response.data.first_name} ${response.data.last_name}`
+            }));
+        })
+        .catch((error) => {
+            console.log(error.response)
+        })
+    }
     
 
     const numberDisplay = (number, type) => {
@@ -140,11 +170,17 @@ const OrderDetailPage = function() {
         getGood(goodId, index)
     }
 
+    const setNewResponsibleValue = (responsibleID) => {
+        getResponsible(responsibleID)
+    }
+
     const newModalValue = (index, valueId, field) => {
         // console.log(`Index ${index}, valueId ${valueId}, field ${field}`)
 
         if (field == 'good') {
             fillNewGoodValue(index, valueId)
+        } else if (field == 'responsible') {
+            setNewResponsibleValue(valueId)
         }
 
         setModalOrdersVisible(false)
@@ -290,7 +326,14 @@ const OrderDetailPage = function() {
                         value={order.responsible_display}
                         change={changeFields}
                         control_elem={true}
-                        readOnly={false}
+                        readOnly={true}
+                        listInfo={
+                            {
+                                form: setModalOrdersVisible,
+                                Component: <EmployeesList modalDirect={true} modalSelection={newModalValue} index={null} field='responsible' />,
+                                setComponent: setModalForm
+                            }
+                        }
                     />
                     <div className='btn-set'>
                         <ButtonDelete />

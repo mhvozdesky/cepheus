@@ -6,7 +6,7 @@ import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
 
-const EmployeesList = function() {
+const EmployeesList = function(props) {
     const pageSizeDefault = 25;
 
     const [loadingEmployees, setLoadingEmployees] = useState(true)
@@ -18,6 +18,8 @@ const EmployeesList = function() {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+
+    const [employeeSelected, setEmployeeSelected] = useState(null)
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -94,6 +96,21 @@ const EmployeesList = function() {
         getEmployees();
     }, [])
 
+    useEffect(() => {
+        if (employeeSelected == null) {
+            return
+        }
+
+        if (props.modalDirect) {
+            props.modalSelection(props.index, employeeSelected, props.field)
+        } else {
+            // router(`/orders/${goodSelected}`)
+            //router(`/orders/217`)
+        }
+
+        setEmployeeSelected(null);
+    }, [employeeSelected])
+
     if (loadingEmployees) {
         return (
             <PreLoader />
@@ -119,6 +136,7 @@ const EmployeesList = function() {
             <div className='page-content'>
                 <EmployeesTable 
                     employees={employees}
+                    setEmployeeSelected={setEmployeeSelected}
                 />
             </div>
             <div className='page-footer'>

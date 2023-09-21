@@ -2,7 +2,7 @@ import React from "react";
 
 const EmployeeTableRow = function(props) {
     return (
-        <div className={`row row${props.index}`}>
+        <div className={`row row${props.index}`} onDoubleClick={() => props.setEmployeeSelected(props.employee.id)}>
             <div className='row-item checkbox'>
                 <div className='text'><span><input type='checkbox'/></span></div>
             </div>

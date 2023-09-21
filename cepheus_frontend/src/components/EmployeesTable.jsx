@@ -23,7 +23,7 @@ const EmployeesTable = function(props) {
             </div>
             <div className='table-body'>
                 {props.employees.map((employee, index) => 
-                    <EmployeeTableRow key={employee.id} employee={employee} index={index} />
+                    <EmployeeTableRow key={employee.id} employee={employee} index={index} setEmployeeSelected={props.setEmployeeSelected} />
                 )}
             </div>
         </div>
