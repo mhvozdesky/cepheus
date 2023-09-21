@@ -107,7 +107,7 @@ const OrderDetailPage = function() {
     };
 
     const valueTotalSelectedProducts = () => {
-        if (order.goods && listSelectedProducts.length == order.goods.length) {
+        if (order.goods && listSelectedProducts.length == order.goods.length && order.goods.length > 0) {
             setTotalSelectedProducts(true)
         } else {
             setTotalSelectedProducts(false)
@@ -146,6 +146,16 @@ const OrderDetailPage = function() {
               vendor_code: ''
             })
         }));
+        setUpdateTotalAmount(true);
+    }
+
+    const delGood = () => {
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            goods: prevOrder.goods.filter((item, index) => !listSelectedProducts.includes(index))
+        }));
+        setUpdateTotalAmount(true);
+        setListSelectedProducts([])
     }
 
     const getGood = (id, index) => {
@@ -294,6 +304,7 @@ const OrderDetailPage = function() {
         if (order.goods && updateTotalAmount) {
             recalculateTotalAmount();
             setUpdateTotalAmount(false);
+            valueTotalSelectedProducts();
         }
     }, [order])
 
@@ -540,6 +551,11 @@ const OrderDetailPage = function() {
                         name='add_good'
                         value='Додати товар'
                         handler={addGood}
+                    />
+                    <OrderTableButton 
+                        name='del_good'
+                        value='Видалити товар'
+                        handler={delGood}
                     />
                 </div>
             </div>
