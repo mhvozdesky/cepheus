@@ -780,6 +780,15 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin: 0 5px;
+}
+
+.order-detail-page .goods-info .btn-block .table-btn:hover {
+  background-color: #d9d7d7;
+}
+
+.order-detail-page .goods-info .btn-block .table-btn:active {
+  background-color: #bbb7b7;
 }
 
 .order-detail-page .goods-info .btn-block .table-btn .text {

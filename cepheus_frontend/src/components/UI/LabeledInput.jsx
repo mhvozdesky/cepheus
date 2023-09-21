@@ -10,6 +10,10 @@ const LabeledInput = function(props) {
     }
 
     const changeHandle = (e) => {
+        if (props.readOnly) {
+            return
+        }
+        
         if (props.index !== null) {
             props.change(props.index, e.target.id, e.target.value)
         } else {
