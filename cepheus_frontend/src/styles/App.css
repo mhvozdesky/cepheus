@@ -898,8 +898,24 @@ body {
   background-color: #03AB78;
 }
 
+.order-detail-page .footer-block .order-footer-btn.save:hover {
+  background-color: #019165;
+}
+
+.order-detail-page .footer-block .order-footer-btn.save:active {
+  background-color: #017954;
+}
+
 .order-detail-page .footer-block .order-footer-btn.cancel {
   background-color: #CB3730;
+}
+
+.order-detail-page .footer-block .order-footer-btn.cancel:hover {
+  background-color: #b7332d;
+}
+
+.order-detail-page .footer-block .order-footer-btn.cancel:active {
+  background-color: #a52f29;
 }
 
 /* ################### */
