@@ -1392,3 +1392,14 @@ body {
 }
 
 /* ################### */
+
+.page tr,
+.page .row {
+  cursor: default;
+}
+
+
+.page .orders-list tbody tr:hover,
+.page .table-body .row:hover {
+  background-color: #03ab7840;
+}
