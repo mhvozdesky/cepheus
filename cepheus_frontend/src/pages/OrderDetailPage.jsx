@@ -30,6 +30,7 @@ const OrderDetailPage = function() {
     const [updateTotalAmount, setUpdateTotalAmount] = useState(false)
     const [listSelectedProducts, setListSelectedProducts] = useState([])
     const [totalSelectedProducts, setTotalSelectedProducts] = useState(false)
+    const [objectChanged, setObjectChanged] = useState(false)
 
     const importantFields = [
         'place_of_delivery',
@@ -40,23 +41,12 @@ const OrderDetailPage = function() {
         'customer_comment'
     ]
 
-    // function getUpdatedFields(original, updated) {
-    //     const changes = {};
-        
-    //     for (const key in original) {
-    //         if (original[key] !== updated[key]) {
-    //         changes[key] = updated[key];
-    //         }
-    //     }
-        
-    //     return changes;
-    // }
-
     const changeFields = (field, value) => {
         setOrder(prevOrder => ({
             ...prevOrder,
             [field]: value
         }));
+        setObjectChanged(true)
     }
 
     const normalizeFloatValue = (value, type) => {
@@ -113,6 +103,7 @@ const OrderDetailPage = function() {
         }));
 
         setUpdateTotalAmount(true)
+        setObjectChanged(true)
     };
 
     const valueTotalSelectedProducts = () => {
@@ -156,6 +147,7 @@ const OrderDetailPage = function() {
             })
         }));
         setUpdateTotalAmount(true);
+        setObjectChanged(true);
     }
 
     const delGood = () => {
@@ -165,6 +157,7 @@ const OrderDetailPage = function() {
         }));
         setUpdateTotalAmount(true);
         setListSelectedProducts([])
+        setObjectChanged(true);
     }
 
     const getGood = (id, index) => {
@@ -239,8 +232,6 @@ const OrderDetailPage = function() {
     }
 
     const newModalValue = (index, valueId, field) => {
-        // console.log(`Index ${index}, valueId ${valueId}, field ${field}`)
-
         if (field == 'good') {
             fillNewGoodValue(index, valueId)
         } else if (field == 'responsible') {
@@ -254,6 +245,7 @@ const OrderDetailPage = function() {
 
         setModalOrdersVisible(false)
         setModalForm(null)
+        setObjectChanged(true)
     }
 
     const getOrder = () => {
@@ -279,6 +271,7 @@ const OrderDetailPage = function() {
             setOrder(response.data)
             setOrderClear(response.data)
             setLoadingOrder(false)
+            setObjectChanged(false)
         })
         .catch((error) => {
             console.log(error.response)
@@ -308,14 +301,42 @@ const OrderDetailPage = function() {
         return updatedFields;
     }
 
+    const sendData = (data) => {
+        const url = `/api/v1/orders/${route_params.id}/`;
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        if (document.cookie) {
+            headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
+        }
+
+        axios.patch(
+            url,
+            data,
+            {
+                withCredentials: true,
+                headers: headers
+            }
+        )
+        .then((response) => {
+            getOrder();
+        })
+        .catch((error) => {
+            console.log(error.response.data)
+        })
+    }
+
     const saveOrder = () => {
         clearBadGoods();
         let updatedFields = getUpdatedFields();
-        console.log(updatedFields)
+        sendData(updatedFields);
     }
 
     const cancelOrder = () => {
-        //console.log('In cancel')
+        setOrder(orderClear)
+        setObjectChanged(false)
     }
 
     useEffect(() => {
@@ -617,11 +638,13 @@ const OrderDetailPage = function() {
                         text='Зберегти'
                         name='save'
                         click={saveOrder}
+                        active={objectChanged}
                     />
                     <OrderFooterBtn
                         text='Відмінити'
                         name='cancel'
                         click={cancelOrder}
+                        active={objectChanged}
                     />
                 </div>
             </div>

@@ -918,6 +918,10 @@ body {
   background-color: #a52f29;
 }
 
+.order-detail-page .footer-block .order-footer-btn.inactive {
+  background-color: #919191;
+}
+
 /* ################### */
 
 /* ########LabeledInput########### */
