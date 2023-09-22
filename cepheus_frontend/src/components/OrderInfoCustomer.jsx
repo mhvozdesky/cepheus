@@ -12,6 +12,10 @@ const OrderInfoCustomer = function(props) {
         //
     }
 
+    const changeHandler = (e) => {      
+        props.change(e.target.id, e.target.value)
+    }
+
     const getCustomer = () => {
         setLoadingCustomer(true)
         const url = `/api/v1/customers/${props.customer_id}/`;
@@ -101,6 +105,7 @@ const OrderInfoCustomer = function(props) {
                         value={props.place_of_delivery}
                         readOnly={false}
                         rows='15'
+                        change={props.change}
                     />
                     <LabeledText 
                         name='customer_comment'
@@ -108,6 +113,7 @@ const OrderInfoCustomer = function(props) {
                         value={props.customer_comment}
                         readOnly={false}
                         rows='15'
+                        change={props.change}
                     />
                 </div>
             </div>

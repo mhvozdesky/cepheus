@@ -31,6 +31,15 @@ const OrderDetailPage = function() {
     const [listSelectedProducts, setListSelectedProducts] = useState([])
     const [totalSelectedProducts, setTotalSelectedProducts] = useState(false)
 
+    const importantFields = [
+        'place_of_delivery',
+        'responsible',
+        'customer',
+        'status',
+        'payment_status',
+        'customer_comment'
+    ]
+
     // function getUpdatedFields(original, updated) {
     //     const changes = {};
         
@@ -277,12 +286,37 @@ const OrderDetailPage = function() {
         })
     }
 
-    // useEffect(() => {
-    //     if (order){
-    //         console.log(order)
-    //         console.log(orderClear)
-    //     }
-    // }, [order])
+    const clearBadGoods = () => {
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            goods: prevOrder.goods.filter(item => item.good !== null)
+        }));
+    }
+
+    const getUpdatedFields = () => {
+        const updatedFields = {}
+
+        for (let i in importantFields) {
+            let field = importantFields[i]
+            if (order[field] !== orderClear[field]) {
+                updatedFields[field] = order[field]
+            }
+        }
+
+        updatedFields['goods'] = order['goods']
+
+        return updatedFields;
+    }
+
+    const saveOrder = () => {
+        clearBadGoods();
+        let updatedFields = getUpdatedFields();
+        console.log(updatedFields)
+    }
+
+    const cancelOrder = () => {
+        //console.log('In cancel')
+    }
 
     useEffect(() => {
         getOrder();
@@ -564,6 +598,7 @@ const OrderDetailPage = function() {
                     customer_id={order.customer}
                     place_of_delivery={order.place_of_delivery}
                     customer_comment={order.customer_comment}
+                    change={changeFields}
                     listInfo={
                         {
                             form: setModalOrdersVisible,
@@ -581,10 +616,12 @@ const OrderDetailPage = function() {
                     <OrderFooterBtn
                         text='Зберегти'
                         name='save'
+                        click={saveOrder}
                     />
                     <OrderFooterBtn
                         text='Відмінити'
                         name='cancel'
+                        click={cancelOrder}
                     />
                 </div>
             </div>

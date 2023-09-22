@@ -1,6 +1,14 @@
 import React from "react";
 
 const LabeledText = function(props) {
+    const changeHandler = (e) => {  
+        if (props.readOnly) {
+            return
+        }
+            
+        props.change(e.target.id, e.target.value)
+    }
+
     return (
         <div className='labeled-text'>
             <label htmlFor={props.input_name}>{props.label_text}</label>
@@ -11,6 +19,7 @@ const LabeledText = function(props) {
                     readOnly={props.readOnly}
                     rows={props.rows}
                     defaultValue={props.value}
+                    onBlur={(e) => changeHandler(e)}
                 >
                     
                 </textarea>
