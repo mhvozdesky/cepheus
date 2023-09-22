@@ -46,7 +46,7 @@ const OrderInfoCustomer = function(props) {
     }
 
     useEffect(() => {
-        getCustomer();
+        //getCustomer();
     }, [])
 
     useEffect(() => {
