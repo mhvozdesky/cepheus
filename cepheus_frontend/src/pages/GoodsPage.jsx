@@ -9,6 +9,7 @@ import PaginationPanel from "../components/UI/PaginationPanel"
 import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
+import UniversalSearch from "../components/UI/UniversalSearch"
 
 const GoodsPage = function(props) {
     const router = useNavigate()
@@ -126,18 +127,7 @@ const GoodsPage = function(props) {
     return (
         <div className='page goods-page'>
             <div className='page-header'>
-                <LabeledSearch
-                    name='search-id'
-                    btn_text='ID'
-                />
-                <LabeledSearch
-                    name='search-title'
-                    btn_text='Назва'
-                />
-                <LabeledSearch
-                    name='search-vendor-code'
-                    btn_text='Артикул'
-                />
+                <UniversalSearch />
                 <ButtonAdd />
                 <ButtonExport />
                 <ButtonDelete />
