@@ -25,6 +25,9 @@ const GoodsPage = function(props) {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: ['']})
+    const [searchInputName, setSearchInputName] = useState({name: 'Назва', values: ['']})
+    const [searchInputVendor, setSearchInputVendor] = useState({name: 'Артикул', values: ['']})
 
     const [goodSelected, setGoodSelected] = useState(null)
 
@@ -127,7 +130,9 @@ const GoodsPage = function(props) {
     return (
         <div className='page goods-page'>
             <div className='page-header'>
-                <UniversalSearch />
+                <UniversalSearch 
+                    listInputs={[searchInputId, searchInputName, searchInputVendor]}
+                />
                 <ButtonAdd />
                 <ButtonExport />
                 <ButtonDelete />
