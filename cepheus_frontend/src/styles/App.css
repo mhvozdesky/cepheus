@@ -1540,14 +1540,74 @@ body {
   z-index: 999;
   position: relative;
   width: 100%;
-  height: 100px;
+  height: 500px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: none;
+  padding: 10px 20px;
+  /* display: none; */
+}
+
+.universal-search .search-block .search-inputs .inputs-block {
+  width: 100%;
 }
 
 .universal-search .search-block.active .search-inputs {
   display: block;
+}
+
+.universal-search .inputs-block .line {
+  height: 40px;
+  width: 100%;
+  display: flex;
+}
+
+.universal-search .inputs-block .line span {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 55px;
+}
+
+.universal-search .inputs-block .line .line-field {
+  flex: auto;
+}
+
+.universal-search .inputs-block .line .line-field .line-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 5px 0;
+  display: flex;
+  border-radius: 3px;
+  border: 1px solid #dbe5ea;
+}
+
+.universal-search .inputs-block .line .line-field .inputWrapper {
+  flex: auto;
+  display: flex;
+  align-items: center;
+}
+
+.universal-search .inputs-block .line .line-field .inputWrapper input {
+  width: 100%;
+  height: 30px;
+  padding-left: 5px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+.universal-search .inputs-block .line .line-field .addIcon,
+.universal-search .inputs-block .line .line-field .icon {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.universal-search .inputs-block .line .line-field .addIcon svg,
+.universal-search .inputs-block .line .line-field .icon svg{
+  fill: #555454;
 }
 
 .universal-search .search-block.active .direction svg {

@@ -75,7 +75,8 @@ const UniversalSearch = function(props) {
                                 <svg id="Layer_1" version="1.1" height="20px" width="20px" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                     <path d="M284.3,245.1l110.9-110.9c7.8-7.8,7.8-20.5,0-28.3s-20.5-7.8-28.3,0L256,216.8L145.1,105.9 
                                     c-7.8-7.8-20.5-7.8-28.3,0s-7.8,20.5,0,28.3l110.9,110.9L116.9,355.9c-7.8,7.8-7.8,20.5,0,28.3c3.9,3.9,9,5.9,14.1,5.9 
-                                    c5.1,0,10.2-2,14.1-5.9L256,273.3l110.9,110.9c3.9,3.9,9,5.9,14.1,5.9s10.2-2,14.1-5.9c7.8-7.8,7.8-20.5,0-28.3L284.3,245.1z"/></svg>
+                                    c5.1,0,10.2-2,14.1-5.9L256,273.3l110.9,110.9c3.9,3.9,9,5.9,14.1,5.9s10.2-2,14.1-5.9c7.8-7.8,7.8-20.5,0-28.3L284.3,245.1z"/>
+                                </svg>
                             </div>
                             <div className='direction' onClick={changeShowSearchBlock}>
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 16 16">
@@ -85,7 +86,32 @@ const UniversalSearch = function(props) {
                         </div>
                     </div>
                     <div className='search-inputs'>
-                        <div className='spam'>spam</div>
+                        <div className='inputs-block'>
+                            <div className='line'>
+                                <span>ID</span>
+                                <div className='line-field'>
+                                    <div className='line-wrapper'>
+                                        <div className='inputWrapper'>
+                                            <input type='text' />
+                                        </div>
+                                        <div className='addIcon'>
+                                            <svg height="18px" width="18px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
+                                                viewBox="0 0 455 455" xmlSpace="preserve">
+                                                <polygon points="455,212.5 242.5,212.5 242.5,0 212.5,0 212.5,212.5 0,212.5 0,242.5 212.5,242.5 212.5,455 242.5,455 242.5,242.5 
+                                                455,242.5 "/>
+                                            </svg>
+                                        </div>
+                                        <div className='icon'>
+                                            <svg id="Layer_1" version="1.1" height="20px" width="20px" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                                                <path d="M284.3,245.1l110.9-110.9c7.8-7.8,7.8-20.5,0-28.3s-20.5-7.8-28.3,0L256,216.8L145.1,105.9 
+                                                c-7.8-7.8-20.5-7.8-28.3,0s-7.8,20.5,0,28.3l110.9,110.9L116.9,355.9c-7.8,7.8-7.8,20.5,0,28.3c3.9,3.9,9,5.9,14.1,5.9 
+                                                c5.1,0,10.2-2,14.1-5.9L256,273.3l110.9,110.9c3.9,3.9,9,5.9,14.1,5.9s10.2-2,14.1-5.9c7.8-7.8,7.8-20.5,0-28.3L284.3,245.1z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className='searchButton' onClick={hendlerSearchBtn}><span>Пошук</span></div>
