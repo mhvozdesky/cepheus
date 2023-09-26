@@ -4,6 +4,7 @@ const UniversalSearch = function(props) {
     const [searchText, setSearchText] = useState('Пошук')
     const [searchBlockClsnm, setSearchBlockClsnm] = useState('search-block')
     const [showSearchInputs, setShowSearchInputs] = useState(false)
+    const [changeInputText, setChangeInputText] = useState(false)
 
     const changeShowSearchBlock = () => {
         setShowSearchInputs(!showSearchInputs)
@@ -21,6 +22,7 @@ const UniversalSearch = function(props) {
     const handlerSearchBtn = () => {
         setShowSearchInputs(false) // Hide search fields
         props.searchHandler() // We perform a basic search
+        generateInputText()
     }
 
     // A function to create a new state and a new array of values
@@ -87,6 +89,24 @@ const UniversalSearch = function(props) {
         for (let i=0; i < props.listInputs.length; i++){
             clearInputFields(i) // Clear each input field
         }
+        setChangeInputText(true)
+    }
+
+    const generateInputText = () => {
+        let textList = [];
+        for (let i=0; i < props.listInputs.length; i++) {
+            let valueList = props.listInputs[i].state.values;
+            if (valueList.length === 1 && valueList[0] === '') {
+                continue
+            }
+            valueList.map((item) => textList.push(`"${item}"`))
+        }
+
+        let newText = textList.join(', ')
+        if (newText === '') {
+            newText = 'Пошук'
+        }
+        setSearchText(newText)
     }
 
     useEffect(() => {
@@ -96,6 +116,13 @@ const UniversalSearch = function(props) {
             closeSearchBlock()
         }
     }, [showSearchInputs])
+
+    useEffect(() => {
+        if (changeInputText) {
+            generateInputText()
+            setChangeInputText(false)
+        }
+    }, [props.listInputs])
 
     return (
         <div className='universal-search'>

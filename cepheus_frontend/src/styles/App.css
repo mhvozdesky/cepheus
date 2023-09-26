@@ -1495,10 +1495,15 @@ body {
   flex: auto;
   display: flex;
   align-items: center;
+  width: 261px;
 }
 
 .universal-search .search-line .search-block .searchInput .emptySearchInput .display .text {
   color: #878585;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .universal-search .search-line .search-block .searchInput .emptySearchInput .clear,
