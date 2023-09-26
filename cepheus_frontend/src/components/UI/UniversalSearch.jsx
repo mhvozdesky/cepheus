@@ -17,8 +17,76 @@ const UniversalSearch = function(props) {
         setSearchBlockClsnm('search-block')
     }
 
-    const hendlerSearchBtn = () => {
-        setShowSearchInputs(false)
+    // The function that is called when the search button is clicked
+    const handlerSearchBtn = () => {
+        setShowSearchInputs(false) // Hide search fields
+        props.searchHandler() // We perform a basic search
+    }
+
+    // A function to create a new state and a new array of values
+    const get_new_data = (cur_state) => {
+        const newState = {...cur_state}; // We copy the current state
+        const newValues = [...newState.values]; // We copy the array of values
+        return {newState, newValues} // We return the new state and new values
+    }
+
+    // A function to get the current state and a state change function for the specified index
+    const get_cur_state = (index) => {
+        const cur_state = props.listInputs[index].state
+        const func_change_state = props.listInputs[index].setState
+        return {cur_state, func_change_state}
+    }
+
+    // A function to handle input changes
+    const InputChangeHandler = (index, indexValue, value) => {
+        const {cur_state, func_change_state} = get_cur_state(index)
+        const {newState, newValues} = get_new_data(cur_state)
+
+        newValues[indexValue] = value; // We update the value
+        newState.values = newValues; // We update the array of values in the state
+
+        func_change_state(newState) // We update the status
+    }
+
+    // Function for adding a new line (element) to the array of values
+    const addNewLine = (index) => {
+        const {cur_state, func_change_state} = get_cur_state(index)
+        const {newState, newValues} = get_new_data(cur_state)
+
+        newValues.push('') // Add a new line
+        newState.values = newValues;
+
+        func_change_state(newState)
+    }
+
+    // A function for removing a row (element) from an array of values
+    const removeLine = (index, indexValue) => {
+        const {cur_state, func_change_state} = get_cur_state(index)
+        let {newState, newValues} = get_new_data(cur_state)
+
+        if (cur_state.values.length === 1) {
+            newValues = [''] // If there is only one element, replace it with an empty line
+        } else {
+            newValues = newValues.filter((item, index) => index !== indexValue)
+        }
+        newState.values = newValues;
+        func_change_state(newState)
+    }
+
+    // A function to clear all input fields for the specified index
+    const clearInputFields = (inputIndex) => {
+        const {cur_state, func_change_state} = get_cur_state(inputIndex)
+        let {newState, newValues} = get_new_data(cur_state)
+        newValues = [''] // Clear the array of values
+        newState.values = newValues;
+        func_change_state(newState)
+    }
+
+    // Function to clear all input fields
+    const clearAllFields = () => {
+        for (let i=0; i < props.listInputs.length; i++){
+            clearInputFields(i) // Clear each input field
+        }
     }
 
     useEffect(() => {
@@ -71,7 +139,7 @@ const UniversalSearch = function(props) {
                             <div className='display' onClick={changeShowSearchBlock}>
                                 <div className='text'>{searchText}</div>
                             </div>
-                            <div className='clear'>
+                            <div className='clear' onClick={clearAllFields}>
                                 <svg id="Layer_1" version="1.1" height="20px" width="20px" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                     <path d="M284.3,245.1l110.9-110.9c7.8-7.8,7.8-20.5,0-28.3s-20.5-7.8-28.3,0L256,216.8L145.1,105.9 
                                     c-7.8-7.8-20.5-7.8-28.3,0s-7.8,20.5,0,28.3l110.9,110.9L116.9,355.9c-7.8,7.8-7.8,20.5,0,28.3c3.9,3.9,9,5.9,14.1,5.9 
@@ -87,34 +155,38 @@ const UniversalSearch = function(props) {
                     </div>
                     <div className='search-inputs'>
                         <div className='inputs-block'>
-                            <div className='line'>
-                                <span>ID</span>
-                                <div className='line-field'>
-                                    <div className='line-wrapper'>
-                                        <div className='inputWrapper'>
-                                            <input type='text' />
-                                        </div>
-                                        <div className='addIcon'>
-                                            <svg height="18px" width="18px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
-                                                viewBox="0 0 455 455" xmlSpace="preserve">
-                                                <polygon points="455,212.5 242.5,212.5 242.5,0 212.5,0 212.5,212.5 0,212.5 0,242.5 212.5,242.5 212.5,455 242.5,455 242.5,242.5 
-                                                455,242.5 "/>
-                                            </svg>
-                                        </div>
-                                        <div className='icon'>
-                                            <svg id="Layer_1" version="1.1" height="20px" width="20px" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                                                <path d="M284.3,245.1l110.9-110.9c7.8-7.8,7.8-20.5,0-28.3s-20.5-7.8-28.3,0L256,216.8L145.1,105.9 
-                                                c-7.8-7.8-20.5-7.8-28.3,0s-7.8,20.5,0,28.3l110.9,110.9L116.9,355.9c-7.8,7.8-7.8,20.5,0,28.3c3.9,3.9,9,5.9,14.1,5.9 
-                                                c5.1,0,10.2-2,14.1-5.9L256,273.3l110.9,110.9c3.9,3.9,9,5.9,14.1,5.9s10.2-2,14.1-5.9c7.8-7.8,7.8-20.5,0-28.3L284.3,245.1z"/>
-                                            </svg>
-                                        </div>
+                            {props.listInputs.map((item, index) => 
+                                <div key={index} className='line'>
+                                    <span>{item.state.name}</span>
+                                    <div className='line-field'>
+                                        {item.state.values.map((inputValue, valueIndex) =>
+                                            <div key={valueIndex} className='line-wrapper'>
+                                                <div className='inputWrapper'>
+                                                    <input type='text' value={inputValue} onChange={(e) => InputChangeHandler(index, valueIndex, e.target.value)} />
+                                                </div>
+                                                <div className='addIcon' onClick={(e) => addNewLine(index)}>
+                                                    <svg height="18px" width="18px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
+                                                        viewBox="0 0 455 455" xmlSpace="preserve">
+                                                        <polygon points="455,212.5 242.5,212.5 242.5,0 212.5,0 212.5,212.5 0,212.5 0,242.5 212.5,242.5 212.5,455 242.5,455 242.5,242.5 
+                                                        455,242.5 "/>
+                                                    </svg>
+                                                </div>
+                                                <div className='icon' onClick={(e) => removeLine(index, valueIndex)}>
+                                                    <svg id="Layer_1" version="1.1" height="20px" width="20px" viewBox="0 0 512 512" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                                                        <path d="M284.3,245.1l110.9-110.9c7.8-7.8,7.8-20.5,0-28.3s-20.5-7.8-28.3,0L256,216.8L145.1,105.9 
+                                                        c-7.8-7.8-20.5-7.8-28.3,0s-7.8,20.5,0,28.3l110.9,110.9L116.9,355.9c-7.8,7.8-7.8,20.5,0,28.3c3.9,3.9,9,5.9,14.1,5.9 
+                                                        c5.1,0,10.2-2,14.1-5.9L256,273.3l110.9,110.9c3.9,3.9,9,5.9,14.1,5.9s10.2-2,14.1-5.9c7.8-7.8,7.8-20.5,0-28.3L284.3,245.1z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
-                <div className='searchButton' onClick={hendlerSearchBtn}><span>Пошук</span></div>
+                <div className='searchButton' onClick={handlerSearchBtn}><span>Пошук</span></div>
             </div>
         </div>
     );

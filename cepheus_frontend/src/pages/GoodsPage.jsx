@@ -102,6 +102,31 @@ const GoodsPage = function(props) {
         })
     }
 
+    const get_value_for_search = (values) => {
+        let res = []
+        for (let i = 0; i < values.length; i++) {
+            let value = values[i]
+            if (value !== '') {
+                res.push(value)
+            }
+        }
+        return res.join(', ')
+    }
+
+    const searchHandler = () => {
+        const search_fields = [searchInputId, searchInputName, searchInputVendor]
+        let searchText = "";
+        for (let i = 0; i < search_fields.length; i++) {
+            let state = search_fields[i]
+            let valueForSearch = get_value_for_search(state.values)
+            if (valueForSearch !== '') {
+                searchText = searchText + ' ' + `${state.name}: ${valueForSearch}`
+            }
+        }
+
+        console.log(searchText)
+    }
+
     useEffect(() => {
         getGoods();
     }, [])
@@ -131,7 +156,13 @@ const GoodsPage = function(props) {
         <div className='page goods-page'>
             <div className='page-header'>
                 <UniversalSearch 
-                    listInputs={[searchInputId, searchInputName, searchInputVendor]}
+                    listInputs={[
+                        {state: searchInputId, setState: setSearchInputId}, 
+                        {state: searchInputName, setState: setSearchInputName},
+                        {state: searchInputVendor, setState: setSearchInputVendor}
+                    ]}
+                    searchHandler={searchHandler}
+                    //listInputs={[searchInputId]}
                 />
                 <ButtonAdd />
                 <ButtonExport />
