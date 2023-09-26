@@ -9,6 +9,7 @@ import PaginationPanel from "../components/UI/PaginationPanel"
 import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
+import UniversalSearch from "../components/UI/UniversalSearch"
 
 const GoodsPage = function(props) {
     const router = useNavigate()
@@ -24,6 +25,9 @@ const GoodsPage = function(props) {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: ['']})
+    const [searchInputName, setSearchInputName] = useState({name: 'Назва', values: ['']})
+    const [searchInputVendor, setSearchInputVendor] = useState({name: 'Артикул', values: ['']})
 
     const [goodSelected, setGoodSelected] = useState(null)
 
@@ -98,6 +102,31 @@ const GoodsPage = function(props) {
         })
     }
 
+    const get_value_for_search = (values) => {
+        let res = []
+        for (let i = 0; i < values.length; i++) {
+            let value = values[i]
+            if (value !== '') {
+                res.push(value)
+            }
+        }
+        return res.join(', ')
+    }
+
+    const searchHandler = () => {
+        const search_fields = [searchInputId, searchInputName, searchInputVendor]
+        let searchText = "";
+        for (let i = 0; i < search_fields.length; i++) {
+            let state = search_fields[i]
+            let valueForSearch = get_value_for_search(state.values)
+            if (valueForSearch !== '') {
+                searchText = searchText + ' ' + `${state.name}: ${valueForSearch}`
+            }
+        }
+
+        console.log(searchText)
+    }
+
     useEffect(() => {
         getGoods();
     }, [])
@@ -126,17 +155,14 @@ const GoodsPage = function(props) {
     return (
         <div className='page goods-page'>
             <div className='page-header'>
-                <LabeledSearch
-                    name='search-id'
-                    btn_text='ID'
-                />
-                <LabeledSearch
-                    name='search-title'
-                    btn_text='Назва'
-                />
-                <LabeledSearch
-                    name='search-vendor-code'
-                    btn_text='Артикул'
+                <UniversalSearch 
+                    listInputs={[
+                        {state: searchInputId, setState: setSearchInputId}, 
+                        {state: searchInputName, setState: setSearchInputName},
+                        {state: searchInputVendor, setState: setSearchInputVendor}
+                    ]}
+                    searchHandler={searchHandler}
+                    //listInputs={[searchInputId]}
                 />
                 <ButtonAdd />
                 <ButtonExport />
