@@ -124,6 +124,10 @@ const UniversalSearch = function(props) {
         }
     }, [props.listInputs])
 
+    useEffect(() => {
+        generateInputText()
+    }, [])
+
     return (
         <div className='universal-search'>
             <div className='search-line'>
