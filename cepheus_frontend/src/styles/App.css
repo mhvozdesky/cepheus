@@ -1074,6 +1074,7 @@ body {
 .employees-page .page-header,
 .goods-page .page-header {
   height: 80px;
+  min-height: 80px;
   display: flex;
   align-items: center;
 }
