@@ -1,9 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 
 from .models import Order, Category, Customer, Good
 from .serializers import (OrderListSerializer, CategorySerializer, CustomerSerializer,
                           GoodSerializer, OrderDetailSerializer)
+from .filters import GoodFilters
 
 
 class OrderViewSet(ModelViewSet):
@@ -36,3 +38,5 @@ class GoodViewSet(ModelViewSet):
     lookup_field = 'pk'
     serializer_class = GoodSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = GoodFilters
