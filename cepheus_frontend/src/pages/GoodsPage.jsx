@@ -25,9 +25,9 @@ const GoodsPage = function(props) {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
-    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: ['']})
-    const [searchInputName, setSearchInputName] = useState({name: 'Назва', values: ['']})
-    const [searchInputVendor, setSearchInputVendor] = useState({name: 'Артикул', values: ['']})
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: [''], field: 'id'})
+    const [searchInputName, setSearchInputName] = useState({name: 'Назва', values: [''], field: 'title'})
+    const [searchInputVendor, setSearchInputVendor] = useState({name: 'Артикул', values: [''], field: 'vendor_code'})
 
     const [goodSelected, setGoodSelected] = useState(null)
 
@@ -46,11 +46,11 @@ const GoodsPage = function(props) {
             cur_page = need_page;
         }
 
-        getGoods(cur_page);
+        getGoods({cur_page: cur_page});
     }
 
     const change_page_size = (onPage) => {
-        getGoods(1, onPage);
+        getGoods({cur_page: 1, onPage: onPage});
     }
 
     const fill_pagination = (data) => {
@@ -72,9 +72,13 @@ const GoodsPage = function(props) {
         setLastPage(data['last_page'])
     }
 
-    const getGoods = (cur_page=page, onPage=pageSize) => {
+    const getGoods = ({cur_page=page, onPage=pageSize, filterString=''} = {}) => {
         setLoadingGoods(true)
-        const url = `/api/v1/goods/?page=${cur_page}&page_size=${onPage}`;
+        let url = `/api/v1/goods/?page=${cur_page}&page_size=${onPage}`;
+
+        if (filterString !== '') {
+            url = url + '&' + filterString;
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -113,18 +117,50 @@ const GoodsPage = function(props) {
         return res.join(', ')
     }
 
-    const searchHandler = () => {
+    const convertToBase64 = (value) => {
+        let json = JSON.stringify(value)
+        let encoder = new TextEncoder()
+        let bytes = encoder.encode(json)
+        let base64String = btoa(String.fromCharCode(...bytes))
+        return encodeURIComponent(base64String)
+    }
+
+    const get_string_value = (searchItem) => {
+        let valueList = searchItem.values;
+        let valueListClear = valueList.filter((item) => item !== '')
+
+        if (valueListClear.length === 0) {
+            return ''
+        }
+
+        let valueBase64 = convertToBase64(valueListClear)
+
+        return `${searchItem.field}=${valueBase64}`
+
+    }
+
+    const get_filter_string = () => {
         const search_fields = [searchInputId, searchInputName, searchInputVendor]
-        let searchText = "";
-        for (let i = 0; i < search_fields.length; i++) {
-            let state = search_fields[i]
-            let valueForSearch = get_value_for_search(state.values)
-            if (valueForSearch !== '') {
-                searchText = searchText + ' ' + `${state.name}: ${valueForSearch}`
+        let string_list = []
+
+        for (let i=0; i < search_fields.length; i++) {
+            let searchItem = search_fields[i]
+            let stringValue = get_string_value(searchItem)
+            if (stringValue !== '') {
+                string_list.push(stringValue)
             }
         }
 
-        console.log(searchText)
+        return string_list.join('&')
+    }
+
+    const searchHandler = () => {
+        const filterString = get_filter_string()
+        getGoods({filterString: filterString});
+    }
+
+    const clearFilter = () => {
+        getGoods();
     }
 
     useEffect(() => {
@@ -162,7 +198,7 @@ const GoodsPage = function(props) {
                         {state: searchInputVendor, setState: setSearchInputVendor}
                     ]}
                     searchHandler={searchHandler}
-                    //listInputs={[searchInputId]}
+                    clearFilter={clearFilter}
                 />
                 <ButtonAdd />
                 <ButtonExport />
