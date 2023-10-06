@@ -90,6 +90,7 @@ const UniversalSearch = function(props) {
             clearInputFields(i) // Clear each input field
         }
         setChangeInputText(true)
+        props.clearFilter()
     }
 
     const generateInputText = () => {

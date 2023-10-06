@@ -159,6 +159,10 @@ const GoodsPage = function(props) {
         getGoods({filterString: filterString});
     }
 
+    const clearFilter = () => {
+        getGoods();
+    }
+
     useEffect(() => {
         getGoods();
     }, [])
@@ -194,7 +198,7 @@ const GoodsPage = function(props) {
                         {state: searchInputVendor, setState: setSearchInputVendor}
                     ]}
                     searchHandler={searchHandler}
-                    //listInputs={[searchInputId]}
+                    clearFilter={clearFilter}
                 />
                 <ButtonAdd />
                 <ButtonExport />
