@@ -6,6 +6,7 @@ import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
 import PreLoader from "../components/UI/PreLoader"
 import PaginationPanel from "../components/UI/PaginationPanel"
+import FilterSet from "../components/UI/FilterSet"
 import OrdersTable from "../components/OrdersTable"
 import axios from "axios";
 
@@ -160,6 +161,7 @@ const OrdersPage = function(props) {
             <div className='page-header'>
                 <div className='header-part part0'>
                     <ButtonAdd />
+                    <FilterSet />
                     <SelectOption
                         class_name='responsible'
                         defaultValue="Відповідальний"

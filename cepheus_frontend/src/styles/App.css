@@ -1633,3 +1633,57 @@ body {
 
 
 /* ################### */
+
+/* ########FilterSet########### */
+
+.filter-set {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.filter-set .button {
+  display: flex;
+  width: 160px;
+  height: 37px;
+  align-items: center;
+  border: 1px solid #dbe5ea;
+  cursor: pointer;
+  border-radius: 25px;
+  background-color: #ECECEC;
+}
+
+.filter-set .button .text-wrap {
+  margin-left: 10px;
+}
+
+.filter-set .button .badge-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 22px;
+}
+
+.filter-set .button .badge-wrap .text {
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background-color: #03AB78;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+}
+
+.filter-set .button .img {
+  width: 18px;
+  height: 18px;
+  background-image: url("../../public/images/filter.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-left: 14px;
+}
+
+/* ################### */
