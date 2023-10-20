@@ -12,6 +12,17 @@ const FilterSet = function() {
                     <div className='text'>1</div>
                 </div>
             </div>
+            <div className='filterSideBar'>
+                <div className='filterHeader'>
+                    <div className='title'>Фільтри таблиці</div>
+                    <div className='close-icon'></div>
+                </div>
+                <div className='filterContent'></div>
+                <div className='filterFooter'>
+                    <div className='doFilterBtn'>Фільтр</div>
+                    <div className='cleanFilterBtn'>Скинути</div>
+                </div>
+            </div>
         </div>
     );
 };

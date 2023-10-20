@@ -1640,6 +1640,7 @@ body {
   display: flex;
   flex-direction: column;
   height: fit-content;
+  position: relative;
 }
 
 .filter-set .button {
@@ -1684,6 +1685,65 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   margin-left: 14px;
+}
+
+.filter-set .filterSideBar {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50px;
+  background-color: #fff;
+  padding: 20px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.filterSideBar .filterHeader {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterSideBar .filterHeader .title {
+  font-weight: 700;
+}
+
+.filterSideBar .filterHeader .close-icon {
+  width: 20px;
+  height: 20px;
+  background-image: url("../../public/images/close.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  top: -18px;
+  cursor: pointer;
+}
+
+.filterSideBar .filterFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterSideBar .filterFooter .doFilterBtn,
+.filterSideBar .filterFooter .cleanFilterBtn {
+  width: 100px;
+  height: 30px;
+  border: 1px solid #b6cadb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ECECEC;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.filterSideBar .filterFooter .doFilterBtn:hover,
+.filterSideBar .filterFooter .cleanFilterBtn:hover {
+  border: 2px solid #03AB78;
 }
 
 /* ################### */
