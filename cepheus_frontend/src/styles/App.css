@@ -1659,10 +1659,14 @@ body {
 }
 
 .filter-set .button .badge-wrap {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   margin-left: 22px;
+}
+
+.filter-set .button .badge-wrap.active {
+  display: flex;
 }
 
 .filter-set .button .badge-wrap .text {

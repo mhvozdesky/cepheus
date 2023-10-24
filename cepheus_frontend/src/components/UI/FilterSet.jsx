@@ -9,8 +9,8 @@ const FilterSet = function(props) {
                 <div className='text-wrap'>
                     <div className='text'>Фільтри</div>
                 </div>
-                <div className='badge-wrap'>
-                    <div className='text'>1</div>
+                <div className={`badge-wrap ${Object.keys(props.filterChoice).length > 0 ? 'active' : ''}`}>
+                    <div className='text'>{Object.keys(props.filterChoice).length}</div>
                 </div>
             </div>
             <div className='filterSideBar'>
