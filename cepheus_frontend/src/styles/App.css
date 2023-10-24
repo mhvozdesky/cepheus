@@ -1722,6 +1722,15 @@ body {
   cursor: pointer;
 }
 
+.filterContent {
+  margin-top: 20px;
+}
+
+.filterItem {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
 .filterSideBar .filterFooter {
   display: flex;
   align-items: center;
@@ -1744,6 +1753,84 @@ body {
 .filterSideBar .filterFooter .doFilterBtn:hover,
 .filterSideBar .filterFooter .cleanFilterBtn:hover {
   border: 2px solid #03AB78;
+}
+
+/* ################### */
+
+/* ########FilterCollapsibleGroup########### */
+
+.collapsibleGroup .title {
+  display: flex;
+  cursor: pointer;
+}
+
+.collapsibleGroup .title .text {
+  margin-left: 10px;
+}
+
+/* ################### */
+
+/* ########FilterList########### */
+
+.listForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.listForm label {
+  float: left;
+}
+
+.listForm .radioButton [type="radio"]:checked,.radioButton [type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.listForm .radioButton [type="radio"]:checked + .radioButton__label,.radioButton [type="radio"]:not(:checked) + .radioButton__label {
+  position: relative;
+  padding: 6px 0 6px 30px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.listForm .radioButton [type="radio"]:checked + .radioButton__label:before,.radioButton [type="radio"]:not(:checked) + .radioButton__label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ddd;
+  border-radius: 100%;
+  background: #fff;
+}
+
+.listForm .radioButton [type="radio"]:checked + .radioButton__label:after,.radioButton [type="radio"]:not(:checked) + .radioButton__label:after {
+  content: '';
+  width: 11px;
+  height: 11px;
+  background: #03AB78;
+  position: absolute;
+  top: 10px;
+  left: 4px;
+  border-radius: 100%;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+}
+
+.listForm .radioButton [type="radio"]:not(:checked) + .radioButton__label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.listForm .radioButton [type="radio"]:checked + .radioButton__label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }
 
 /* ################### */

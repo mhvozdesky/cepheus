@@ -1,6 +1,7 @@
 import React from "react";
+import FilterCollapsibleGroup from "./FilterCollapsibleGroup"
 
-const FilterSet = function() {
+const FilterSet = function(props) {
     return (
         <div className='filter-set'>
             <div className='button'>
@@ -17,7 +18,15 @@ const FilterSet = function() {
                     <div className='title'>Фільтри таблиці</div>
                     <div className='close-icon'></div>
                 </div>
-                <div className='filterContent'></div>
+                <div className='filterContent'>
+                    {props.items.map((filterItem, index) => 
+                        <div key={index} className='filterItem'>
+                            <FilterCollapsibleGroup
+                                {...filterItem}
+                            />
+                        </div>
+                    )}
+                </div>
                 <div className='filterFooter'>
                     <div className='doFilterBtn'>Фільтр</div>
                     <div className='cleanFilterBtn'>Скинути</div>
