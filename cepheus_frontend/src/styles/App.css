@@ -1728,7 +1728,7 @@ body {
 
 .filterItem {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .filterSideBar .filterFooter {
@@ -1766,6 +1766,19 @@ body {
 
 .collapsibleGroup .title .text {
   margin-left: 10px;
+}
+
+.collapsibleGroup.active .icon svg {
+  transform: rotate(180deg);
+}
+
+.collapsibleGroup .content {
+  display: none;
+}
+
+.collapsibleGroup.active .content {
+  display: block;
+  margin-top: 10px;
 }
 
 /* ################### */
