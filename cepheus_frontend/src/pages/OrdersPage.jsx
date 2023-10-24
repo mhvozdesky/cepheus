@@ -7,6 +7,8 @@ import SelectOption from "../components/UI/SelectOption"
 import PreLoader from "../components/UI/PreLoader"
 import PaginationPanel from "../components/UI/PaginationPanel"
 import FilterSet from "../components/UI/FilterSet"
+import FilterCollapsibleGroup from "../components/UI/FilterCollapsibleGroup"
+import FilterList from "../components/UI/FilterList"
 import OrdersTable from "../components/OrdersTable"
 import axios from "axios";
 
@@ -25,6 +27,7 @@ const OrdersPage = function(props) {
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
     const [orderSelected, setOrderSelected] = useState(null)
+    const [filterChoice, setFilterChoice] = useState({})
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -132,6 +135,42 @@ const OrdersPage = function(props) {
         })
     }
 
+    const filterStatusConfig = {
+        component: FilterList,
+        componentConfig: {
+            items: [
+                {name: '', value: "Всі"},
+                {name: 'in_progress', value: "В роботі"},
+                {name: 'canceled', value: "Анульовано"},
+                {name: 'returned', value: "Повернено"},
+                {name: 'shipped', value: "В дорозі"},
+                {name: 'shipped_back', value: "В дорозі назад"},
+                {name: 'completed', value: "Готово"},
+            ],
+            name: 'status',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Статус'
+    }
+
+    const filterPaymentStatusConfig = {
+        component: FilterList,
+        componentConfig: {
+            items: [
+                {name: '', value: "Всі"},
+                {name: 'not_paid', value: "Не оплачено"},
+                {name: 'partially_paid', value: "Частково оплачено"},
+                {name: 'paid', value: "Оплачено"},
+                {name: 'overpaid', value: "Переплачено"}
+            ],
+            name: 'payment_status',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Статус оплати'
+    }
+
     useEffect(() => {
         getOrders();
       }, [])
@@ -161,7 +200,9 @@ const OrdersPage = function(props) {
             <div className='page-header'>
                 <div className='header-part part0'>
                     <ButtonAdd />
-                    <FilterSet />
+                    <FilterSet
+                        items={[filterStatusConfig, filterPaymentStatusConfig]}
+                    />
                     <SelectOption
                         class_name='responsible'
                         defaultValue="Відповідальний"
