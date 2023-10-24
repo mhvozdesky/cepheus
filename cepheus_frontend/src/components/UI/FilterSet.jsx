@@ -1,10 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import FilterCollapsibleGroup from "./FilterCollapsibleGroup"
 
 const FilterSet = function(props) {
+    const [sidebarVisibility, setSidebarVisibility] = useState(false)
+
+    const invertSidebarVisibility = () => {
+        setSidebarVisibility(!sidebarVisibility);
+    }
+
+    const turnOffSidebar = () => {
+        setSidebarVisibility(false)
+    }
+
     return (
         <div className='filter-set'>
-            <div className='button'>
+            <div className='button' onClick={invertSidebarVisibility}>
                 <div className='img'></div>
                 <div className='text-wrap'>
                     <div className='text'>Фільтри</div>
@@ -13,10 +23,10 @@ const FilterSet = function(props) {
                     <div className='text'>{Object.keys(props.filterChoice).length}</div>
                 </div>
             </div>
-            <div className='filterSideBar'>
+            <div className={`filterSideBar ${sidebarVisibility ? 'active' : ''}`}>
                 <div className='filterHeader'>
                     <div className='title'>Фільтри таблиці</div>
-                    <div className='close-icon'></div>
+                    <div className='close-icon' onClick={turnOffSidebar}></div>
                 </div>
                 <div className='filterContent'>
                     {props.items.map((filterItem, index) => 
