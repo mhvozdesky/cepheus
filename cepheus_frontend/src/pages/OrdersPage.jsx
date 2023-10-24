@@ -203,6 +203,7 @@ const OrdersPage = function(props) {
                     <FilterSet
                         items={[filterStatusConfig, filterPaymentStatusConfig]}
                         filterChoice={filterChoice}
+                        setFilterChoice={setFilterChoice}
                     />
                     <SelectOption
                         class_name='responsible'

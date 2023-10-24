@@ -12,6 +12,10 @@ const FilterSet = function(props) {
         setSidebarVisibility(false)
     }
 
+    const cleanFilter = () => {
+        props.setFilterChoice({})
+    }
+
     return (
         <div className='filter-set'>
             <div className='button' onClick={invertSidebarVisibility}>
@@ -39,7 +43,7 @@ const FilterSet = function(props) {
                 </div>
                 <div className='filterFooter'>
                     <div className='doFilterBtn'>Фільтр</div>
-                    <div className='cleanFilterBtn'>Скинути</div>
+                    <div className='cleanFilterBtn' onClick={cleanFilter}>Скинути</div>
                 </div>
             </div>
         </div>
