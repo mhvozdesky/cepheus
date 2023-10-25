@@ -1855,3 +1855,51 @@ body {
 }
 
 /* ################### */
+
+/* ########FilterDateRange########### */
+
+.dateFilter {
+  padding: 0 10px;
+}
+
+.dateFilter .dateRow {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.dateFilter .dateRow .rowTitle {
+  display: flex;
+  width: 20px;
+  font-size: 12px;
+}
+
+/* ################### */
+
+/* ########DatePicker########### */
+
+.react-datepicker-wrapper {
+  margin-left: 5px;
+}
+
+.react-datepicker-wrapper input {
+  height: 27px;
+  width: 170px;
+  padding: 10px 15px;
+  border-radius: 3px;
+  border: 1px solid #dbe5ea;
+}
+
+.react-datepicker-wrapper button::after {
+  width: 15px;
+  height: 15px;
+  background-image: url("../../public/images/close.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  content: "";
+}
+
+/* ################### */
