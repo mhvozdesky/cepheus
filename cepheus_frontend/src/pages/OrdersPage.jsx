@@ -9,6 +9,7 @@ import PaginationPanel from "../components/UI/PaginationPanel"
 import FilterSet from "../components/UI/FilterSet"
 import FilterCollapsibleGroup from "../components/UI/FilterCollapsibleGroup"
 import FilterList from "../components/UI/FilterList"
+import FilterDateRange from "../components/UI/FilterDateRange"
 import OrdersTable from "../components/OrdersTable"
 import axios from "axios";
 
@@ -171,6 +172,16 @@ const OrdersPage = function(props) {
         title: 'Статус оплати'
     }
 
+    const filterDateCreated = {
+        component: FilterDateRange,
+        componentConfig: {
+            name: 'created',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Дата створення'
+    }
+
     useEffect(() => {
         getOrders();
       }, [])
@@ -201,7 +212,7 @@ const OrdersPage = function(props) {
                 <div className='header-part part0'>
                     <ButtonAdd />
                     <FilterSet
-                        items={[filterStatusConfig, filterPaymentStatusConfig]}
+                        items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated]}
                         filterChoice={filterChoice}
                         setFilterChoice={setFilterChoice}
                     />
