@@ -182,6 +182,16 @@ const OrdersPage = function(props) {
         title: 'Дата створення'
     }
 
+    const filterDateModified = {
+        component: FilterDateRange,
+        componentConfig: {
+            name: 'modified',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Дата оновлення'
+    }
+
     useEffect(() => {
         getOrders();
       }, [])
@@ -212,7 +222,7 @@ const OrdersPage = function(props) {
                 <div className='header-part part0'>
                     <ButtonAdd />
                     <FilterSet
-                        items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated]}
+                        items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated, filterDateModified]}
                         filterChoice={filterChoice}
                         setFilterChoice={setFilterChoice}
                     />
