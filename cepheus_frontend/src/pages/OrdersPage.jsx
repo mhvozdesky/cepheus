@@ -28,8 +28,7 @@ const OrdersPage = function(props) {
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
     const [orderSelected, setOrderSelected] = useState(null)
-    const [filterChoice, setFilterChoice] = useState({})
-    const [filterCreated, setFilterCreated] = useState({name: 'created', value: {}}) 
+    const [filterChoice, setFilterChoice] = useState({}) 
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -177,8 +176,8 @@ const OrdersPage = function(props) {
         component: FilterDateRange,
         componentConfig: {
             name: 'created',
-            filterChoice: filterCreated,
-            setFilterChoice: setFilterCreated
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
         },
         title: 'Дата створення'
     }

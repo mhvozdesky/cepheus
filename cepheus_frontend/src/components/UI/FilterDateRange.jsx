@@ -16,24 +16,27 @@ const FilterDateRange = function(props) {
     }
 
     const dateSelected = (mark, date) => {
-        if (date === null) {
-            props.setFilterChoice(prevData => {
-                const newData = { ...prevData };
-                const newValue = { ...newData.value };
-                delete newValue[mark];
-                newData.value = newValue;
-                return newData;
-            })
-        } else {
-            const formattedDate = dateToHuman(date);
-            props.setFilterChoice(prevData => ({
-                ...prevData,
-                value: {
-                    ...prevData.value,
-                    [mark]: formattedDate
-                }
-            }))
-        }
+        props.setFilterChoice(prevState => {
+            const newState = { ...prevState };
+        
+            if (!newState.created) {
+              if (date === null) return newState;
+        
+              newState.created = { type: "date", value: {} };
+            }
+        
+            if (date === null) {
+              delete newState.created.value[mark];
+            } else {
+              newState.created.value[mark] = dateToHuman(date);
+            }
+        
+            if (Object.keys(newState.created.value).length === 0) {
+              delete newState.created;
+            }
+        
+            return newState;
+        });
     }
 
     const startSelected = (date) => {
@@ -45,7 +48,13 @@ const FilterDateRange = function(props) {
     }
 
     const defineDate = () => {
-        const { start, end } = props.filterChoice.value;
+        if (!props.filterChoice.created) {
+            setStartDate(null)
+            setEndDate(null)
+            return
+        }
+
+        const { start, end } = props.filterChoice.created.value;
         setStartDate(start ? new Date(start) : null);
         setEndDate(end ? new Date(end) : null);
     }
