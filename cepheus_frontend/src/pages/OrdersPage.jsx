@@ -12,6 +12,7 @@ import FilterList from "../components/UI/FilterList"
 import FilterDateRange from "../components/UI/FilterDateRange"
 import OrdersTable from "../components/OrdersTable"
 import UniversalSearch from "../components/UI/UniversalSearch"
+import {get_filter_string} from "../utils"
 import axios from "axios";
 
 const OrdersPage = function(props) {
@@ -31,8 +32,8 @@ const OrdersPage = function(props) {
     const [orderSelected, setOrderSelected] = useState(null)
     const [filterChoice, setFilterChoice] = useState({}) 
     const [searchInputId, setSearchInputId] = useState({name: 'ID', values: [''], field: 'id'})
-    const [searchInputName, setSearchInputName] = useState({name: 'Назва', values: [''], field: 'title'})
-    const [searchInputVendor, setSearchInputVendor] = useState({name: 'Артикул', values: [''], field: 'vendor_code'})
+    const [searchInputResponsible, setSearchInputResponsible] = useState({name: 'Відповідальний', values: [''], field: 'responsible_full_name'})
+    const [searchInputCustomer, setSearchInputCustomer] = useState({name: 'Email замовника', values: [''], field: 'customer_email'})
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -49,11 +50,11 @@ const OrdersPage = function(props) {
             cur_page = need_page;
         }
 
-        getOrders(cur_page);
+        getOrders({cur_page:cur_page});
     }
 
     const change_page_size = (onPage) => {
-        getOrders(1, onPage);
+        getOrders({cur_page: 1, onPage: onPage});
     }
 
     const fill_pagination = (data) => {
@@ -110,9 +111,13 @@ const OrdersPage = function(props) {
         }
       }
 
-    const getOrders = (cur_page=page, onPage=pageSize) => {
+    const getOrders = ({cur_page=page, onPage=pageSize, filterString=''} = {}) => {
         setLoadingOrders(true)
-        const url = `/api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
+        let url = `/api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
+
+        if (filterString !== '') {
+            url = url + '&' + filterString;
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -197,12 +202,14 @@ const OrdersPage = function(props) {
     }
 
     const searchHandler = () => {
-        // const filterString = get_filter_string()
-        // getGoods({filterString: filterString});
+        const search_fields = [searchInputId, searchInputResponsible, searchInputCustomer]
+        const filterString = get_filter_string(search_fields)
+        //console.log(filterString)
+        getOrders({filterString: filterString});
     }
 
     const clearFilter = () => {
-        // getGoods();
+        getOrders();
     }
 
     useEffect(() => {
@@ -242,8 +249,8 @@ const OrdersPage = function(props) {
                     <UniversalSearch 
                         listInputs={[
                             {state: searchInputId, setState: setSearchInputId}, 
-                            {state: searchInputName, setState: setSearchInputName},
-                            {state: searchInputVendor, setState: setSearchInputVendor}
+                            {state: searchInputResponsible, setState: setSearchInputResponsible},
+                            {state: searchInputCustomer, setState: setSearchInputCustomer}
                         ]}
                         searchHandler={searchHandler}
                         clearFilter={clearFilter}
