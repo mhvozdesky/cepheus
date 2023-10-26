@@ -11,6 +11,7 @@ import FilterCollapsibleGroup from "../components/UI/FilterCollapsibleGroup"
 import FilterList from "../components/UI/FilterList"
 import FilterDateRange from "../components/UI/FilterDateRange"
 import OrdersTable from "../components/OrdersTable"
+import UniversalSearch from "../components/UI/UniversalSearch"
 import axios from "axios";
 
 const OrdersPage = function(props) {
@@ -29,6 +30,9 @@ const OrdersPage = function(props) {
     const [lastPage, setLastPage] = useState(1)
     const [orderSelected, setOrderSelected] = useState(null)
     const [filterChoice, setFilterChoice] = useState({}) 
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: [''], field: 'id'})
+    const [searchInputName, setSearchInputName] = useState({name: 'Назва', values: [''], field: 'title'})
+    const [searchInputVendor, setSearchInputVendor] = useState({name: 'Артикул', values: [''], field: 'vendor_code'})
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -192,6 +196,15 @@ const OrdersPage = function(props) {
         title: 'Дата оновлення'
     }
 
+    const searchHandler = () => {
+        // const filterString = get_filter_string()
+        // getGoods({filterString: filterString});
+    }
+
+    const clearFilter = () => {
+        // getGoods();
+    }
+
     useEffect(() => {
         getOrders();
       }, [])
@@ -225,6 +238,15 @@ const OrdersPage = function(props) {
                         items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated, filterDateModified]}
                         filterChoice={filterChoice}
                         setFilterChoice={setFilterChoice}
+                    />
+                    <UniversalSearch 
+                        listInputs={[
+                            {state: searchInputId, setState: setSearchInputId}, 
+                            {state: searchInputName, setState: setSearchInputName},
+                            {state: searchInputVendor, setState: setSearchInputVendor}
+                        ]}
+                        searchHandler={searchHandler}
+                        clearFilter={clearFilter}
                     />
                 </div>
                 <div className='header-part part1'>
