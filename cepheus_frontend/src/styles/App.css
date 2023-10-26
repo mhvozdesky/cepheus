@@ -1641,6 +1641,7 @@ body {
   flex-direction: column;
   height: fit-content;
   position: relative;
+  margin: 5px;
 }
 
 .filter-set .button {
