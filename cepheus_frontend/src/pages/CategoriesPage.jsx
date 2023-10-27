@@ -5,6 +5,8 @@ import CategoriesTable from "../components/CategoriesTable"
 import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
+import UniversalSearch from "../components/UI/UniversalSearch"
+import {get_search_string} from "../utils"
 
 const CategoriesPage = function() {
     const pageSizeDefault = 25;
@@ -18,6 +20,9 @@ const CategoriesPage = function() {
     const [pageSize, setPageSize] = useState(pageSizeDefault)
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
+
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: [''], field: 'id'})
+    const [searchInputTitle, setSearchInputTitle] = useState({name: "Назва", values: [''], field: 'title'})
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -34,11 +39,11 @@ const CategoriesPage = function() {
             cur_page = need_page;
         }
 
-        getCategories(cur_page);
+        getCategories({cur_page: cur_page});
     }
 
     const change_page_size = (onPage) => {
-        getCategories(1, onPage);
+        getCategories({cur_page: 1, onPage: onPage});
     }
 
     const fill_pagination = (data) => {
@@ -60,9 +65,13 @@ const CategoriesPage = function() {
         setLastPage(data['last_page'])
     }
 
-    const getCategories = (cur_page=page, onPage=pageSize) => {
+    const getCategories = ({cur_page=page, onPage=pageSize, filterString=''} = {}) => {
         setLoadingCategories(true)
-        const url = `/api/v1/categories/?page=${cur_page}&page_size=${onPage}`;
+        let url = `/api/v1/categories/?page=${cur_page}&page_size=${onPage}`;
+
+        if (filterString !== '') {
+            url = url + '&' + filterString;
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -90,6 +99,16 @@ const CategoriesPage = function() {
         })
     }
 
+    const searchHandler = () => {
+        const search_fields = [searchInputId, searchInputTitle]
+        const searchString = get_search_string(search_fields)
+        getCategories({filterString: searchString});
+    }
+
+    const clearSearch = () => {
+        getCategories()
+    }
+
     useEffect(() => {
         getCategories();
     }, [])
@@ -103,13 +122,13 @@ const CategoriesPage = function() {
     return (
         <div className='page categories-page'>
             <div className='page-header'>
-                <LabeledSearch
-                    name='search-id'
-                    btn_text='ID'
-                />
-                <LabeledSearch
-                    name='search-title'
-                    btn_text="Назва"
+                <UniversalSearch 
+                    listInputs={[
+                        {state: searchInputId, setState: setSearchInputId}, 
+                        {state: searchInputTitle, setState: setSearchInputTitle}
+                    ]}
+                    searchHandler={searchHandler}
+                    clearFilter={clearSearch}
                 />
             </div>
             <div className='page-content'>
