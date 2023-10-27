@@ -5,6 +5,8 @@ import EmployeesTable from "../components/EmployeesTable"
 import SelectOption from "../components/UI/SelectOption"
 import LabeledSearch from "../components/UI/LabeledSearch"
 import PaginationPanel from "../components/UI/PaginationPanel"
+import UniversalSearch from "../components/UI/UniversalSearch"
+import {get_search_string} from "../utils"
 
 const EmployeesList = function(props) {
     const pageSizeDefault = 25;
@@ -21,6 +23,10 @@ const EmployeesList = function(props) {
 
     const [employeeSelected, setEmployeeSelected] = useState(null)
 
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: [''], field: 'id'})
+    const [searchInputFullName, setSearchInputFullName] = useState({name: "Ім'я", values: [''], field: 'full_name'})
+    const [searchInputEmail, setSearchInputEmail] = useState({name: 'Email', values: [''], field: 'email'})
+
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
 
@@ -36,11 +42,11 @@ const EmployeesList = function(props) {
             cur_page = need_page;
         }
 
-        getEmployees(cur_page);
+        getEmployees({cur_page: cur_page});
     }
 
     const change_page_size = (onPage) => {
-        getEmployees(1, onPage);
+        getEmployees({cur_page: 1, onPage: onPage});
     }
 
     const fill_pagination = (data) => {
@@ -62,9 +68,13 @@ const EmployeesList = function(props) {
         setLastPage(data['last_page'])
     }
 
-    const getEmployees = (cur_page=page, onPage=pageSize) => {
+    const getEmployees = ({cur_page=page, onPage=pageSize, filterString=''} = {}) => {
         setLoadingEmployees(true)
-        const url = `/api/v1/accounts/?page=${cur_page}&page_size=${onPage}`;
+        let url = `/api/v1/accounts/?page=${cur_page}&page_size=${onPage}`;
+
+        if (filterString !== '') {
+            url = url + '&' + filterString;
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -90,6 +100,16 @@ const EmployeesList = function(props) {
             console.log(error.response)
             setLoadingEmployees(false)
         })
+    }
+
+    const searchHandler = () => {
+        const search_fields = [searchInputId, searchInputFullName, searchInputEmail]
+        const searchString = get_search_string(search_fields)
+        getEmployees({filterString: searchString});
+    }
+
+    const clearSearch = () => {
+        getEmployees()
     }
 
     useEffect(() => {
@@ -120,17 +140,14 @@ const EmployeesList = function(props) {
     return (
         <div className='page employees-page'>
             <div className='page-header'>
-                <LabeledSearch
-                    name='search-id'
-                    btn_text='ID'
-                />
-                <LabeledSearch
-                    name='search-full-name'
-                    btn_text="Ім'я"
-                />
-                <LabeledSearch
-                    name='search-email'
-                    btn_text='Email'
+                <UniversalSearch 
+                    listInputs={[
+                        {state: searchInputId, setState: setSearchInputId}, 
+                        {state: searchInputFullName, setState: setSearchInputFullName},
+                        {state: searchInputEmail, setState: setSearchInputEmail}
+                    ]}
+                    searchHandler={searchHandler}
+                    clearFilter={clearSearch}
                 />
             </div>
             <div className='page-content'>
