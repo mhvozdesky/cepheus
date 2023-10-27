@@ -10,7 +10,7 @@ import ButtonAdd from "../components/UI/ButtonAdd"
 import ButtonExport from "../components/UI/ButtonExport"
 import ButtonDelete from "../components/UI/ButtonDelete"
 import UniversalSearch from "../components/UI/UniversalSearch"
-import {get_filter_string} from "../utils"
+import {get_search_string} from "../utils"
 
 const GoodsPage = function(props) {
     const router = useNavigate()
@@ -109,7 +109,7 @@ const GoodsPage = function(props) {
 
     const searchHandler = () => {
         const search_fields = [searchInputId, searchInputName, searchInputVendor]
-        const filterString = get_filter_string(search_fields)
+        const filterString = get_search_string(search_fields)
         getGoods({filterString: filterString});
     }
 

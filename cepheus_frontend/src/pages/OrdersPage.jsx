@@ -12,7 +12,7 @@ import FilterList from "../components/UI/FilterList"
 import FilterDateRange from "../components/UI/FilterDateRange"
 import OrdersTable from "../components/OrdersTable"
 import UniversalSearch from "../components/UI/UniversalSearch"
-import {get_filter_string} from "../utils"
+import {get_search_string, get_filter_string} from "../utils"
 import axios from "axios";
 
 const OrdersPage = function(props) {
@@ -201,15 +201,32 @@ const OrdersPage = function(props) {
         title: 'Дата оновлення'
     }
 
+    const doSearch = (mark) => {
+        const stringsList = []
+        if (mark === 'all' || mark === 'search') {
+            const search_fields = [searchInputId, searchInputResponsible, searchInputCustomer]
+            const searchString = get_search_string(search_fields)
+            stringsList.push(searchString)
+        }
+
+        if (mark === 'all' || mark === 'filter') {
+            const filterString = get_filter_string(filterChoice)
+            stringsList.push(filterString)
+        }
+
+        getOrders({filterString: stringsList.join('&')});
+    }
+
     const searchHandler = () => {
-        const search_fields = [searchInputId, searchInputResponsible, searchInputCustomer]
-        const filterString = get_filter_string(search_fields)
-        //console.log(filterString)
-        getOrders({filterString: filterString});
+        doSearch('all')
+    }
+
+    const clearSearch = () => {
+        doSearch('filter')
     }
 
     const clearFilter = () => {
-        getOrders();
+        doSearch('search')
     }
 
     useEffect(() => {
@@ -245,6 +262,8 @@ const OrdersPage = function(props) {
                         items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated, filterDateModified]}
                         filterChoice={filterChoice}
                         setFilterChoice={setFilterChoice}
+                        filterHandler={searchHandler}
+                        clearFilter={clearFilter}
                     />
                     <UniversalSearch 
                         listInputs={[
@@ -253,7 +272,7 @@ const OrdersPage = function(props) {
                             {state: searchInputCustomer, setState: setSearchInputCustomer}
                         ]}
                         searchHandler={searchHandler}
-                        clearFilter={clearFilter}
+                        clearFilter={clearSearch}
                     />
                 </div>
                 <div className='header-part part1'>

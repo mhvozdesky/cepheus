@@ -20,7 +20,7 @@ const get_string_value = (searchItem) => {
 
 }
 
-export const get_filter_string = (search_fields) => {
+export const get_search_string = (search_fields) => {
     let string_list = []
 
     for (let i=0; i < search_fields.length; i++) {
@@ -32,4 +32,20 @@ export const get_filter_string = (search_fields) => {
     }
 
     return string_list.join('&')
+}
+
+export const get_filter_string = (filterChoice) => {
+    let result = [];
+
+    for (const [key, value] of Object.entries(filterChoice)) {
+        if (typeof value === "string") {
+            result.push(`${key}=${value}`);
+        } else if (typeof value === "object" && value.hasOwnProperty("value")) {
+        for (const [subKey, subValue] of Object.entries(value.value)) {
+            result.push(`${key}_${subKey}=${subValue}`);
+        }
+        }
+    }
+
+    return result.join("&");
 }

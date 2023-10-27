@@ -14,6 +14,7 @@ const FilterSet = function(props) {
 
     const cleanFilter = () => {
         props.setFilterChoice({})
+        props.clearFilter()
     }
 
     return (
@@ -42,7 +43,7 @@ const FilterSet = function(props) {
                     )}
                 </div>
                 <div className='filterFooter'>
-                    <div className='doFilterBtn'>Фільтр</div>
+                    <div className='doFilterBtn' onClick={props.filterHandler}>Фільтр</div>
                     <div className='cleanFilterBtn' onClick={cleanFilter}>Скинути</div>
                 </div>
             </div>
