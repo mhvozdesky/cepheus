@@ -6,7 +6,13 @@ import ButtonDelete from "../components/UI/ButtonDelete"
 import SelectOption from "../components/UI/SelectOption"
 import PreLoader from "../components/UI/PreLoader"
 import PaginationPanel from "../components/UI/PaginationPanel"
+import FilterSet from "../components/UI/FilterSet"
+import FilterCollapsibleGroup from "../components/UI/FilterCollapsibleGroup"
+import FilterList from "../components/UI/FilterList"
+import FilterDateRange from "../components/UI/FilterDateRange"
 import OrdersTable from "../components/OrdersTable"
+import UniversalSearch from "../components/UI/UniversalSearch"
+import {get_search_string, get_filter_string} from "../utils"
 import axios from "axios";
 
 const OrdersPage = function(props) {
@@ -24,6 +30,10 @@ const OrdersPage = function(props) {
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
     const [orderSelected, setOrderSelected] = useState(null)
+    const [filterChoice, setFilterChoice] = useState({}) 
+    const [searchInputId, setSearchInputId] = useState({name: 'ID', values: [''], field: 'id'})
+    const [searchInputResponsible, setSearchInputResponsible] = useState({name: 'Відповідальний', values: [''], field: 'responsible_full_name'})
+    const [searchInputCustomer, setSearchInputCustomer] = useState({name: 'Email замовника', values: [''], field: 'customer_email'})
 
     const change_page = (next_page=null, prev_page=null, need_page=null) => {
         let cur_page = page
@@ -40,11 +50,11 @@ const OrdersPage = function(props) {
             cur_page = need_page;
         }
 
-        getOrders(cur_page);
+        getOrders({cur_page:cur_page});
     }
 
     const change_page_size = (onPage) => {
-        getOrders(1, onPage);
+        getOrders({cur_page: 1, onPage: onPage});
     }
 
     const fill_pagination = (data) => {
@@ -101,9 +111,13 @@ const OrdersPage = function(props) {
         }
       }
 
-    const getOrders = (cur_page=page, onPage=pageSize) => {
+    const getOrders = ({cur_page=page, onPage=pageSize, filterString=''} = {}) => {
         setLoadingOrders(true)
-        const url = `/api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
+        let url = `/api/v1/orders/?page=${cur_page}&page_size=${onPage}`;
+
+        if (filterString !== '') {
+            url = url + '&' + filterString;
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -129,6 +143,91 @@ const OrdersPage = function(props) {
             console.log(error.response)
             setLoadingOrders(false)
         })
+    }
+
+    const filterStatusConfig = {
+        component: FilterList,
+        componentConfig: {
+            items: [
+                {name: '', value: "Всі"},
+                {name: 'new', value: "Новий"},
+                {name: 'in_progress', value: "В роботі"},
+                {name: 'canceled', value: "Анульовано"},
+                {name: 'returned', value: "Повернено"},
+                {name: 'shipped', value: "В дорозі"},
+                {name: 'shipped_back', value: "В дорозі назад"},
+                {name: 'completed', value: "Готово"},
+            ],
+            name: 'status',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Статус'
+    }
+
+    const filterPaymentStatusConfig = {
+        component: FilterList,
+        componentConfig: {
+            items: [
+                {name: '', value: "Всі"},
+                {name: 'not_paid', value: "Не оплачено"},
+                {name: 'partially_paid', value: "Частково оплачено"},
+                {name: 'paid', value: "Оплачено"},
+                {name: 'overpaid', value: "Переплачено"}
+            ],
+            name: 'payment_status',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Статус оплати'
+    }
+
+    const filterDateCreated = {
+        component: FilterDateRange,
+        componentConfig: {
+            name: 'created',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Дата створення'
+    }
+
+    const filterDateModified = {
+        component: FilterDateRange,
+        componentConfig: {
+            name: 'modified',
+            filterChoice: filterChoice,
+            setFilterChoice: setFilterChoice
+        },
+        title: 'Дата оновлення'
+    }
+
+    const doSearch = (mark) => {
+        const stringsList = []
+        if (mark === 'all' || mark === 'search') {
+            const search_fields = [searchInputId, searchInputResponsible, searchInputCustomer]
+            const searchString = get_search_string(search_fields)
+            stringsList.push(searchString)
+        }
+
+        if (mark === 'all' || mark === 'filter') {
+            const filterString = get_filter_string(filterChoice)
+            stringsList.push(filterString)
+        }
+
+        getOrders({filterString: stringsList.join('&')});
+    }
+
+    const searchHandler = () => {
+        doSearch('all')
+    }
+
+    const clearSearch = () => {
+        doSearch('filter')
+    }
+
+    const clearFilter = () => {
+        doSearch('search')
     }
 
     useEffect(() => {
@@ -160,46 +259,22 @@ const OrdersPage = function(props) {
             <div className='page-header'>
                 <div className='header-part part0'>
                     <ButtonAdd />
-                    <SelectOption
-                        class_name='responsible'
-                        defaultValue="Відповідальний"
-                        options={[
-                            {value: 1, name: "Антон Сурін"},
-                            {value: 2, name: "Аліса Срібчук"}
-                        ]}
+                    <FilterSet
+                        items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated, filterDateModified]}
+                        filterChoice={filterChoice}
+                        setFilterChoice={setFilterChoice}
+                        filterHandler={searchHandler}
+                        clearFilter={clearFilter}
                     />
-                    <SelectOption
-                        class_name='status'
-                        defaultValue="Статус"
-                        options={[
-                            {value: 'in_progress', name: "В роботі"},
-                            {value: 'canceled', name: "Анульовано"},
-                            {value: 'returned', name: "Повернено"},
-                            {value: 'shipped', name: "В дорозі"},
-                            {value: 'shipped_back', name: "В дорозі назад"},
-                            {value: 'completed', name: "Готово"},
+                    <UniversalSearch 
+                        listInputs={[
+                            {state: searchInputId, setState: setSearchInputId}, 
+                            {state: searchInputResponsible, setState: setSearchInputResponsible},
+                            {state: searchInputCustomer, setState: setSearchInputCustomer}
                         ]}
+                        searchHandler={searchHandler}
+                        clearFilter={clearSearch}
                     />
-                    <div className='wrapper-period'>
-                        <div className='wrapper-date wrapper-date-start'>
-                            <label htmlFor='date_start'>з</label>
-                            <input type='date' name='date_start' lang='uk'/>
-                        </div>
-                        <div className='wrapper-date wrapper-date-end'>
-                            <label htmlFor='date_end'>по</label>
-                            <input type='date' name='date_end' lang='uk'/>
-                        </div>
-                        <SelectOption
-                            class_name='date'
-                            defaultValue="Період"
-                            options={[
-                                {value: 'today', name: "Сьогодні"},
-                                {value: 'this_week', name: "Поточний тиждень"},
-                                {value: 'this_month', name: "Поточний місяць"},
-                                {value: 'own_option', name: "Свій варіант"}
-                            ]}
-                        />
-                    </div>
                 </div>
                 <div className='header-part part1'>
                     <ButtonExport />

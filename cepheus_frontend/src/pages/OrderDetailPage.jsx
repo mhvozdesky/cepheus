@@ -418,6 +418,7 @@ const OrderDetailPage = function() {
                         value={order.status}
                         change={changeFields}
                         options={[
+                            {value: 'new', name: "Новий"},
                             {value: 'in_progress', name: "В роботі"},
                             {value: 'canceled', name: "Анульовано"},
                             {value: 'returned', name: "Повернено"},

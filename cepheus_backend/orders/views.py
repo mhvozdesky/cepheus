@@ -5,13 +5,15 @@ from django_filters import rest_framework as filters
 from .models import Order, Category, Customer, Good
 from .serializers import (OrderListSerializer, CategorySerializer, CustomerSerializer,
                           GoodSerializer, OrderDetailSerializer)
-from .filters import GoodFilters
+from .filters import GoodFilters, OrderFilters
 
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all().order_by('-created_at')
     lookup_field = 'pk'
     permission_classes = [IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = OrderFilters
 
     def get_serializer_class(self):
         if self.action == 'list':
