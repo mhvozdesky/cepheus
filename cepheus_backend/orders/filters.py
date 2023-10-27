@@ -60,7 +60,7 @@ class OrderFilters(filters.FilterSet):
 
     class Meta:
         model = Order
-        fields = []
+        fields = ['status', 'payment_status']
 
     @staticmethod
     def _get_extended_queryset(queryset):
