@@ -5,20 +5,20 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from extra_settings.models import Setting as ExtrSetting
-
 from django.contrib.auth import login, logout
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.shortcuts import get_object_or_404
-
+from django_filters import rest_framework as filters
 
 from .models import Account, PasswordGenerationToken
 from .serializers import AccountSerializer, AccountRegisterSerializer, AccountAuthSerializer,\
     ResetPasswordSerializer
 from common.cepheus_permissions import ForbiddenToAll
 from .tasks import send_mail_delayed
+from .filters import AccountFilters
 
 
 class AccountViewSet(ModelViewSet):
@@ -26,6 +26,8 @@ class AccountViewSet(ModelViewSet):
     serializer_class = AccountSerializer
     lookup_field = 'pk'
     allow_registration = None
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AccountFilters
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
