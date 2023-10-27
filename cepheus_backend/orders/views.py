@@ -5,7 +5,7 @@ from django_filters import rest_framework as filters
 from .models import Order, Category, Customer, Good
 from .serializers import (OrderListSerializer, CategorySerializer, CustomerSerializer,
                           GoodSerializer, OrderDetailSerializer)
-from .filters import GoodFilters, OrderFilters
+from .filters import GoodFilters, OrderFilters, CustomerFilters, CategoryFilters
 
 
 class OrderViewSet(ModelViewSet):
@@ -26,6 +26,8 @@ class CategoryViewSet(ModelViewSet):
     lookup_field = 'pk'
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CategoryFilters
 
 
 class CustomerViewSet(ModelViewSet):
@@ -33,6 +35,8 @@ class CustomerViewSet(ModelViewSet):
     lookup_field = 'pk'
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CustomerFilters
 
 
 class GoodViewSet(ModelViewSet):

@@ -8,7 +8,7 @@ from django.db.models.functions import Concat
 from django import forms
 from django_filters import rest_framework as filters
 
-from .models import Good, Order
+from .models import Good, Order, Customer, Category
 from .utils import filter_list_method
 
 
@@ -72,3 +72,35 @@ class OrderFilters(filters.FilterSet):
     def text_search_method(self, queryset, name, value):
         qs = self._get_extended_queryset(queryset)
         return filter_list_method(self, qs, name, value)
+
+
+class CustomerFilters(filters.FilterSet):
+    id = django_filters.CharFilter(method='text_search_method')
+    full_name = django_filters.CharFilter(lookup_expr='icontains', method='text_search_method')
+    email = django_filters.CharFilter(lookup_expr='icontains', method='text_search_method')
+
+    class Meta:
+        model = Customer
+        fields = []
+
+    @staticmethod
+    def _get_extended_queryset(queryset):
+        return queryset.annotate(
+            responsible_full_name=Concat('first_name', V(' '), 'last_name')
+        )
+
+    def text_search_method(self, queryset, name, value):
+        qs = self._get_extended_queryset(queryset)
+        return filter_list_method(self, qs, name, value)
+
+
+class CategoryFilters(filters.FilterSet):
+    id = django_filters.CharFilter(method='text_search_method')
+    title = django_filters.CharFilter(lookup_expr='icontains', method='text_search_method')
+
+    class Meta:
+        model = Category
+        fields = []
+
+    def text_search_method(self, queryset, name, value):
+        return filter_list_method(self, queryset, name, value)
