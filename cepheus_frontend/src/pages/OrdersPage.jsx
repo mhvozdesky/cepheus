@@ -150,6 +150,7 @@ const OrdersPage = function(props) {
         componentConfig: {
             items: [
                 {name: '', value: "Всі"},
+                {name: 'new', value: "Новий"},
                 {name: 'in_progress', value: "В роботі"},
                 {name: 'canceled', value: "Анульовано"},
                 {name: 'returned', value: "Повернено"},
