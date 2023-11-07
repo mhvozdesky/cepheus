@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const convertToBase64 = (value) => {
     let json = JSON.stringify(value)
     let encoder = new TextEncoder()
@@ -62,4 +64,13 @@ export const get_blanck_customer = () => {
     }
 
     return data
+}
+
+export const getFuncSaveObj = (mode) => {
+    const funcMap = {
+        edit: axios.patch,
+        add: axios.post
+    }
+
+    return funcMap[mode]
 }

@@ -13,8 +13,8 @@ import CategoriesPage from "../pages/CategoriesPage"
 
 export const privateRoutes = [
     {path: '/orders', element: <OrdersPage/>, exact: true},
-    {path: '/orders/:id', element: <OrderDetailPage mode='edit' />, exact: true},
-    {path: '/orders/add', element: <OrderDetailPage mode='add' />, exact: true},
+    {path: '/orders/:id', element: <OrderDetailPage mode='edit' key="edit" />, exact: true},
+    {path: '/orders/add', element: <OrderDetailPage mode='add' key="add" />, exact: true},
     {path: '/goods', element: <GoodsPage/>, exact: true},
     {path: '/employees', element: <EmployeesList/>, exact: true},
     {path: '/customers', element: <CustomersPage/>, exact: true},

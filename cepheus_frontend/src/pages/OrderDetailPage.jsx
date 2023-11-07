@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import axios from "axios";
 import { format } from 'date-fns';
 import PreLoader from "../components/UI/PreLoader"
@@ -13,10 +13,12 @@ import ModalOrders from "../components/ModalOrders"
 import GoodsPage from "./GoodsPage"
 import EmployeesList from "./EmployeesList"
 import CustomersPage from "./CustomersPage"
+import {getFuncSaveObj} from "../utils"
 
 
 const OrderDetailPage = function(props) {
     const route_params = useParams();
+    const router = useNavigate()
     // Order detail page {route_params.id}
     const datePattern = 'dd.MM.yyyy HH:mm'
 
@@ -301,7 +303,10 @@ const OrderDetailPage = function(props) {
     }
 
     const sendData = (data) => {
-        const url = `/api/v1/orders/${route_params.id}/`;
+        let url = `/api/v1/orders/`;
+        if (props.mode === 'edit') {
+            url = `${url}${route_params.id}/`
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -311,7 +316,9 @@ const OrderDetailPage = function(props) {
             headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
         }
 
-        axios.patch(
+        const axiosFunc = getFuncSaveObj(props.mode)
+
+        axiosFunc(
             url,
             data,
             {
@@ -320,7 +327,11 @@ const OrderDetailPage = function(props) {
             }
         )
         .then((response) => {
-            getOrder();
+            if (props.mode === 'edit') {
+                getOrder();
+            } else if (props.mode === 'add') {
+                router(`/orders/${response.data.id}`)
+            }
         })
         .catch((error) => {
             console.log(error.response.data)
