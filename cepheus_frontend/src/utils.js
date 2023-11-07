@@ -49,3 +49,17 @@ export const get_filter_string = (filterChoice) => {
 
     return result.join("&");
 }
+
+export const get_blanck_customer = () => {
+    const data = {
+        email: '',
+        first_name: '',
+        last_name: "",
+        middle_name: "",
+        phone_number: "",
+        date_of_birth: "",
+        gender: ""
+    }
+
+    return data
+}
