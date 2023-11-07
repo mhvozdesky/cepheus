@@ -15,12 +15,11 @@ import EmployeesList from "./EmployeesList"
 import CustomersPage from "./CustomersPage"
 
 
-const OrderDetailPage = function() {
+const OrderDetailPage = function(props) {
     const route_params = useParams();
     // Order detail page {route_params.id}
     const datePattern = 'dd.MM.yyyy HH:mm'
 
-    const [someValue, setSomeValue] = useState(route_params.id)
     const [order, setOrder] = useState({})
     const [orderClear, setOrderClear] = useState({})
     const [loadingOrder, setLoadingOrder] = useState(true)
@@ -339,8 +338,39 @@ const OrderDetailPage = function() {
         setObjectChanged(false)
     }
 
+    const fetchAddData = () => {
+        const data = {
+            status: 'new',
+            goods: [],
+            payment_status: 'not_paid',
+            place_of_delivery: '',
+            customer_comment: '',
+            responsible: null,
+            customer: null,
+            number: 0,
+            amount: 0,
+            status_display: '',
+            payment_status_display: 'Не оплачено',
+            responsible_display: '',
+            latest_editor: '',
+            created_at: "",
+            modified_at: '',
+            id: ''
+        }
+
+        return data
+    }
+
     useEffect(() => {
-        getOrder();
+        if (props.mode === 'edit') {
+            getOrder();
+        } else if (props.mode === 'add') {
+            const data = fetchAddData();
+            setOrder(data);
+            setOrderClear(data);
+            setLoadingOrder(false)
+            setObjectChanged(false)
+        }
     }, [])
 
     useEffect(() => {
