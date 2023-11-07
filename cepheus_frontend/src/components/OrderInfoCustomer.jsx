@@ -3,6 +3,7 @@ import axios from "axios";
 import PreLoader from "./UI/PreLoader"
 import LabeledInput from "./UI/LabeledInput"
 import LabeledText from "./UI/LabeledText"
+import {get_blanck_customer} from "../utils"
 
 const OrderInfoCustomer = function(props) {
     const [loadingCustomer, setLoadingCustomer] = useState(true)
@@ -50,7 +51,13 @@ const OrderInfoCustomer = function(props) {
     }, [])
 
     useEffect(() => {
-        getCustomer();
+        if (props.customer_id) {
+            getCustomer();
+        } else {
+            const data = get_blanck_customer();
+            setCustomer(data)
+            setLoadingCustomer(false)
+        }
     }, [props.customer_id])
 
     if (loadingCustomer) {
