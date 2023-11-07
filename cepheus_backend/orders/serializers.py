@@ -18,13 +18,14 @@ class GoodInOrderSerializer(serializers.ModelSerializer):
 class OrderListSerializer(serializers.ModelSerializer):
     status_display = serializers.CharField(source='get_status_display', read_only=True)
     payment_status_display = serializers.CharField(source='get_payment_status_display', read_only=True)
-    responsible_display = serializers.CharField(source='responsible.get_full_name', read_only=True)
+    responsible_display = serializers.SerializerMethodField()
     number = serializers.SerializerMethodField()
     amount = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
         fields = '__all__'
+        read_only_field = ['id']
 
     def get_number(self, obj):
         return obj.order_goods.count()
@@ -34,6 +35,9 @@ class OrderListSerializer(serializers.ModelSerializer):
         if total_amount is None:
             return 0
         return total_amount
+
+    def get_responsible_display(self, obj):
+        return obj.responsible.get_full_name if obj.responsible else ''
 
 
 class OrderDetailSerializer(OrderListSerializer):
