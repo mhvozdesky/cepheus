@@ -1,8 +1,8 @@
 import React from "react";
 
-const ButtonAdd = function() {
+const ButtonAdd = function(props) {
     return (
-        <div className='button-add'>
+        <div className='button-add' onClick={props.onButtonAdd} >
             <div className='image'></div>
         </div>
     );

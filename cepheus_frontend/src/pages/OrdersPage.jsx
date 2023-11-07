@@ -230,6 +230,10 @@ const OrdersPage = function(props) {
         doSearch('search')
     }
 
+    const onButtonAdd = () => {
+        router(`/orders/add`)
+    }
+
     useEffect(() => {
         getOrders();
       }, [])
@@ -258,7 +262,7 @@ const OrdersPage = function(props) {
         <div className='page order-page'>
             <div className='page-header'>
                 <div className='header-part part0'>
-                    <ButtonAdd />
+                    <ButtonAdd onButtonAdd={onButtonAdd} />
                     <FilterSet
                         items={[filterStatusConfig, filterPaymentStatusConfig, filterDateCreated, filterDateModified]}
                         filterChoice={filterChoice}

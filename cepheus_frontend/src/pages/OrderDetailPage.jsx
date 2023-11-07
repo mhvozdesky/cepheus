@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import axios from "axios";
 import { format } from 'date-fns';
 import PreLoader from "../components/UI/PreLoader"
@@ -13,14 +13,15 @@ import ModalOrders from "../components/ModalOrders"
 import GoodsPage from "./GoodsPage"
 import EmployeesList from "./EmployeesList"
 import CustomersPage from "./CustomersPage"
+import {getFuncSaveObj} from "../utils"
 
 
-const OrderDetailPage = function() {
+const OrderDetailPage = function(props) {
     const route_params = useParams();
+    const router = useNavigate()
     // Order detail page {route_params.id}
     const datePattern = 'dd.MM.yyyy HH:mm'
 
-    const [someValue, setSomeValue] = useState(route_params.id)
     const [order, setOrder] = useState({})
     const [orderClear, setOrderClear] = useState({})
     const [loadingOrder, setLoadingOrder] = useState(true)
@@ -302,7 +303,10 @@ const OrderDetailPage = function() {
     }
 
     const sendData = (data) => {
-        const url = `/api/v1/orders/${route_params.id}/`;
+        let url = `/api/v1/orders/`;
+        if (props.mode === 'edit') {
+            url = `${url}${route_params.id}/`
+        }
 
         const headers = {
             "Content-Type": "application/json"
@@ -312,7 +316,9 @@ const OrderDetailPage = function() {
             headers['x-csrftoken'] = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1] 
         }
 
-        axios.patch(
+        const axiosFunc = getFuncSaveObj(props.mode)
+
+        axiosFunc(
             url,
             data,
             {
@@ -321,7 +327,11 @@ const OrderDetailPage = function() {
             }
         )
         .then((response) => {
-            getOrder();
+            if (props.mode === 'edit') {
+                getOrder();
+            } else if (props.mode === 'add') {
+                router(`/orders/${response.data.id}`)
+            }
         })
         .catch((error) => {
             console.log(error.response.data)
@@ -339,8 +349,39 @@ const OrderDetailPage = function() {
         setObjectChanged(false)
     }
 
+    const fetchAddData = () => {
+        const data = {
+            status: 'new',
+            goods: [],
+            payment_status: 'not_paid',
+            place_of_delivery: '',
+            customer_comment: '',
+            responsible: null,
+            customer: null,
+            number: 0,
+            amount: 0,
+            status_display: '',
+            payment_status_display: 'Не оплачено',
+            responsible_display: '',
+            latest_editor: '',
+            created_at: "",
+            modified_at: '',
+            id: ''
+        }
+
+        return data
+    }
+
     useEffect(() => {
-        getOrder();
+        if (props.mode === 'edit') {
+            getOrder();
+        } else if (props.mode === 'add') {
+            const data = fetchAddData();
+            setOrder(data);
+            setOrderClear(data);
+            setLoadingOrder(false)
+            setObjectChanged(false)
+        }
     }, [])
 
     useEffect(() => {

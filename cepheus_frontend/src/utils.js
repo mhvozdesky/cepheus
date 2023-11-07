@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const convertToBase64 = (value) => {
     let json = JSON.stringify(value)
     let encoder = new TextEncoder()
@@ -48,4 +50,27 @@ export const get_filter_string = (filterChoice) => {
     }
 
     return result.join("&");
+}
+
+export const get_blanck_customer = () => {
+    const data = {
+        email: '',
+        first_name: '',
+        last_name: "",
+        middle_name: "",
+        phone_number: "",
+        date_of_birth: "",
+        gender: ""
+    }
+
+    return data
+}
+
+export const getFuncSaveObj = (mode) => {
+    const funcMap = {
+        edit: axios.patch,
+        add: axios.post
+    }
+
+    return funcMap[mode]
 }
